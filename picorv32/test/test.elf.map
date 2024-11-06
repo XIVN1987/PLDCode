@@ -1,0 +1,71 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+mem              0x0000000000000000 0x0000000000004000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+                0x0000000000004000                __top_mem = (ORIGIN (mem) + LENGTH (mem))
+
+.text           0x0000000000000000      0x144
+ *(.text.entry)
+ *(.text*)
+ .text          0x0000000000000000       0xe8 /tmp/ccmhojN0.o
+                0x0000000000000000                entry
+                0x000000000000003c                finish
+                0x0000000000000052                iputc
+                0x000000000000006e                iputs
+                0x00000000000000a6                iprintf
+ .text          0x00000000000000e8       0x5c /tmp/ccHGQTJ0.o
+                0x00000000000000e8                main
+                0x0000000000000106                test_add
+                0x0000000000000144                . = ALIGN (0x4)
+ *fill*         0x0000000000000144        0x0 
+
+.rodata         0x0000000000000144       0x20
+ *(.rodata)
+ .rodata        0x0000000000000144       0x1f /tmp/ccHGQTJ0.o
+ *(.rodata.*)
+                0x0000000000000164                . = ALIGN (0x4)
+ *fill*         0x0000000000000163        0x1 
+                0x0000000000000164                _etext = .
+
+.rela.dyn       0x0000000000000164        0x0
+ .rela.text     0x0000000000000164        0x0 /tmp/ccmhojN0.o
+
+.data           0x0000000000000164        0x0
+ *(.data)
+ .data          0x0000000000000164        0x0 /tmp/ccmhojN0.o
+ .data          0x0000000000000164        0x0 /tmp/ccHGQTJ0.o
+ *(.data.*)
+ *(.sdata)
+ *(.sdata.*)
+                0x0000000000000164                . = ALIGN (0x4)
+
+.bss            0x0000000000000164        0x0
+                0x0000000000000164                _bss = .
+ *(.bss*)
+ .bss           0x0000000000000164        0x0 /tmp/ccmhojN0.o
+ .bss           0x0000000000000164        0x0 /tmp/ccHGQTJ0.o
+ *(COMMON)
+                0x0000000000000164                . = ALIGN (0x4)
+                0x0000000000000164                _ebss = .
+                [!provide]                        PROVIDE (_end = .)
+                [!provide]                        PROVIDE (_stack_top = __top_mem)
+LOAD /tmp/ccmhojN0.o
+LOAD /tmp/ccHGQTJ0.o
+LOAD /mnt/c/Ubuntu/bin/gcc-riscv-none/bin/../lib/gcc/riscv-none-embed/10.2.0/rv32imc/ilp32/libgcc.a
+START GROUP
+LOAD /mnt/c/Ubuntu/bin/gcc-riscv-none/bin/../lib/gcc/riscv-none-embed/10.2.0/rv32imc/ilp32/libgcc.a
+LOAD /mnt/c/Ubuntu/bin/gcc-riscv-none/bin/../lib/gcc/riscv-none-embed/10.2.0/../../../../riscv-none-embed/lib/rv32imc/ilp32/libg.a
+LOAD /mnt/c/Ubuntu/bin/gcc-riscv-none/bin/../lib/gcc/riscv-none-embed/10.2.0/../../../../riscv-none-embed/lib/rv32imc/ilp32/libc.a
+END GROUP
+LOAD /mnt/c/Ubuntu/bin/gcc-riscv-none/bin/../lib/gcc/riscv-none-embed/10.2.0/rv32imc/ilp32/libgcc.a
+OUTPUT(test.elf elf32-littleriscv)
+
+.comment        0x0000000000000000       0x33
+ .comment       0x0000000000000000       0x33 /tmp/ccmhojN0.o
+                                         0x34 (size before relaxing)
+ .comment       0x0000000000000033       0x34 /tmp/ccHGQTJ0.o
