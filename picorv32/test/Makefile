@@ -1,5 +1,3 @@
-BIN = test
-
 CROSS = riscv-none-embed-
 
 HDRS = .
@@ -10,28 +8,26 @@ HDRS +=
 SRCS += \
 	alu/main.c \
 
-CFLAGS += -march=rv32imc -mabi=ilp32
-CFLAGS += --std=c99 -nostartfiles -O0
+CFLAGS += -march=rv32imc -mabi=ilp32 -nostartfiles -O1
 CFLAGS += -Wl,--script=linker.ld -Wl,-Map=$@.map
 
-all: $(BIN).elf $(BIN).bin $(BIN).mem size
+all: test.dis test.mem size
 
-$(BIN).elf: $(SRCS)
-	@echo CC
-	@$(CROSS)gcc $(CFLAGS) -I$(HDRS) $^ -o $@
-	@$(CROSS)objdump -d $@ > $@.dis
+test.elf: $(SRCS)
+	$(CROSS)gcc $(CFLAGS) -I$(HDRS) $^ -o $@
 
-$(BIN).bin: $(BIN).elf
-	@echo OBJCOPY
-	@$(CROSS)objcopy -O binary $^ $@
+test.dis: test.elf
+	$(CROSS)objdump -d $^ > $@
 
-$(BIN).mem: $(BIN).bin
-	@echo MEM
-	@od -tx4 -w4 -v -An $^ > $@
+test.bin: test.elf
+	$(CROSS)objcopy -O binary $^ $@
 
-size: $(BIN).elf
+test.mem: test.bin
+	od -tx4 -w4 -v -An $^ > $@
+
+size: test.elf
 	@echo size:
 	@$(CROSS)size -t $^
 
 clean:
-	-rm $(BIN).elf $(BIN).elf.map $(BIN).elf.dis $(BIN).bin $(BIN).mem
+	-rm test.elf test.elf.map test.dis test.bin test.mem

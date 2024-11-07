@@ -74,12 +74,12 @@ end
 
 //----------------------------------------------------------------------------
 always @(posedge clk) begin
-	if (mem_addr == 32'h10000000 && (mem_wstrb != 0)) begin
+	if ((mem_addr == 32'h10000000) && (mem_wstrb != 0)) begin
 		$write("\n--- done ---\n");
 		$finish;
 	end
 
-	if (mem_addr == 32'h20000000 && (mem_wstrb != 0)) begin
+	if ((mem_addr == 32'h20000000) && (mem_wstrb != 0) && mem_ready) begin
 		$write("%c", mem_wdata);
 	end
 end

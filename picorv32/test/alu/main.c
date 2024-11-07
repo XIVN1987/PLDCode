@@ -19,10 +19,13 @@ int main(void)
 
 void test_add(void)
 {
-	int a = 3;
-	int b = 4;
+	volatile int a = 3;
+	volatile int b = 4;
 
 	int c = a + b;
 
-	iprintf("%d + %d = %d\n\n", a, b, c);
+	if(c == 7)
+		iputs("\n--- add pass ---\n");
+	else
+		iputs("\n--- add fail ---\n");
 }
