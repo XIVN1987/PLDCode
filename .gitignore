@@ -1,2 +1,6 @@
 __riscv.sim
 __riscv.vcd
+
+*.bin
+*.elf
+*.elf.map

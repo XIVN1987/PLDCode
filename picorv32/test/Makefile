@@ -30,4 +30,4 @@ size: test.elf
 	@$(CROSS)size -t $^
 
 clean:
-	-rm test.elf test.elf.map test.dis test.bin test.mem
+	rm -f test.elf test.elf.map test.dis test.bin test.mem
