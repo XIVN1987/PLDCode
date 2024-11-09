@@ -4,8 +4,8 @@
 #include "helper.h"
 
 
-#define	 ADDR_FINISH	0x10000000
-#define	 ADDR_OUTPUT	0x20000000
+#define	 ADDR_FINISH	0x80000000
+#define	 ADDR_OUTPUT	0x90000000
 
 
 //-----------------------------------------------------------------------------

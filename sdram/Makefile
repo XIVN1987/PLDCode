@@ -1,7 +1,9 @@
 SRCS = \
 	riscv_tb.v \
-	picorv32.v \
-	memory.v \
+	../picorv32/picorv32.v \
+	../picorv32/memory.v \
+	sdramc.v \
+	MT48LC8M16.v \
 
 VCD_FILE=./__riscv.vcd
 SIM_FILE=./__riscv.sim

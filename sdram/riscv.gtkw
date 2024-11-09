@@ -1,0 +1,47 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sat Nov 09 09:18:03 2024
+[*]
+[dumpfile] "C:\Ubuntu\github\PLDCode\sdram\__riscv.vcd"
+[dumpfile_mtime] "Sat Nov 09 09:16:02 2024"
+[dumpfile_size] 9786741
+[savefile] "C:\Ubuntu\github\PLDCode\sdram\riscv.gtkw"
+[timestart] 385994100
+[size] 1440 897
+[pos] -9 -9
+*-15.451764 386340000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] riscv_tb.
+[sst_width] 211
+[signals_width] 198
+[sst_expanded] 1
+[sst_vpaned_height] 259
+@28
+riscv_tb.u_core.mem_valid
+riscv_tb.u_core.mem_ready
+@22
+riscv_tb.u_core.mem_addr[31:0]
+riscv_tb.u_core.mem_wstrb[3:0]
+riscv_tb.u_core.mem_wdata[31:0]
+riscv_tb.u_core.mem_rdata[31:0]
+@820
+riscv_tb.u_core.new_ascii_instr[63:0]
+@200
+-sdramc
+@28
+riscv_tb.u_sdramc.sdram_cs
+riscv_tb.u_sdramc.sdram_ras
+riscv_tb.u_sdramc.sdram_cas
+riscv_tb.u_sdramc.sdram_we
+@820
+riscv_tb.u_sdramc.cmd_name[63:0]
+riscv_tb.u_sdramc.state_name[63:0]
+@22
+riscv_tb.u_sdramc.sdram_addr[12:0]
+@23
+riscv_tb.u_sdramc.sdram_data[15:0]
+@28
+riscv_tb.u_sdramc.sdram_dqm[1:0]
+@200
+-sdram
+[pattern_trace] 1
+[pattern_trace] 0
