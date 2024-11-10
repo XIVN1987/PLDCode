@@ -46,7 +46,7 @@ wire		mem_ready_i2cm;
 wire [31:0] mem_rdata_i2cm;
 
 assign sel_ram   = ((mem_addr >> 28) == 0) || ((mem_addr >> 28) == 8) || ((mem_addr >> 28) == 9);
-assign sel_i2cm  = ((mem_addr >> 28) == 3);
+assign sel_i2cm  = ((mem_addr >> 28) == 5);
 assign mem_ready = sel_ram ? mem_ready_ram : mem_ready_i2cm;
 assign mem_rdata = sel_ram ? mem_rdata_ram : mem_rdata_i2cm;
 
@@ -68,6 +68,12 @@ memory #(
 //----------------------------------------------------------------------------
 wire i2c_scl;
 wire i2c_sda;
+wire i2c_scl_i;
+wire i2c_scl_o;
+wire i2c_scl_oe;
+wire i2c_sda_i;
+wire i2c_sda_o;
+wire i2c_sda_oe;
 
 i2cm u_i2cm (
 	.clk(clk),
@@ -80,8 +86,12 @@ i2cm u_i2cm (
 	.mem_wstrb(mem_wstrb),
 	.mem_rdata(mem_rdata_i2cm),
 
-	.i2c_scl(i2c_scl),
-	.i2c_sda(i2c_sda)
+	.i2c_scl_i (i2c_scl_i),
+	.i2c_scl_o (i2c_scl_o),
+	.i2c_scl_oe(i2c_scl_oe),
+	.i2c_sda_i (i2c_sda_i),
+	.i2c_sda_o (i2c_sda_o),
+	.i2c_sda_oe(i2c_sda_oe)
 );
 
 M24FC04 u_eeprom (
@@ -93,6 +103,11 @@ M24FC04 u_eeprom (
 	.SDA(i2c_sda),
 	.RESET(~rst_n)
 );
+
+assign i2c_scl_i = i2c_scl;
+assign i2c_scl   = i2c_scl_oe ? i2c_scl_o : 1'bz;
+assign i2c_sda_i = i2c_sda;
+assign i2c_sda   = i2c_sda_oe ? i2c_sda_o : 1'bz;
 
 //----------------------------------------------------------------------------
 always #10 clk = !clk;

@@ -3,6 +3,7 @@ SRCS = \
 	../picorv32/picorv32.v \
 	../picorv32/memory.v \
 	i2cm.v \
+	i2cm_reg.v \
 	24FC04.v \
 
 VCD_FILE=./__riscv.vcd

@@ -49,7 +49,7 @@ uint32_t AT24_WriteOnePage(uint16_t addr, uint8_t data[], uint8_t nbyte)
 	if(addr + nbyte > ADDR_LIMIT)	// out of range
 		return AT24_RES_ERR;
 
-	if(addr / PAGE_SIZE != (addr + nbyte) / PAGE_SIZE)	// corss page
+	if(addr / PAGE_SIZE != (addr + nbyte - 1) / PAGE_SIZE)	// corss page
 		return AT24_RES_ERR;
 
 	res = I2CM_Start(I2CM, (DEV_ADDR_P(addr) << 1) | 1);
