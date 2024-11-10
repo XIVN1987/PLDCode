@@ -52,7 +52,7 @@ uint32_t AT24_WriteOnePage(uint16_t addr, uint8_t data[], uint8_t nbyte)
 	if(addr / PAGE_SIZE != (addr + nbyte - 1) / PAGE_SIZE)	// corss page
 		return AT24_RES_ERR;
 
-	res = I2CM_Start(I2CM, (DEV_ADDR_P(addr) << 1) | 1);
+	res = I2CM_Start(I2CM, (DEV_ADDR_P(addr) << 1) | 0);
 	if(res != I2CM_RES_OK)
 		goto error;
 
@@ -157,7 +157,7 @@ uint32_t AT24_Read(uint16_t addr, uint8_t buff[], uint8_t nbyte)
 	if(addr + nbyte > ADDR_LIMIT)	// out of range
 		return AT24_RES_ERR;
 
-	res = I2CM_Start(I2CM, (DEV_ADDR_P(addr) << 1) | 1);
+	res = I2CM_Start(I2CM, (DEV_ADDR_P(addr) << 1) | 0);
 	if(res != I2CM_RES_OK)
 		goto error;
 
@@ -165,7 +165,7 @@ uint32_t AT24_Read(uint16_t addr, uint8_t buff[], uint8_t nbyte)
 	if(res != I2CM_RES_OK)
 		goto error;
 
-	res = I2CM_Start(I2CM, (DEV_ADDR_P(addr) << 1) | 0);	// re-start for read
+	res = I2CM_Start(I2CM, (DEV_ADDR_P(addr) << 1) | 1);	// re-start for read
 	if(res != I2CM_RES_OK)
 		goto error;
 

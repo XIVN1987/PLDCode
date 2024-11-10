@@ -251,8 +251,8 @@ Disassembly of section .text:
  226:	8082                	ret
  228:	0084d593          	srli	a1,s1,0x8
  22c:	0586                	slli	a1,a1,0x1
- 22e:	0a15e593          	ori	a1,a1,161
- 232:	0ff5f593          	zext.b	a1,a1
+ 22e:	fa05e593          	ori	a1,a1,-96
+ 232:	0fe5f593          	andi	a1,a1,254
  236:	50000537          	lui	a0,0x50000
  23a:	3f1d                	jal	170 <I2CM_Start>
  23c:	c511                	beqz	a0,248 <AT24_WriteOnePage+0x64>
@@ -298,8 +298,8 @@ Disassembly of section .text:
  29e:	8432                	mv	s0,a2
  2a0:	00855993          	srli	s3,a0,0x8
  2a4:	00199593          	slli	a1,s3,0x1
- 2a8:	0a15e593          	ori	a1,a1,161
- 2ac:	0ff5f593          	zext.b	a1,a1
+ 2a8:	fa05e593          	ori	a1,a1,-96
+ 2ac:	0fe5f593          	andi	a1,a1,254
  2b0:	50000537          	lui	a0,0x50000
  2b4:	3d75                	jal	170 <I2CM_Start>
  2b6:	cd09                	beqz	a0,2d0 <AT24_Read+0x54>
@@ -319,8 +319,8 @@ Disassembly of section .text:
  2d8:	35f1                	jal	1a4 <I2CM_Write>
  2da:	fd79                	bnez	a0,2b8 <AT24_Read+0x3c>
  2dc:	00199593          	slli	a1,s3,0x1
- 2e0:	fa05e593          	ori	a1,a1,-96
- 2e4:	0fe5f593          	andi	a1,a1,254
+ 2e0:	0a15e593          	ori	a1,a1,161
+ 2e4:	0ff5f593          	zext.b	a1,a1
  2e8:	50000537          	lui	a0,0x50000
  2ec:	3551                	jal	170 <I2CM_Start>
  2ee:	84aa                	mv	s1,a0

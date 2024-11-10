@@ -12,22 +12,26 @@ module i2cm_reg (
 	output [31:0] mem_rdata,
 
 	output		  clr_n,	// clear internal state
-	output		  ckdiv,
-	output [ 7:0] wbyte,	// byte to send
-	output [ 4:0] cmd,
-	input  [ 4:0] cmd_clr,	// used to clear completed command
+	output [11:0] ckdiv,
+	output [ 7:0] tbyte,	// byte to transmit
+	output [ 4:0] cmds,		// multiple commands can be set at a time
+	input  [ 4:0] cdone,	// command done
 	
 	input		  error,
 	input		  rxack,
 	input  [ 7:0] rbyte		// received byte
 );
 
-`include "i2cm_def.vh"
-
 localparam ADDR_CR	 = 12'h00;
 localparam ADDR_SR	 = 12'h04;
 localparam ADDR_CMD	 = 12'h08;
 localparam ADDR_DATA = 12'h0C;
+
+`define CMD_START	 (1 << 0)
+`define CMD_WRITE	 (1 << 1)
+`define CMD_READ		 (1 << 2)
+`define CMD_TXACK	 (1 << 3)
+`define CMD_STOP		 (1 << 4)
 
 
 //----------------------------------------------------------------------------
@@ -59,12 +63,12 @@ always @(posedge clk or negedge rst_n) begin
 	else if((mem_addr == ADDR_CMD) && (mem_wstrb != 0) && mem_ready) begin
 		cmd_r <= mem_wdata[4:0];
 	end
-	else if(cmd_clr) begin
-		cmd_r <= cmd_r & ~(cmd_clr == CMD_READ ? (cmd_clr | CMD_TXACK) : cmd_clr);
+	else if(cdone) begin
+		cmd_r <= cmd_r & ~cdone;
 	end
 end
 
-assign cmd = cmd_r;
+assign cmds = cmd_r;
 
 
 //----------------------------------------------------------------------------
@@ -75,11 +79,11 @@ always @(posedge clk or negedge rst_n) begin
 		data_r <= 0;
 	end
 	else if((mem_addr == ADDR_DATA) && (mem_wstrb != 0) && mem_ready) begin
-		data_r <= mem_wdata;
+		data_r <= mem_wdata[7:0];
 	end
 end
 
-assign wbyte = data_r;
+assign tbyte = data_r;
 
 
 //-----------------------------------------------------------------------------

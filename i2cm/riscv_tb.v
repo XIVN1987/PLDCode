@@ -94,6 +94,9 @@ i2cm u_i2cm (
 	.i2c_sda_oe(i2c_sda_oe)
 );
 
+pullup(i2c_scl);
+pullup(i2c_sda);
+
 M24FC04 u_eeprom (
 	.A0 (1'b0),
 	.A1 (1'b0),
@@ -101,7 +104,7 @@ M24FC04 u_eeprom (
 	.WP (1'b0),
 	.SCL(i2c_scl),
 	.SDA(i2c_sda),
-	.RESET(~rst_n)
+	.RESET(rst_n)
 );
 
 assign i2c_scl_i = i2c_scl;
