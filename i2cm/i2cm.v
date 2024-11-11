@@ -51,8 +51,6 @@ i2cm_reg u_reg (
 );
 
 
-
-
 //----------------------------------------------------------------------------
 localparam STATE_IDLE	= 4'h0;
 localparam STATE_START	= 4'h1;
@@ -179,29 +177,9 @@ always @(posedge clk or negedge rst_n) begin
 
 		STATE_WAIT: begin
 			state_r <= STATE_IDLE;
+			cdone   <= 5'b0;
 		end
 		endcase
-	end
-end
-
-
-
-//----------------------------------------------------------------------------
-reg [11:0] cnt;
-reg        clk_en;
-
-always @(posedge clk or negedge rst_n) begin
-	if(~rst_n) begin
-		cnt    <= 12'b0;
-		clk_en <= 1'b0;
-	end
-	else if(~|cnt && clr_n) begin
-		cnt    <= ckdiv;
-		clk_en <= 1'b1;
-	end
-	else begin
-		cnt    <= cnt - 12'b1;
-		clk_en <= 1'b0;
 	end
 end
 
@@ -209,9 +187,9 @@ end
 i2cm_bit u_bit (
 	.clk   (clk   ),
 	.rst_n (rst_n ),
-
+	
 	.clr_n (clr_n ),
-	.clk_en(clk_en),
+	.ckdiv (ckdiv ),
 	.cmd   (cmd   ),
 	.tbit  (tbit  ),
 	.rbit  (rbit  ),
