@@ -20,6 +20,29 @@ module i2cm_bit (
 	output		  i2c_sda_oe
 );
 
+//----------------------------------------------------------------------------
+reg [11:0] count;
+reg 	   clk_en;
+
+always @(posedge clk or negedge rst_n) begin
+	if(~rst_n || ~clr_n) begin
+		count  <= 12'b0;
+		clk_en <= 1'b0;
+	end
+	else if(count < 12'h5) begin
+		count  <= ckdiv;
+		clk_en <= 1'b1;
+	end
+	else begin
+		count  <= count - 12'h5;	// 5 clock cycle per bit
+		clk_en <= 1'b0;
+	end
+end
+
+
+//----------------------------------------------------------------------------
+`include "i2cm.vh"
+
 localparam STATE_IDLE		= 6'h00;
 localparam STATE_START_1	= 6'h01;
 localparam STATE_START_2	= 6'h02;
@@ -46,8 +69,6 @@ reg 	  error_r;
 reg 	  scl_oe_r;
 reg 	  sda_oe_r;
 
-reg 	  clk_en_r;
-
 always @(posedge clk or negedge rst_n) begin
 	if(~rst_n) begin
 		state_r  <= STATE_IDLE;
@@ -60,14 +81,14 @@ always @(posedge clk or negedge rst_n) begin
 		bdone_r  <= 1'b0;
 		error_r  <= 1'b0;
 
-		if(clk_en_r) begin
+		if(clk_en) begin
 			case(state_r)
 			STATE_IDLE: begin
 				case(cmd)
-					`CMD_START: state_r <= STATE_START_1;
-					`CMD_WRITE: state_r <= STATE_WRITE_1;
-					`CMD_READ:  state_r <= STATE_READ_1;
-					`CMD_STOP:  state_r <= STATE_STOP_1;
+					CMD_START: state_r <= STATE_START_1;
+					CMD_WRITE: state_r <= STATE_WRITE_1;
+					CMD_READ:  state_r <= STATE_READ_1;
+					CMD_STOP:  state_r <= STATE_STOP_1;
 				endcase
 			end
 
@@ -165,29 +186,10 @@ end
 
 
 //----------------------------------------------------------------------------
-reg [11:0] count_r;
-
-always @(posedge clk or negedge rst_n) begin
-	if(~rst_n || ~clr_n) begin
-		count_r  <= 12'b0;
-		clk_en_r <= 1'b0;
-	end
-	else if(count_r < 12'h5) begin
-		count_r  <= ckdiv;
-		clk_en_r <= 1'b1;
-	end
-	else begin
-		count_r  <= count_r - 12'h5;	// 5 clock cycle per bit
-		clk_en_r <= 1'b0;
-	end
-end
-
-
-//----------------------------------------------------------------------------
 reg [1:0] scl_i;
 reg [1:0] sda_i;
 
-always @(posedge clk_en_r or negedge rst_n) begin
+always @(posedge clk_en or negedge rst_n) begin
 	if(~rst_n) begin
 		scl_i <= 2'b11;
 		sda_i <= 2'b11;
@@ -199,7 +201,7 @@ always @(posedge clk_en_r or negedge rst_n) begin
 end
 
 always @(posedge clk) begin
-	if(scl_i[0] & ~scl_i[1])	// at middle of SCL
+	if(scl_i[0] & ~scl_i[1])	// sampling at middle of SCL
 		rbit <= i2c_sda_i;
 end
 

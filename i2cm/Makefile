@@ -2,9 +2,9 @@ SRCS = \
 	riscv_tb.v \
 	../picorv32/picorv32.v \
 	../picorv32/memory.v \
+	i2cm.v \
 	i2cm_reg.v \
 	i2cm_bit.v \
-	i2cm.v \
 	24FC04.v \
 
 VCD_FILE=./__riscv.vcd

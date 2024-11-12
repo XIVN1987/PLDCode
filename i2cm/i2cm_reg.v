@@ -1,37 +1,33 @@
 `timescale 1ns / 1ps
 
 module i2cm_reg (
-	input         clk,
-	input         rst_n,
+	input  		  clk,
+	input  		  rst_n,
 
-	input         mem_valid,
-	output        mem_ready,
+	input  		  mem_valid,
+	output 		  mem_ready,
 	input  [11:0] mem_addr,
 	input  [31:0] mem_wdata,
 	input  [ 3:0] mem_wstrb,
 	output [31:0] mem_rdata,
 
-	output		  clr_n,	// clear internal state
+	output 		  clr_n,	// clear internal state
 	output [11:0] ckdiv,
-	output [ 7:0] tbyte,	// byte to transmit
-	output [ 4:0] cmds,		// multiple commands can be set at a time
+	output [ 4:0] cmds,		// commands
 	input  [ 4:0] cdone,	// command done
-	
-	input		  error,
-	input		  rxack,
-	input  [ 7:0] rbyte		// received byte
+	output [ 7:0] tbyte,	// byte to transmit
+	input  		  rxack,	// received ack
+	input  [ 7:0] rbyte,	// received byte
+	output 		  txack,	// ack to transmit
+	input  		  error
 );
+
+`include "i2cm.vh"
 
 localparam ADDR_CR	 = 12'h00;
 localparam ADDR_SR	 = 12'h04;
 localparam ADDR_CMD	 = 12'h08;
 localparam ADDR_DATA = 12'h0C;
-
-`define CMD_START	 (1 << 0)
-`define CMD_WRITE	 (1 << 1)
-`define CMD_READ		 (1 << 2)
-`define CMD_TXACK	 (1 << 3)
-`define CMD_STOP		 (1 << 4)
 
 
 //----------------------------------------------------------------------------
@@ -64,23 +60,28 @@ always @(posedge clk or negedge rst_n) begin
 		cmd_r <= mem_wdata[4:0];
 	end
 	else if(cdone) begin
-		cmd_r <= cmd_r & ~cdone;
+		cmd_r <= cmd_r & ~(cdone | (cdone == CMD_READ ? CMD_TXACK_Msk : 0));
 	end
 end
 
-assign cmds = cmd_r;
+assign cmds  = cmd_r;
+assign txack = cmd_r[CMD_TXACK_Pos];
 
 
 //----------------------------------------------------------------------------
 reg [ 7: 0]	data_r;
+reg [ 7: 0]	rbyte_r;
 
 always @(posedge clk or negedge rst_n) begin
 	if(~rst_n) begin
-		data_r <= 0;
+		data_r  <= 0;
+		rbyte_r <= 0;
 	end
 	else if((mem_addr == ADDR_DATA) && (mem_wstrb != 0) && mem_ready) begin
-		data_r <= mem_wdata[7:0];
+		data_r  <= mem_wdata[7:0];
 	end
+	else if(cdone == CMD_READ)
+		rbyte_r <= rbyte;
 end
 
 assign tbyte = data_r;
@@ -97,8 +98,7 @@ always @(posedge clk or negedge rst_n) begin
 			ADDR_CR:	rdata_r <= {ckdiv_r, 7'b0, ena_r};
 			ADDR_SR:	rdata_r <= {rxack, error};
 			ADDR_CMD:	rdata_r <= cmd_r;
-			ADDR_DATA:	rdata_r <= rbyte;
-			default:	rdata_r <= 32'b0;
+			ADDR_DATA:	rdata_r <= rbyte_r;
 		endcase
 	end
 end

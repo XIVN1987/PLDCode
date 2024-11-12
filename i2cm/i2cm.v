@@ -19,14 +19,16 @@ module i2cm (
 	output        i2c_sda_oe
 );
 
-wire		clr_n;
-wire [11:0]	ckdiv;
-wire [ 7:0] tbyte;
-wire [ 4:0] cmds;
+//----------------------------------------------------------------------------
+wire 		clr_n;
+wire [11:0] ckdiv;
+wire [ 4:0] cmds;	// commands
 reg  [ 4:0] cdone;	// command done
-wire		error;
-reg			rxack;
+wire [ 7:0] tbyte;
+reg  		rxack;
 wire [ 7:0] rbyte;
+wire 		txack;
+wire 		error;
 
 i2cm_reg u_reg (
 	.clk(clk),
@@ -41,17 +43,19 @@ i2cm_reg u_reg (
 
 	.clr_n(clr_n),
 	.ckdiv(ckdiv),
-	.tbyte(tbyte),
 	.cmds (cmds ),
 	.cdone(cdone),
-
-	.error(error),
+	.tbyte(tbyte),
 	.rxack(rxack),
-	.rbyte(rbyte)
+	.rbyte(rbyte),
+	.txack(txack),
+	.error(error)
 );
 
 
 //----------------------------------------------------------------------------
+`include "i2cm.vh"
+
 localparam STATE_IDLE	= 4'h0;
 localparam STATE_START	= 4'h1;
 localparam STATE_WRITE	= 4'h2;
@@ -59,35 +63,18 @@ localparam STATE_RXACK	= 4'h3;
 localparam STATE_READ	= 4'h4;
 localparam STATE_TXACK	= 4'h5;
 localparam STATE_STOP	= 4'h6;
-localparam STATE_WAIT	= 4'h7;		// wait for cmds clear, then switch to IDLE
+localparam STATE_WAIT	= 4'h7;		// wait for clearing completed cmd from cmds, then switch to IDLE
 
 reg [3:0] state_r;
 
-reg [4:0] cmd;		// cmd to excute
+reg [4:0] cmd;
 reg 	  tbit;		// bit to transmit
 wire 	  rbit;		// received bit
 wire 	  bdone;	// bit done
 reg 	  load;
 reg 	  shift;
 reg [7:0] shift_r;	// shift register
-reg [2:0] shift_cnt;
 wire 	  shift_done;
-
-always @(posedge clk or negedge rst_n) begin
-	if(~rst_n) begin
-	end
-	else if(load) begin
-		shift_r   <= tbyte;
-		shift_cnt <= 3'h7;
-	end
-	else if(shift) begin
-		shift_r   <= {shift_r[6:0], rbit};
-		shift_cnt <= shift_cnt - 3'b1;
-	end
-end
-
-assign rbyte = shift_r;
-assign shift_done = ~|shift_cnt;
 
 
 always @(posedge clk or negedge rst_n) begin
@@ -101,24 +88,24 @@ always @(posedge clk or negedge rst_n) begin
 
 		case(state_r)
 		STATE_IDLE: begin
-			if(cmds & `CMD_START) begin
-				cmd     <= `CMD_START;
+			if(cmds & CMD_START) begin
+				cmd     <= CMD_START;
 				state_r <= STATE_START;
 			end
-			else if(cmds & `CMD_WRITE) begin
-				cmd     <= `CMD_WRITE;
+			else if(cmds & CMD_WRITE) begin
+				cmd     <= CMD_WRITE;
 				state_r <= STATE_WRITE;
 
-				load <= 1'b1;
+				load	<= 1'b1;
 			end
-			else if(cmds & `CMD_READ) begin
-				cmd     <= `CMD_READ;
+			else if(cmds & CMD_READ) begin
+				cmd     <= CMD_READ;
 				state_r <= STATE_READ;
 
-				load <= 1'b1;
+				load	<= 1'b1;
 			end
-			else if(cmds & `CMD_STOP) begin
-				cmd     <= `CMD_STOP;
+			else if(cmds & CMD_STOP) begin
+				cmd     <= CMD_STOP;
 				state_r <= STATE_STOP;
 			end
 		end
@@ -126,25 +113,25 @@ always @(posedge clk or negedge rst_n) begin
 		STATE_START: begin
 			if(bdone) begin
 				state_r <= STATE_WAIT;
-				cdone   <= `CMD_START;
+				cdone   <= CMD_START;
 			end
 		end
 
 		STATE_WRITE: begin
 			if(bdone) begin
 				if(shift_done) begin
-					cmd     <= `CMD_READ;
+					cmd     <= CMD_READ;
 					state_r <= STATE_RXACK;
 				end
 				else
-					shift <= 1'b1;
+					shift	<= 1'b1;
 			end
 		end
 
 		STATE_RXACK: begin
 			if(bdone) begin
 				state_r <= STATE_WAIT;
-				cdone   <= `CMD_WRITE;
+				cdone   <= CMD_WRITE;
 				rxack   <= rbit;
 			end
 		end
@@ -152,26 +139,26 @@ always @(posedge clk or negedge rst_n) begin
 		STATE_READ: begin
 			if(bdone) begin
 				if(shift_done) begin
-					cmd     <= `CMD_WRITE;
+					cmd     <= CMD_WRITE;
 					state_r <= STATE_TXACK;
+					tbit    <= txack;
 				end
 				else
-					shift <= 1'b1;
+					shift	<= 1'b1;
 			end
 		end
 
 		STATE_TXACK: begin
 			if(bdone) begin
 				state_r <= STATE_WAIT;
-				cdone   <= `CMD_READ;
-				tbit    <= cmds & `CMD_TXACK ? 1 : 0;
+				cdone   <= CMD_READ;
 			end
 		end
 
 		STATE_STOP: begin
 			if(bdone) begin
 				state_r <= STATE_WAIT;
-				cdone   <= `CMD_STOP;
+				cdone   <= CMD_STOP;
 			end
 		end
 
@@ -203,5 +190,25 @@ i2cm_bit u_bit (
 	.i2c_sda_o (i2c_sda_o ),
 	.i2c_sda_oe(i2c_sda_oe)
 );
+
+
+//----------------------------------------------------------------------------
+reg [2:0] count;
+
+always @(posedge clk or negedge rst_n) begin
+	if(~rst_n | ~clr_n) begin
+	end
+	else if(load) begin
+		shift_r <= tbyte;
+		count   <= 3'h7;
+	end
+	else if(shift) begin
+		shift_r <= {shift_r[6:0], rbit};
+		count   <= count - 3'b1;
+	end
+end
+
+assign rbyte = shift_r;
+assign shift_done = ~|count;
 
 endmodule
