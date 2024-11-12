@@ -82,31 +82,34 @@ always @(posedge clk or negedge rst_n) begin
 		state_r <= STATE_IDLE;
 	end
 	else begin
-		tbit  <= shift_r[7];
+		tbit  <= state_r == STATE_TXACK ? txack : shift_r[7];
 		load  <= 1'b0;
 		shift <= 1'b0;
 
 		case(state_r)
 		STATE_IDLE: begin
 			if(cmds & CMD_START) begin
-				cmd     <= CMD_START;
+				cmd		<= CMD_START;
 				state_r <= STATE_START;
 			end
 			else if(cmds & CMD_WRITE) begin
-				cmd     <= CMD_WRITE;
+				cmd		<= CMD_WRITE;
 				state_r <= STATE_WRITE;
 
 				load	<= 1'b1;
 			end
 			else if(cmds & CMD_READ) begin
-				cmd     <= CMD_READ;
+				cmd		<= CMD_READ;
 				state_r <= STATE_READ;
 
 				load	<= 1'b1;
 			end
 			else if(cmds & CMD_STOP) begin
-				cmd     <= CMD_STOP;
+				cmd		<= CMD_STOP;
 				state_r <= STATE_STOP;
+			end
+			else begin
+				cmd		<= 0;
 			end
 		end
 
@@ -141,10 +144,9 @@ always @(posedge clk or negedge rst_n) begin
 				if(shift_done) begin
 					cmd     <= CMD_WRITE;
 					state_r <= STATE_TXACK;
-					tbit    <= txack;
 				end
-				else
-					shift	<= 1'b1;
+				
+				shift	<= 1'b1;
 			end
 		end
 

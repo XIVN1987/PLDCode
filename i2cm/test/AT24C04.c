@@ -220,6 +220,9 @@ uint32_t AT24_Busy(void)
 *******************************************************************************************************************************/
 uint32_t AT24_BusyWait(void)
 {
+	for(int i = 0; i < 5000 * 50 / 4 / 2; i++) {}	// when fCPU = 50MHz
+		return AT24_RES_OK;
+
 	for(int i = 0; i < 5000; i++)	// AT24_Busy() consumes 2 SCL clock cycle, 1us per cycle at min
 		if(AT24_Busy() == 0)
 			return AT24_RES_OK;

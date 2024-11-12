@@ -7,16 +7,16 @@ Disassembly of section .text:
 00000000 <entry>:
    0:	1141                	addi	sp,sp,-16
    2:	c606                	sw	ra,12(sp)
-   4:	50000713          	li	a4,1280
-   8:	52000793          	li	a5,1312
+   4:	4f000713          	li	a4,1264
+   8:	51000793          	li	a5,1296
    c:	02f77163          	bgeu	a4,a5,2e <entry+0x2e>
-  10:	50000693          	li	a3,1280
-  14:	51f00713          	li	a4,1311
+  10:	4f000693          	li	a3,1264
+  14:	50f00713          	li	a4,1295
   18:	8f15                	sub	a4,a4,a3
   1a:	9b71                	andi	a4,a4,-4
   1c:	0711                	addi	a4,a4,4
   1e:	9736                	add	a4,a4,a3
-  20:	50000793          	li	a5,1280
+  20:	4f000793          	li	a5,1264
   24:	0007a023          	sw	zero,0(a5)
   28:	0791                	addi	a5,a5,4
   2a:	fee79de3          	bne	a5,a4,24 <entry+0x24>
@@ -67,61 +67,61 @@ Disassembly of section .text:
 0000007e <main>:
   7e:	1141                	addi	sp,sp,-16
   80:	c606                	sw	ra,12(sp)
-  82:	3e000513          	li	a0,992
+  82:	3d000513          	li	a0,976
   86:	37c9                	jal	48 <iputs>
   88:	3e800593          	li	a1,1000
   8c:	50000537          	lui	a0,0x50000
   90:	204d                	jal	132 <I2CM_Init>
-  92:	3f000513          	li	a0,1008
+  92:	3e000513          	li	a0,992
   96:	3f4d                	jal	48 <iputs>
   98:	460d                	li	a2,3
-  9a:	4e000593          	li	a1,1248
+  9a:	4d000593          	li	a1,1232
   9e:	4501                	li	a0,0
-  a0:	2c71                	jal	33c <AT24_Write>
+  a0:	2471                	jal	32c <AT24_Write>
   a2:	c115                	beqz	a0,c6 <main+0x48>
-  a4:	43c00513          	li	a0,1084
+  a4:	42c00513          	li	a0,1068
   a8:	3745                	jal	48 <iputs>
-  aa:	46400513          	li	a0,1124
+  aa:	45400513          	li	a0,1108
   ae:	3f69                	jal	48 <iputs>
   b0:	460d                	li	a2,3
-  b2:	4e000593          	li	a1,1248
+  b2:	4d000593          	li	a1,1232
   b6:	450d                	li	a0,3
-  b8:	2451                	jal	33c <AT24_Write>
+  b8:	2c95                	jal	32c <AT24_Write>
   ba:	c129                	beqz	a0,fc <main+0x7e>
-  bc:	4b400513          	li	a0,1204
+  bc:	4a400513          	li	a0,1188
   c0:	3761                	jal	48 <iputs>
   c2:	3f95                	jal	36 <finish>
   c4:	a001                	j	c4 <main+0x46>
   c6:	460d                	li	a2,3
-  c8:	50000593          	li	a1,1280
+  c8:	4f000593          	li	a1,1264
   cc:	2241                	jal	24c <AT24_Read>
   ce:	f979                	bnez	a0,a4 <main+0x26>
-  d0:	50004703          	lbu	a4,1280(zero) # 500 <rdbuf>
-  d4:	4e004783          	lbu	a5,1248(zero) # 4e0 <wrbuf>
+  d0:	4f004703          	lbu	a4,1264(zero) # 4f0 <rdbuf>
+  d4:	4d004783          	lbu	a5,1232(zero) # 4d0 <wrbuf>
   d8:	fcf716e3          	bne	a4,a5,a4 <main+0x26>
-  dc:	50104703          	lbu	a4,1281(zero) # 501 <rdbuf+0x1>
-  e0:	4e104783          	lbu	a5,1249(zero) # 4e1 <wrbuf+0x1>
+  dc:	4f104703          	lbu	a4,1265(zero) # 4f1 <rdbuf+0x1>
+  e0:	4d104783          	lbu	a5,1233(zero) # 4d1 <wrbuf+0x1>
   e4:	fcf710e3          	bne	a4,a5,a4 <main+0x26>
-  e8:	50204703          	lbu	a4,1282(zero) # 502 <rdbuf+0x2>
-  ec:	4e204783          	lbu	a5,1250(zero) # 4e2 <wrbuf+0x2>
+  e8:	4f204703          	lbu	a4,1266(zero) # 4f2 <rdbuf+0x2>
+  ec:	4d204783          	lbu	a5,1234(zero) # 4d2 <wrbuf+0x2>
   f0:	faf71ae3          	bne	a4,a5,a4 <main+0x26>
-  f4:	41400513          	li	a0,1044
+  f4:	40400513          	li	a0,1028
   f8:	3f81                	jal	48 <iputs>
   fa:	bf45                	j	aa <main+0x2c>
   fc:	460d                	li	a2,3
-  fe:	50000593          	li	a1,1280
+  fe:	4f000593          	li	a1,1264
  102:	22a9                	jal	24c <AT24_Read>
  104:	fd45                	bnez	a0,bc <main+0x3e>
- 106:	50004703          	lbu	a4,1280(zero) # 500 <rdbuf>
- 10a:	4e004783          	lbu	a5,1248(zero) # 4e0 <wrbuf>
+ 106:	4f004703          	lbu	a4,1264(zero) # 4f0 <rdbuf>
+ 10a:	4d004783          	lbu	a5,1232(zero) # 4d0 <wrbuf>
  10e:	faf717e3          	bne	a4,a5,bc <main+0x3e>
- 112:	50104703          	lbu	a4,1281(zero) # 501 <rdbuf+0x1>
- 116:	4e104783          	lbu	a5,1249(zero) # 4e1 <wrbuf+0x1>
+ 112:	4f104703          	lbu	a4,1265(zero) # 4f1 <rdbuf+0x1>
+ 116:	4d104783          	lbu	a5,1233(zero) # 4d1 <wrbuf+0x1>
  11a:	faf711e3          	bne	a4,a5,bc <main+0x3e>
- 11e:	50204703          	lbu	a4,1282(zero) # 502 <rdbuf+0x2>
- 122:	4e204783          	lbu	a5,1250(zero) # 4e2 <wrbuf+0x2>
+ 11e:	4f204703          	lbu	a4,1266(zero) # 4f2 <rdbuf+0x2>
+ 122:	4d204783          	lbu	a5,1234(zero) # 4d2 <wrbuf+0x2>
  126:	f8f71be3          	bne	a4,a5,bc <main+0x3e>
- 12a:	48800513          	li	a0,1160
+ 12a:	47800513          	li	a0,1144
  12e:	3f29                	jal	48 <iputs>
  130:	bf49                	j	c2 <main+0x44>
 
@@ -339,90 +339,82 @@ Disassembly of section .text:
  31c:	8082                	ret
 
 0000031e <AT24_BusyWait>:
- 31e:	1141                	addi	sp,sp,-16
- 320:	c606                	sw	ra,12(sp)
- 322:	c422                	sw	s0,8(sp)
- 324:	6405                	lui	s0,0x1
- 326:	38840413          	addi	s0,s0,904 # 1388 <_ebss+0xe68>
- 32a:	3fc1                	jal	2fa <AT24_Busy>
- 32c:	c501                	beqz	a0,334 <AT24_BusyWait+0x16>
- 32e:	147d                	addi	s0,s0,-1
- 330:	fc6d                	bnez	s0,32a <AT24_BusyWait+0xc>
- 332:	4505                	li	a0,1
- 334:	40b2                	lw	ra,12(sp)
- 336:	4422                	lw	s0,8(sp)
- 338:	0141                	addi	sp,sp,16
- 33a:	8082                	ret
+ 31e:	67a1                	lui	a5,0x8
+ 320:	a1278793          	addi	a5,a5,-1518 # 7a12 <__top_mem+0x3a12>
+ 324:	17fd                	addi	a5,a5,-1
+ 326:	fffd                	bnez	a5,324 <AT24_BusyWait+0x6>
+ 328:	4501                	li	a0,0
+ 32a:	8082                	ret
 
-0000033c <AT24_Write>:
- 33c:	00c50733          	add	a4,a0,a2
- 340:	1ff00793          	li	a5,511
- 344:	08e7cc63          	blt	a5,a4,3dc <AT24_Write+0xa0>
- 348:	1101                	addi	sp,sp,-32
- 34a:	ce06                	sw	ra,28(sp)
- 34c:	cc22                	sw	s0,24(sp)
- 34e:	ca26                	sw	s1,20(sp)
- 350:	c84a                	sw	s2,16(sp)
- 352:	c64e                	sw	s3,12(sp)
- 354:	84aa                	mv	s1,a0
- 356:	892e                	mv	s2,a1
- 358:	8432                	mv	s0,a2
- 35a:	00f57793          	andi	a5,a0,15
- 35e:	ef95                	bnez	a5,39a <AT24_Write+0x5e>
- 360:	47bd                	li	a5,15
- 362:	0287f363          	bgeu	a5,s0,388 <AT24_Write+0x4c>
- 366:	49bd                	li	s3,15
- 368:	4641                	li	a2,16
- 36a:	85ca                	mv	a1,s2
- 36c:	8526                	mv	a0,s1
- 36e:	3599                	jal	1b4 <AT24_WriteOnePage>
- 370:	ed11                	bnez	a0,38c <AT24_Write+0x50>
- 372:	3775                	jal	31e <AT24_BusyWait>
- 374:	ed01                	bnez	a0,38c <AT24_Write+0x50>
- 376:	04c1                	addi	s1,s1,16
- 378:	04c2                	slli	s1,s1,0x10
- 37a:	80c1                	srli	s1,s1,0x10
- 37c:	0941                	addi	s2,s2,16
- 37e:	1441                	addi	s0,s0,-16
- 380:	0442                	slli	s0,s0,0x10
- 382:	8041                	srli	s0,s0,0x10
- 384:	fe89e2e3          	bltu	s3,s0,368 <AT24_Write+0x2c>
- 388:	4501                	li	a0,0
- 38a:	e029                	bnez	s0,3cc <AT24_Write+0x90>
- 38c:	40f2                	lw	ra,28(sp)
- 38e:	4462                	lw	s0,24(sp)
- 390:	44d2                	lw	s1,20(sp)
- 392:	4942                	lw	s2,16(sp)
- 394:	49b2                	lw	s3,12(sp)
- 396:	6105                	addi	sp,sp,32
- 398:	8082                	ret
- 39a:	49c1                	li	s3,16
- 39c:	40f989b3          	sub	s3,s3,a5
- 3a0:	01365363          	bge	a2,s3,3a6 <AT24_Write+0x6a>
- 3a4:	89b2                	mv	s3,a2
- 3a6:	0ff9f613          	zext.b	a2,s3
- 3aa:	85ca                	mv	a1,s2
- 3ac:	8526                	mv	a0,s1
- 3ae:	3519                	jal	1b4 <AT24_WriteOnePage>
- 3b0:	fd71                	bnez	a0,38c <AT24_Write+0x50>
- 3b2:	37b5                	jal	31e <AT24_BusyWait>
- 3b4:	fd61                	bnez	a0,38c <AT24_Write+0x50>
- 3b6:	01099793          	slli	a5,s3,0x10
- 3ba:	83c1                	srli	a5,a5,0x10
- 3bc:	94be                	add	s1,s1,a5
- 3be:	04c2                	slli	s1,s1,0x10
- 3c0:	80c1                	srli	s1,s1,0x10
- 3c2:	994e                	add	s2,s2,s3
- 3c4:	8c1d                	sub	s0,s0,a5
- 3c6:	0442                	slli	s0,s0,0x10
- 3c8:	8041                	srli	s0,s0,0x10
- 3ca:	bf59                	j	360 <AT24_Write+0x24>
- 3cc:	0ff47613          	zext.b	a2,s0
- 3d0:	85ca                	mv	a1,s2
- 3d2:	8526                	mv	a0,s1
- 3d4:	33c5                	jal	1b4 <AT24_WriteOnePage>
- 3d6:	f95d                	bnez	a0,38c <AT24_Write+0x50>
- 3d8:	3799                	jal	31e <AT24_BusyWait>
- 3da:	bf4d                	j	38c <AT24_Write+0x50>
- 3dc:	4505                	li	a0,1
- 3de:	8082                	ret
+0000032c <AT24_Write>:
+ 32c:	00c50733          	add	a4,a0,a2
+ 330:	1ff00793          	li	a5,511
+ 334:	08e7cc63          	blt	a5,a4,3cc <AT24_Write+0xa0>
+ 338:	1101                	addi	sp,sp,-32
+ 33a:	ce06                	sw	ra,28(sp)
+ 33c:	cc22                	sw	s0,24(sp)
+ 33e:	ca26                	sw	s1,20(sp)
+ 340:	c84a                	sw	s2,16(sp)
+ 342:	c64e                	sw	s3,12(sp)
+ 344:	84aa                	mv	s1,a0
+ 346:	892e                	mv	s2,a1
+ 348:	8432                	mv	s0,a2
+ 34a:	00f57793          	andi	a5,a0,15
+ 34e:	ef95                	bnez	a5,38a <AT24_Write+0x5e>
+ 350:	47bd                	li	a5,15
+ 352:	0287f363          	bgeu	a5,s0,378 <AT24_Write+0x4c>
+ 356:	49bd                	li	s3,15
+ 358:	4641                	li	a2,16
+ 35a:	85ca                	mv	a1,s2
+ 35c:	8526                	mv	a0,s1
+ 35e:	3d99                	jal	1b4 <AT24_WriteOnePage>
+ 360:	ed11                	bnez	a0,37c <AT24_Write+0x50>
+ 362:	3f75                	jal	31e <AT24_BusyWait>
+ 364:	ed01                	bnez	a0,37c <AT24_Write+0x50>
+ 366:	04c1                	addi	s1,s1,16
+ 368:	04c2                	slli	s1,s1,0x10
+ 36a:	80c1                	srli	s1,s1,0x10
+ 36c:	0941                	addi	s2,s2,16
+ 36e:	1441                	addi	s0,s0,-16
+ 370:	0442                	slli	s0,s0,0x10
+ 372:	8041                	srli	s0,s0,0x10
+ 374:	fe89e2e3          	bltu	s3,s0,358 <AT24_Write+0x2c>
+ 378:	4501                	li	a0,0
+ 37a:	e029                	bnez	s0,3bc <AT24_Write+0x90>
+ 37c:	40f2                	lw	ra,28(sp)
+ 37e:	4462                	lw	s0,24(sp)
+ 380:	44d2                	lw	s1,20(sp)
+ 382:	4942                	lw	s2,16(sp)
+ 384:	49b2                	lw	s3,12(sp)
+ 386:	6105                	addi	sp,sp,32
+ 388:	8082                	ret
+ 38a:	49c1                	li	s3,16
+ 38c:	40f989b3          	sub	s3,s3,a5
+ 390:	01365363          	bge	a2,s3,396 <AT24_Write+0x6a>
+ 394:	89b2                	mv	s3,a2
+ 396:	0ff9f613          	zext.b	a2,s3
+ 39a:	85ca                	mv	a1,s2
+ 39c:	8526                	mv	a0,s1
+ 39e:	3d19                	jal	1b4 <AT24_WriteOnePage>
+ 3a0:	fd71                	bnez	a0,37c <AT24_Write+0x50>
+ 3a2:	3fb5                	jal	31e <AT24_BusyWait>
+ 3a4:	fd61                	bnez	a0,37c <AT24_Write+0x50>
+ 3a6:	01099793          	slli	a5,s3,0x10
+ 3aa:	83c1                	srli	a5,a5,0x10
+ 3ac:	94be                	add	s1,s1,a5
+ 3ae:	04c2                	slli	s1,s1,0x10
+ 3b0:	80c1                	srli	s1,s1,0x10
+ 3b2:	994e                	add	s2,s2,s3
+ 3b4:	8c1d                	sub	s0,s0,a5
+ 3b6:	0442                	slli	s0,s0,0x10
+ 3b8:	8041                	srli	s0,s0,0x10
+ 3ba:	bf59                	j	350 <AT24_Write+0x24>
+ 3bc:	0ff47613          	zext.b	a2,s0
+ 3c0:	85ca                	mv	a1,s2
+ 3c2:	8526                	mv	a0,s1
+ 3c4:	3bc5                	jal	1b4 <AT24_WriteOnePage>
+ 3c6:	f95d                	bnez	a0,37c <AT24_Write+0x50>
+ 3c8:	3f99                	jal	31e <AT24_BusyWait>
+ 3ca:	bf4d                	j	37c <AT24_Write+0x50>
+ 3cc:	4505                	li	a0,1
+ 3ce:	8082                	ret
