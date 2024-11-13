@@ -1,0 +1,774 @@
+
+test.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <entry>:
+   0:	1141                	addi	sp,sp,-16
+   2:	c606                	sw	ra,12(sp)
+   4:	6705                	lui	a4,0x1
+   6:	93070713          	addi	a4,a4,-1744 # 930 <rdbuf>
+   a:	6785                	lui	a5,0x1
+   c:	96078793          	addi	a5,a5,-1696 # 960 <AddressSize>
+  10:	02f77363          	bgeu	a4,a5,36 <entry+0x36>
+  14:	6785                	lui	a5,0x1
+  16:	93078693          	addi	a3,a5,-1744 # 930 <rdbuf>
+  1a:	6705                	lui	a4,0x1
+  1c:	95f70713          	addi	a4,a4,-1697 # 95f <rdbuf+0x2f>
+  20:	8f15                	sub	a4,a4,a3
+  22:	9b71                	andi	a4,a4,-4
+  24:	0711                	addi	a4,a4,4
+  26:	9736                	add	a4,a4,a3
+  28:	93078793          	addi	a5,a5,-1744
+  2c:	0007a023          	sw	zero,0(a5)
+  30:	0791                	addi	a5,a5,4
+  32:	fee79de3          	bne	a5,a4,2c <entry+0x2c>
+  36:	2881                	jal	86 <main>
+  38:	40b2                	lw	ra,12(sp)
+  3a:	0141                	addi	sp,sp,16
+  3c:	8082                	ret
+
+0000003e <finish>:
+  3e:	800007b7          	lui	a5,0x80000
+  42:	4705                	li	a4,1
+  44:	c398                	sw	a4,0(a5)
+  46:	8082                	ret
+
+00000048 <iputc>:
+  48:	900007b7          	lui	a5,0x90000
+  4c:	c388                	sw	a0,0(a5)
+  4e:	8082                	ret
+
+00000050 <iputs>:
+  50:	00054783          	lbu	a5,0(a0)
+  54:	cb81                	beqz	a5,64 <iputs+0x14>
+  56:	90000737          	lui	a4,0x90000
+  5a:	0505                	addi	a0,a0,1
+  5c:	c31c                	sw	a5,0(a4)
+  5e:	00054783          	lbu	a5,0(a0)
+  62:	ffe5                	bnez	a5,5a <iputs+0xa>
+  64:	8082                	ret
+
+00000066 <iprintf>:
+  66:	7111                	addi	sp,sp,-256
+  68:	cf86                	sw	ra,220(sp)
+  6a:	d3ae                	sw	a1,228(sp)
+  6c:	d5b2                	sw	a2,232(sp)
+  6e:	d7b6                	sw	a3,236(sp)
+  70:	d9ba                	sw	a4,240(sp)
+  72:	dbbe                	sw	a5,244(sp)
+  74:	ddc2                	sw	a6,248(sp)
+  76:	dfc6                	sw	a7,252(sp)
+  78:	11dc                	addi	a5,sp,228
+  7a:	c23e                	sw	a5,4(sp)
+  7c:	0028                	addi	a0,sp,8
+  7e:	3fc9                	jal	50 <iputs>
+  80:	40fe                	lw	ra,220(sp)
+  82:	6111                	addi	sp,sp,256
+  84:	8082                	ret
+
+00000086 <main>:
+  86:	1141                	addi	sp,sp,-16
+  88:	c606                	sw	ra,12(sp)
+  8a:	c422                	sw	s0,8(sp)
+  8c:	c226                	sw	s1,4(sp)
+  8e:	c04a                	sw	s2,0(sp)
+  90:	4501                	li	a0,0
+  92:	77000513          	li	a0,1904
+  96:	3f6d                	jal	50 <iputs>
+  98:	08000513          	li	a0,128
+  9c:	22ed                	jal	286 <W25_Init>
+  9e:	458d                	li	a1,3
+  a0:	09f00513          	li	a0,159
+  a4:	2919                	jal	4ba <W25_ReadReg>
+  a6:	4505                	li	a0,1
+  a8:	2be9                	jal	682 <W25_QuadSwitch>
+  aa:	4605                	li	a2,1
+  ac:	65c1                	lui	a1,0x10
+  ae:	02000513          	li	a0,32
+  b2:	2179                	jal	540 <W25_Erase>
+  b4:	6485                	lui	s1,0x1
+  b6:	4705                	li	a4,1
+  b8:	4685                	li	a3,1
+  ba:	4631                	li	a2,12
+  bc:	93048593          	addi	a1,s1,-1744 # 930 <rdbuf>
+  c0:	6541                	lui	a0,0x10
+  c2:	22fd                	jal	2b0 <W25_Read_>
+  c4:	93048413          	addi	s0,s1,-1744
+  c8:	93048793          	addi	a5,s1,-1744
+  cc:	4701                	li	a4,0
+  ce:	0ff00613          	li	a2,255
+  d2:	45b1                	li	a1,12
+  d4:	0007c683          	lbu	a3,0(a5) # 90000000 <__top_mem+0x8fffc000>
+  d8:	00c69b63          	bne	a3,a2,ee <main+0x68>
+  dc:	0705                	addi	a4,a4,1
+  de:	0785                	addi	a5,a5,1
+  e0:	feb71ae3          	bne	a4,a1,d4 <main+0x4e>
+  e4:	4501                	li	a0,0
+  e6:	78000513          	li	a0,1920
+  ea:	379d                	jal	50 <iputs>
+  ec:	a801                	j	fc <main+0x76>
+  ee:	47b1                	li	a5,12
+  f0:	fef70ae3          	beq	a4,a5,e4 <main+0x5e>
+  f4:	4501                	li	a0,0
+  f6:	79c00513          	li	a0,1948
+  fa:	3f99                	jal	50 <iputs>
+  fc:	6485                	lui	s1,0x1
+  fe:	4685                	li	a3,1
+ 100:	4631                	li	a2,12
+ 102:	90048593          	addi	a1,s1,-1792 # 900 <wrbuf>
+ 106:	6541                	lui	a0,0x10
+ 108:	2145                	jal	5a8 <W25_Write_>
+ 10a:	4705                	li	a4,1
+ 10c:	4685                	li	a3,1
+ 10e:	4631                	li	a2,12
+ 110:	6585                	lui	a1,0x1
+ 112:	93058593          	addi	a1,a1,-1744 # 930 <rdbuf>
+ 116:	6541                	lui	a0,0x10
+ 118:	2a61                	jal	2b0 <W25_Read_>
+ 11a:	90048913          	addi	s2,s1,-1792
+ 11e:	90048793          	addi	a5,s1,-1792
+ 122:	86a2                	mv	a3,s0
+ 124:	4701                	li	a4,0
+ 126:	4531                	li	a0,12
+ 128:	0006c583          	lbu	a1,0(a3)
+ 12c:	0007c603          	lbu	a2,0(a5)
+ 130:	00c59c63          	bne	a1,a2,148 <main+0xc2>
+ 134:	0705                	addi	a4,a4,1
+ 136:	0685                	addi	a3,a3,1
+ 138:	0785                	addi	a5,a5,1
+ 13a:	fea717e3          	bne	a4,a0,128 <main+0xa2>
+ 13e:	4501                	li	a0,0
+ 140:	7b800513          	li	a0,1976
+ 144:	3731                	jal	50 <iputs>
+ 146:	a801                	j	156 <main+0xd0>
+ 148:	47b1                	li	a5,12
+ 14a:	fef70ae3          	beq	a4,a5,13e <main+0xb8>
+ 14e:	4501                	li	a0,0
+ 150:	7d400513          	li	a0,2004
+ 154:	3df5                	jal	50 <iputs>
+ 156:	4709                	li	a4,2
+ 158:	4685                	li	a3,1
+ 15a:	4631                	li	a2,12
+ 15c:	6585                	lui	a1,0x1
+ 15e:	93058593          	addi	a1,a1,-1744 # 930 <rdbuf>
+ 162:	6541                	lui	a0,0x10
+ 164:	22b1                	jal	2b0 <W25_Read_>
+ 166:	86ca                	mv	a3,s2
+ 168:	8722                	mv	a4,s0
+ 16a:	4781                	li	a5,0
+ 16c:	4531                	li	a0,12
+ 16e:	00074583          	lbu	a1,0(a4) # 90000000 <__top_mem+0x8fffc000>
+ 172:	0006c603          	lbu	a2,0(a3)
+ 176:	00c59c63          	bne	a1,a2,18e <main+0x108>
+ 17a:	0785                	addi	a5,a5,1
+ 17c:	0705                	addi	a4,a4,1
+ 17e:	0685                	addi	a3,a3,1
+ 180:	fea797e3          	bne	a5,a0,16e <main+0xe8>
+ 184:	4501                	li	a0,0
+ 186:	7f000513          	li	a0,2032
+ 18a:	35d9                	jal	50 <iputs>
+ 18c:	a801                	j	19c <main+0x116>
+ 18e:	4731                	li	a4,12
+ 190:	fee78ae3          	beq	a5,a4,184 <main+0xfe>
+ 194:	6505                	lui	a0,0x1
+ 196:	81050513          	addi	a0,a0,-2032 # 810 <SPIM_CmdStructInit+0xd0>
+ 19a:	3d5d                	jal	50 <iputs>
+ 19c:	4709                	li	a4,2
+ 19e:	4689                	li	a3,2
+ 1a0:	4631                	li	a2,12
+ 1a2:	6585                	lui	a1,0x1
+ 1a4:	93058593          	addi	a1,a1,-1744 # 930 <rdbuf>
+ 1a8:	6541                	lui	a0,0x10
+ 1aa:	2219                	jal	2b0 <W25_Read_>
+ 1ac:	86ca                	mv	a3,s2
+ 1ae:	8722                	mv	a4,s0
+ 1b0:	4781                	li	a5,0
+ 1b2:	4531                	li	a0,12
+ 1b4:	00074583          	lbu	a1,0(a4)
+ 1b8:	0006c603          	lbu	a2,0(a3)
+ 1bc:	00c59c63          	bne	a1,a2,1d4 <main+0x14e>
+ 1c0:	0785                	addi	a5,a5,1
+ 1c2:	0705                	addi	a4,a4,1
+ 1c4:	0685                	addi	a3,a3,1
+ 1c6:	fea797e3          	bne	a5,a0,1b4 <main+0x12e>
+ 1ca:	6505                	lui	a0,0x1
+ 1cc:	83050513          	addi	a0,a0,-2000 # 830 <SPIM_CmdStructInit+0xf0>
+ 1d0:	3541                	jal	50 <iputs>
+ 1d2:	a801                	j	1e2 <main+0x15c>
+ 1d4:	4731                	li	a4,12
+ 1d6:	fee78ae3          	beq	a5,a4,1ca <main+0x144>
+ 1da:	6505                	lui	a0,0x1
+ 1dc:	85450513          	addi	a0,a0,-1964 # 854 <SPIM_CmdStructInit+0x114>
+ 1e0:	3d85                	jal	50 <iputs>
+ 1e2:	4605                	li	a2,1
+ 1e4:	65c1                	lui	a1,0x10
+ 1e6:	02000513          	li	a0,32
+ 1ea:	2e99                	jal	540 <W25_Erase>
+ 1ec:	4691                	li	a3,4
+ 1ee:	4631                	li	a2,12
+ 1f0:	6585                	lui	a1,0x1
+ 1f2:	90058593          	addi	a1,a1,-1792 # 900 <wrbuf>
+ 1f6:	6541                	lui	a0,0x10
+ 1f8:	2e45                	jal	5a8 <W25_Write_>
+ 1fa:	4711                	li	a4,4
+ 1fc:	4685                	li	a3,1
+ 1fe:	4631                	li	a2,12
+ 200:	6585                	lui	a1,0x1
+ 202:	93058593          	addi	a1,a1,-1744 # 930 <rdbuf>
+ 206:	6541                	lui	a0,0x10
+ 208:	2065                	jal	2b0 <W25_Read_>
+ 20a:	86ca                	mv	a3,s2
+ 20c:	8722                	mv	a4,s0
+ 20e:	4781                	li	a5,0
+ 210:	4531                	li	a0,12
+ 212:	00074583          	lbu	a1,0(a4)
+ 216:	0006c603          	lbu	a2,0(a3)
+ 21a:	00c59c63          	bne	a1,a2,232 <main+0x1ac>
+ 21e:	0785                	addi	a5,a5,1
+ 220:	0705                	addi	a4,a4,1
+ 222:	0685                	addi	a3,a3,1
+ 224:	fea797e3          	bne	a5,a0,212 <main+0x18c>
+ 228:	6505                	lui	a0,0x1
+ 22a:	87850513          	addi	a0,a0,-1928 # 878 <SPIM_CmdStructInit+0x138>
+ 22e:	350d                	jal	50 <iputs>
+ 230:	a801                	j	240 <main+0x1ba>
+ 232:	4731                	li	a4,12
+ 234:	fee78ae3          	beq	a5,a4,228 <main+0x1a2>
+ 238:	6505                	lui	a0,0x1
+ 23a:	89850513          	addi	a0,a0,-1896 # 898 <SPIM_CmdStructInit+0x158>
+ 23e:	3d09                	jal	50 <iputs>
+ 240:	4711                	li	a4,4
+ 242:	4691                	li	a3,4
+ 244:	4631                	li	a2,12
+ 246:	6585                	lui	a1,0x1
+ 248:	93058593          	addi	a1,a1,-1744 # 930 <rdbuf>
+ 24c:	6541                	lui	a0,0x10
+ 24e:	208d                	jal	2b0 <W25_Read_>
+ 250:	4781                	li	a5,0
+ 252:	4631                	li	a2,12
+ 254:	00044683          	lbu	a3,0(s0)
+ 258:	00094703          	lbu	a4,0(s2)
+ 25c:	00e69c63          	bne	a3,a4,274 <main+0x1ee>
+ 260:	0785                	addi	a5,a5,1
+ 262:	0405                	addi	s0,s0,1
+ 264:	0905                	addi	s2,s2,1
+ 266:	fec797e3          	bne	a5,a2,254 <main+0x1ce>
+ 26a:	6505                	lui	a0,0x1
+ 26c:	8b850513          	addi	a0,a0,-1864 # 8b8 <SPIM_CmdStructInit+0x178>
+ 270:	33c5                	jal	50 <iputs>
+ 272:	a801                	j	282 <main+0x1fc>
+ 274:	4731                	li	a4,12
+ 276:	fee78ae3          	beq	a5,a4,26a <main+0x1e4>
+ 27a:	6505                	lui	a0,0x1
+ 27c:	8dc50513          	addi	a0,a0,-1828 # 8dc <SPIM_CmdStructInit+0x19c>
+ 280:	3bc1                	jal	50 <iputs>
+ 282:	3b75                	jal	3e <finish>
+ 284:	a001                	j	284 <main+0x1fe>
+
+00000286 <W25_Init>:
+ 286:	1141                	addi	sp,sp,-16
+ 288:	c606                	sw	ra,12(sp)
+ 28a:	c422                	sw	s0,8(sp)
+ 28c:	842a                	mv	s0,a0
+ 28e:	4611                	li	a2,4
+ 290:	458d                	li	a1,3
+ 292:	50010537          	lui	a0,0x50010
+ 296:	2135                	jal	6c2 <SPIM_Init>
+ 298:	08000513          	li	a0,128
+ 29c:	00853533          	sltu	a0,a0,s0
+ 2a0:	0509                	addi	a0,a0,2
+ 2a2:	6785                	lui	a5,0x1
+ 2a4:	96a7a023          	sw	a0,-1696(a5) # 960 <AddressSize>
+ 2a8:	40b2                	lw	ra,12(sp)
+ 2aa:	4422                	lw	s0,8(sp)
+ 2ac:	0141                	addi	sp,sp,16
+ 2ae:	8082                	ret
+
+000002b0 <W25_Read_>:
+ 2b0:	715d                	addi	sp,sp,-80
+ 2b2:	c686                	sw	ra,76(sp)
+ 2b4:	c4a2                	sw	s0,72(sp)
+ 2b6:	c2a6                	sw	s1,68(sp)
+ 2b8:	c0ca                	sw	s2,64(sp)
+ 2ba:	de4e                	sw	s3,60(sp)
+ 2bc:	dc52                	sw	s4,56(sp)
+ 2be:	da56                	sw	s5,52(sp)
+ 2c0:	d85a                	sw	s6,48(sp)
+ 2c2:	d65e                	sw	s7,44(sp)
+ 2c4:	d462                	sw	s8,40(sp)
+ 2c6:	d266                	sw	s9,36(sp)
+ 2c8:	89aa                	mv	s3,a0
+ 2ca:	84ae                	mv	s1,a1
+ 2cc:	8932                	mv	s2,a2
+ 2ce:	8436                	mv	s0,a3
+ 2d0:	8a3a                	mv	s4,a4
+ 2d2:	0028                	addi	a0,sp,8
+ 2d4:	21b5                	jal	740 <SPIM_CmdStructInit>
+ 2d6:	00441793          	slli	a5,s0,0x4
+ 2da:	0147e7b3          	or	a5,a5,s4
+ 2de:	4751                	li	a4,20
+ 2e0:	10e78763          	beq	a5,a4,3ee <W25_Read_+0x13e>
+ 2e4:	4c81                	li	s9,0
+ 2e6:	4c01                	li	s8,0
+ 2e8:	4a81                	li	s5,0
+ 2ea:	4b01                	li	s6,0
+ 2ec:	4b81                	li	s7,0
+ 2ee:	02f75763          	bge	a4,a5,31c <W25_Read_+0x6c>
+ 2f2:	02200713          	li	a4,34
+ 2f6:	0ce78f63          	beq	a5,a4,3d4 <W25_Read_+0x124>
+ 2fa:	04400713          	li	a4,68
+ 2fe:	04e79d63          	bne	a5,a4,358 <W25_Read_+0xa8>
+ 302:	6785                	lui	a5,0x1
+ 304:	9607a703          	lw	a4,-1696(a5) # 960 <AddressSize>
+ 308:	478d                	li	a5,3
+ 30a:	12f70a63          	beq	a4,a5,43e <W25_Read_+0x18e>
+ 30e:	4b8d                	li	s7,3
+ 310:	4b11                	li	s6,4
+ 312:	4a8d                	li	s5,3
+ 314:	4c0d                	li	s8,3
+ 316:	0eb00c93          	li	s9,235
+ 31a:	a83d                	j	358 <W25_Read_+0xa8>
+ 31c:	4745                	li	a4,17
+ 31e:	02e78263          	beq	a5,a4,342 <W25_Read_+0x92>
+ 322:	4749                	li	a4,18
+ 324:	02e79a63          	bne	a5,a4,358 <W25_Read_+0xa8>
+ 328:	6785                	lui	a5,0x1
+ 32a:	9607a703          	lw	a4,-1696(a5) # 960 <AddressSize>
+ 32e:	478d                	li	a5,3
+ 330:	0ef70263          	beq	a4,a5,414 <W25_Read_+0x164>
+ 334:	4b81                	li	s7,0
+ 336:	4b21                	li	s6,8
+ 338:	4a89                	li	s5,2
+ 33a:	4c05                	li	s8,1
+ 33c:	03b00c93          	li	s9,59
+ 340:	a821                	j	358 <W25_Read_+0xa8>
+ 342:	6785                	lui	a5,0x1
+ 344:	9607a703          	lw	a4,-1696(a5) # 960 <AddressSize>
+ 348:	478d                	li	a5,3
+ 34a:	0af70f63          	beq	a4,a5,408 <W25_Read_+0x158>
+ 34e:	4b81                	li	s7,0
+ 350:	4b21                	li	s6,8
+ 352:	4a85                	li	s5,1
+ 354:	4c05                	li	s8,1
+ 356:	4cad                	li	s9,11
+ 358:	4785                	li	a5,1
+ 35a:	00f104a3          	sb	a5,9(sp)
+ 35e:	01910423          	sb	s9,8(sp)
+ 362:	01810823          	sb	s8,16(sp)
+ 366:	6785                	lui	a5,0x1
+ 368:	9607a783          	lw	a5,-1696(a5) # 960 <AddressSize>
+ 36c:	00f108a3          	sb	a5,17(sp)
+ 370:	c64e                	sw	s3,12(sp)
+ 372:	01710c23          	sb	s7,24(sp)
+ 376:	00010ca3          	sb	zero,25(sp)
+ 37a:	0ff00793          	li	a5,255
+ 37e:	ca3e                	sw	a5,20(sp)
+ 380:	01610d23          	sb	s6,26(sp)
+ 384:	01510da3          	sb	s5,27(sp)
+ 388:	ce4a                	sw	s2,28(sp)
+ 38a:	0030                	addi	a2,sp,8
+ 38c:	4585                	li	a1,1
+ 38e:	50010537          	lui	a0,0x50010
+ 392:	26a9                	jal	6dc <SPIM_Command>
+ 394:	02090363          	beqz	s2,3ba <W25_Read_+0x10a>
+ 398:	86a6                	mv	a3,s1
+ 39a:	01248633          	add	a2,s1,s2
+ 39e:	50010737          	lui	a4,0x50010
+ 3a2:	435c                	lw	a5,4(a4)
+ 3a4:	83a1                	srli	a5,a5,0x8
+ 3a6:	03f7f793          	andi	a5,a5,63
+ 3aa:	dfe5                	beqz	a5,3a2 <W25_Read_+0xf2>
+ 3ac:	01874783          	lbu	a5,24(a4) # 50010018 <__top_mem+0x5000c018>
+ 3b0:	00f68023          	sb	a5,0(a3)
+ 3b4:	0685                	addi	a3,a3,1
+ 3b6:	fec696e3          	bne	a3,a2,3a2 <W25_Read_+0xf2>
+ 3ba:	40b6                	lw	ra,76(sp)
+ 3bc:	4426                	lw	s0,72(sp)
+ 3be:	4496                	lw	s1,68(sp)
+ 3c0:	4906                	lw	s2,64(sp)
+ 3c2:	59f2                	lw	s3,60(sp)
+ 3c4:	5a62                	lw	s4,56(sp)
+ 3c6:	5ad2                	lw	s5,52(sp)
+ 3c8:	5b42                	lw	s6,48(sp)
+ 3ca:	5bb2                	lw	s7,44(sp)
+ 3cc:	5c22                	lw	s8,40(sp)
+ 3ce:	5c92                	lw	s9,36(sp)
+ 3d0:	6161                	addi	sp,sp,80
+ 3d2:	8082                	ret
+ 3d4:	6785                	lui	a5,0x1
+ 3d6:	9607a703          	lw	a4,-1696(a5) # 960 <AddressSize>
+ 3da:	478d                	li	a5,3
+ 3dc:	04f70363          	beq	a4,a5,422 <W25_Read_+0x172>
+ 3e0:	4b89                	li	s7,2
+ 3e2:	4b01                	li	s6,0
+ 3e4:	4a89                	li	s5,2
+ 3e6:	4c09                	li	s8,2
+ 3e8:	0bb00c93          	li	s9,187
+ 3ec:	b7b5                	j	358 <W25_Read_+0xa8>
+ 3ee:	6785                	lui	a5,0x1
+ 3f0:	9607a703          	lw	a4,-1696(a5) # 960 <AddressSize>
+ 3f4:	478d                	li	a5,3
+ 3f6:	02f70d63          	beq	a4,a5,430 <W25_Read_+0x180>
+ 3fa:	4b81                	li	s7,0
+ 3fc:	4b21                	li	s6,8
+ 3fe:	4a8d                	li	s5,3
+ 400:	4c05                	li	s8,1
+ 402:	06b00c93          	li	s9,107
+ 406:	bf89                	j	358 <W25_Read_+0xa8>
+ 408:	4b81                	li	s7,0
+ 40a:	4b21                	li	s6,8
+ 40c:	4a85                	li	s5,1
+ 40e:	4c05                	li	s8,1
+ 410:	4cb1                	li	s9,12
+ 412:	b799                	j	358 <W25_Read_+0xa8>
+ 414:	4b81                	li	s7,0
+ 416:	4b21                	li	s6,8
+ 418:	4a89                	li	s5,2
+ 41a:	4c05                	li	s8,1
+ 41c:	03c00c93          	li	s9,60
+ 420:	bf25                	j	358 <W25_Read_+0xa8>
+ 422:	4b89                	li	s7,2
+ 424:	4b01                	li	s6,0
+ 426:	4a89                	li	s5,2
+ 428:	4c09                	li	s8,2
+ 42a:	0bc00c93          	li	s9,188
+ 42e:	b72d                	j	358 <W25_Read_+0xa8>
+ 430:	4b81                	li	s7,0
+ 432:	4b21                	li	s6,8
+ 434:	4a8d                	li	s5,3
+ 436:	4c05                	li	s8,1
+ 438:	06c00c93          	li	s9,108
+ 43c:	bf31                	j	358 <W25_Read_+0xa8>
+ 43e:	4b8d                	li	s7,3
+ 440:	4b11                	li	s6,4
+ 442:	4a8d                	li	s5,3
+ 444:	4c0d                	li	s8,3
+ 446:	0ec00c93          	li	s9,236
+ 44a:	b739                	j	358 <W25_Read_+0xa8>
+
+0000044c <W25_WriteReg>:
+ 44c:	7139                	addi	sp,sp,-64
+ 44e:	de06                	sw	ra,60(sp)
+ 450:	dc22                	sw	s0,56(sp)
+ 452:	da26                	sw	s1,52(sp)
+ 454:	84aa                	mv	s1,a0
+ 456:	c62e                	sw	a1,12(sp)
+ 458:	8432                	mv	s0,a2
+ 45a:	0828                	addi	a0,sp,24
+ 45c:	24d5                	jal	740 <SPIM_CmdStructInit>
+ 45e:	4785                	li	a5,1
+ 460:	00f10ca3          	sb	a5,25(sp)
+ 464:	00910c23          	sb	s1,24(sp)
+ 468:	02010023          	sb	zero,32(sp)
+ 46c:	02010423          	sb	zero,40(sp)
+ 470:	02010523          	sb	zero,42(sp)
+ 474:	008037b3          	snez	a5,s0
+ 478:	02f105a3          	sb	a5,43(sp)
+ 47c:	d622                	sw	s0,44(sp)
+ 47e:	0830                	addi	a2,sp,24
+ 480:	4581                	li	a1,0
+ 482:	50010537          	lui	a0,0x50010
+ 486:	2c99                	jal	6dc <SPIM_Command>
+ 488:	cc19                	beqz	s0,4a6 <W25_WriteReg+0x5a>
+ 48a:	0074                	addi	a3,sp,12
+ 48c:	fff40793          	addi	a5,s0,-1
+ 490:	97b6                	add	a5,a5,a3
+ 492:	50010637          	lui	a2,0x50010
+ 496:	0007c703          	lbu	a4,0(a5)
+ 49a:	00e60c23          	sb	a4,24(a2) # 50010018 <__top_mem+0x5000c018>
+ 49e:	873e                	mv	a4,a5
+ 4a0:	17fd                	addi	a5,a5,-1
+ 4a2:	fed71ae3          	bne	a4,a3,496 <W25_WriteReg+0x4a>
+ 4a6:	50010737          	lui	a4,0x50010
+ 4aa:	435c                	lw	a5,4(a4)
+ 4ac:	8b89                	andi	a5,a5,2
+ 4ae:	fff5                	bnez	a5,4aa <W25_WriteReg+0x5e>
+ 4b0:	50f2                	lw	ra,60(sp)
+ 4b2:	5462                	lw	s0,56(sp)
+ 4b4:	54d2                	lw	s1,52(sp)
+ 4b6:	6121                	addi	sp,sp,64
+ 4b8:	8082                	ret
+
+000004ba <W25_ReadReg>:
+ 4ba:	7179                	addi	sp,sp,-48
+ 4bc:	d606                	sw	ra,44(sp)
+ 4be:	d422                	sw	s0,40(sp)
+ 4c0:	d226                	sw	s1,36(sp)
+ 4c2:	84aa                	mv	s1,a0
+ 4c4:	842e                	mv	s0,a1
+ 4c6:	0028                	addi	a0,sp,8
+ 4c8:	2ca5                	jal	740 <SPIM_CmdStructInit>
+ 4ca:	4785                	li	a5,1
+ 4cc:	00f104a3          	sb	a5,9(sp)
+ 4d0:	00910423          	sb	s1,8(sp)
+ 4d4:	00010823          	sb	zero,16(sp)
+ 4d8:	00010c23          	sb	zero,24(sp)
+ 4dc:	00010d23          	sb	zero,26(sp)
+ 4e0:	00f10da3          	sb	a5,27(sp)
+ 4e4:	84a2                	mv	s1,s0
+ 4e6:	ce22                	sw	s0,28(sp)
+ 4e8:	0030                	addi	a2,sp,8
+ 4ea:	4585                	li	a1,1
+ 4ec:	50010537          	lui	a0,0x50010
+ 4f0:	22f5                	jal	6dc <SPIM_Command>
+ 4f2:	50010737          	lui	a4,0x50010
+ 4f6:	435c                	lw	a5,4(a4)
+ 4f8:	83a1                	srli	a5,a5,0x8
+ 4fa:	03f7f793          	andi	a5,a5,63
+ 4fe:	fe97ece3          	bltu	a5,s1,4f6 <W25_ReadReg+0x3c>
+ 502:	c202                	sw	zero,4(sp)
+ 504:	cc19                	beqz	s0,522 <W25_ReadReg+0x68>
+ 506:	0054                	addi	a3,sp,4
+ 508:	fff40793          	addi	a5,s0,-1
+ 50c:	97b6                	add	a5,a5,a3
+ 50e:	50010637          	lui	a2,0x50010
+ 512:	01864703          	lbu	a4,24(a2) # 50010018 <__top_mem+0x5000c018>
+ 516:	00e78023          	sb	a4,0(a5)
+ 51a:	873e                	mv	a4,a5
+ 51c:	17fd                	addi	a5,a5,-1
+ 51e:	fed71ae3          	bne	a4,a3,512 <W25_ReadReg+0x58>
+ 522:	4512                	lw	a0,4(sp)
+ 524:	50b2                	lw	ra,44(sp)
+ 526:	5422                	lw	s0,40(sp)
+ 528:	5492                	lw	s1,36(sp)
+ 52a:	6145                	addi	sp,sp,48
+ 52c:	8082                	ret
+
+0000052e <W25_FlashBusy>:
+ 52e:	1141                	addi	sp,sp,-16
+ 530:	c606                	sw	ra,12(sp)
+ 532:	4585                	li	a1,1
+ 534:	4515                	li	a0,5
+ 536:	3751                	jal	4ba <W25_ReadReg>
+ 538:	8905                	andi	a0,a0,1
+ 53a:	40b2                	lw	ra,12(sp)
+ 53c:	0141                	addi	sp,sp,16
+ 53e:	8082                	ret
+
+00000540 <W25_Erase>:
+ 540:	7179                	addi	sp,sp,-48
+ 542:	d606                	sw	ra,44(sp)
+ 544:	d422                	sw	s0,40(sp)
+ 546:	d226                	sw	s1,36(sp)
+ 548:	d04a                	sw	s2,32(sp)
+ 54a:	892a                	mv	s2,a0
+ 54c:	84ae                	mv	s1,a1
+ 54e:	8432                	mv	s0,a2
+ 550:	0028                	addi	a0,sp,8
+ 552:	22fd                	jal	740 <SPIM_CmdStructInit>
+ 554:	4785                	li	a5,1
+ 556:	00f104a3          	sb	a5,9(sp)
+ 55a:	01210423          	sb	s2,8(sp)
+ 55e:	00f10823          	sb	a5,16(sp)
+ 562:	6785                	lui	a5,0x1
+ 564:	9607a783          	lw	a5,-1696(a5) # 960 <AddressSize>
+ 568:	00f108a3          	sb	a5,17(sp)
+ 56c:	c626                	sw	s1,12(sp)
+ 56e:	00010c23          	sb	zero,24(sp)
+ 572:	00010d23          	sb	zero,26(sp)
+ 576:	00010da3          	sb	zero,27(sp)
+ 57a:	4601                	li	a2,0
+ 57c:	4581                	li	a1,0
+ 57e:	4519                	li	a0,6
+ 580:	35f1                	jal	44c <W25_WriteReg>
+ 582:	0030                	addi	a2,sp,8
+ 584:	4581                	li	a1,0
+ 586:	50010537          	lui	a0,0x50010
+ 58a:	2a89                	jal	6dc <SPIM_Command>
+ 58c:	50010737          	lui	a4,0x50010
+ 590:	435c                	lw	a5,4(a4)
+ 592:	8b89                	andi	a5,a5,2
+ 594:	fff5                	bnez	a5,590 <W25_Erase+0x50>
+ 596:	c019                	beqz	s0,59c <W25_Erase+0x5c>
+ 598:	3f59                	jal	52e <W25_FlashBusy>
+ 59a:	fd7d                	bnez	a0,598 <W25_Erase+0x58>
+ 59c:	50b2                	lw	ra,44(sp)
+ 59e:	5422                	lw	s0,40(sp)
+ 5a0:	5492                	lw	s1,36(sp)
+ 5a2:	5902                	lw	s2,32(sp)
+ 5a4:	6145                	addi	sp,sp,48
+ 5a6:	8082                	ret
+
+000005a8 <W25_Write_>:
+ 5a8:	7139                	addi	sp,sp,-64
+ 5aa:	de06                	sw	ra,60(sp)
+ 5ac:	dc22                	sw	s0,56(sp)
+ 5ae:	da26                	sw	s1,52(sp)
+ 5b0:	d84a                	sw	s2,48(sp)
+ 5b2:	d64e                	sw	s3,44(sp)
+ 5b4:	d452                	sw	s4,40(sp)
+ 5b6:	8a2a                	mv	s4,a0
+ 5b8:	842e                	mv	s0,a1
+ 5ba:	89b2                	mv	s3,a2
+ 5bc:	84b6                	mv	s1,a3
+ 5be:	0028                	addi	a0,sp,8
+ 5c0:	2241                	jal	740 <SPIM_CmdStructInit>
+ 5c2:	4785                	li	a5,1
+ 5c4:	08f48863          	beq	s1,a5,654 <W25_Write_+0xac>
+ 5c8:	4901                	li	s2,0
+ 5ca:	4791                	li	a5,4
+ 5cc:	08f48d63          	beq	s1,a5,666 <W25_Write_+0xbe>
+ 5d0:	4785                	li	a5,1
+ 5d2:	00f104a3          	sb	a5,9(sp)
+ 5d6:	01210423          	sb	s2,8(sp)
+ 5da:	00f10823          	sb	a5,16(sp)
+ 5de:	6785                	lui	a5,0x1
+ 5e0:	9607a783          	lw	a5,-1696(a5) # 960 <AddressSize>
+ 5e4:	00f108a3          	sb	a5,17(sp)
+ 5e8:	c652                	sw	s4,12(sp)
+ 5ea:	00010c23          	sb	zero,24(sp)
+ 5ee:	00010d23          	sb	zero,26(sp)
+ 5f2:	00910da3          	sb	s1,27(sp)
+ 5f6:	ce4e                	sw	s3,28(sp)
+ 5f8:	4601                	li	a2,0
+ 5fa:	4581                	li	a1,0
+ 5fc:	4519                	li	a0,6
+ 5fe:	35b9                	jal	44c <W25_WriteReg>
+ 600:	0030                	addi	a2,sp,8
+ 602:	4581                	li	a1,0
+ 604:	50010537          	lui	a0,0x50010
+ 608:	28d1                	jal	6dc <SPIM_Command>
+ 60a:	02098663          	beqz	s3,636 <W25_Write_+0x8e>
+ 60e:	8522                	mv	a0,s0
+ 610:	01340633          	add	a2,s0,s3
+ 614:	50010737          	lui	a4,0x50010
+ 618:	02000693          	li	a3,32
+ 61c:	435c                	lw	a5,4(a4)
+ 61e:	83a1                	srli	a5,a5,0x8
+ 620:	03f7f793          	andi	a5,a5,63
+ 624:	fed78ce3          	beq	a5,a3,61c <W25_Write_+0x74>
+ 628:	00054783          	lbu	a5,0(a0) # 50010000 <__top_mem+0x5000c000>
+ 62c:	00f70c23          	sb	a5,24(a4) # 50010018 <__top_mem+0x5000c018>
+ 630:	0505                	addi	a0,a0,1
+ 632:	fec515e3          	bne	a0,a2,61c <W25_Write_+0x74>
+ 636:	50010737          	lui	a4,0x50010
+ 63a:	435c                	lw	a5,4(a4)
+ 63c:	8b89                	andi	a5,a5,2
+ 63e:	fff5                	bnez	a5,63a <W25_Write_+0x92>
+ 640:	35fd                	jal	52e <W25_FlashBusy>
+ 642:	fd7d                	bnez	a0,640 <W25_Write_+0x98>
+ 644:	50f2                	lw	ra,60(sp)
+ 646:	5462                	lw	s0,56(sp)
+ 648:	54d2                	lw	s1,52(sp)
+ 64a:	5942                	lw	s2,48(sp)
+ 64c:	59b2                	lw	s3,44(sp)
+ 64e:	5a22                	lw	s4,40(sp)
+ 650:	6121                	addi	sp,sp,64
+ 652:	8082                	ret
+ 654:	6785                	lui	a5,0x1
+ 656:	9607a703          	lw	a4,-1696(a5) # 960 <AddressSize>
+ 65a:	478d                	li	a5,3
+ 65c:	4949                	li	s2,18
+ 65e:	f6f709e3          	beq	a4,a5,5d0 <W25_Write_+0x28>
+ 662:	4909                	li	s2,2
+ 664:	b7b5                	j	5d0 <W25_Write_+0x28>
+ 666:	6785                	lui	a5,0x1
+ 668:	9607a703          	lw	a4,-1696(a5) # 960 <AddressSize>
+ 66c:	478d                	li	a5,3
+ 66e:	00f70663          	beq	a4,a5,67a <W25_Write_+0xd2>
+ 672:	448d                	li	s1,3
+ 674:	03200913          	li	s2,50
+ 678:	bfa1                	j	5d0 <W25_Write_+0x28>
+ 67a:	448d                	li	s1,3
+ 67c:	03400913          	li	s2,52
+ 680:	bf81                	j	5d0 <W25_Write_+0x28>
+
+00000682 <W25_QuadSwitch>:
+ 682:	1141                	addi	sp,sp,-16
+ 684:	c606                	sw	ra,12(sp)
+ 686:	c422                	sw	s0,8(sp)
+ 688:	c226                	sw	s1,4(sp)
+ 68a:	842a                	mv	s0,a0
+ 68c:	4585                	li	a1,1
+ 68e:	03500513          	li	a0,53
+ 692:	3525                	jal	4ba <W25_ReadReg>
+ 694:	0ff57793          	zext.b	a5,a0
+ 698:	0fd7f493          	andi	s1,a5,253
+ 69c:	c019                	beqz	s0,6a2 <W25_QuadSwitch+0x20>
+ 69e:	0027e493          	ori	s1,a5,2
+ 6a2:	4601                	li	a2,0
+ 6a4:	4581                	li	a1,0
+ 6a6:	4519                	li	a0,6
+ 6a8:	3355                	jal	44c <W25_WriteReg>
+ 6aa:	4605                	li	a2,1
+ 6ac:	85a6                	mv	a1,s1
+ 6ae:	03100513          	li	a0,49
+ 6b2:	3b69                	jal	44c <W25_WriteReg>
+ 6b4:	3dad                	jal	52e <W25_FlashBusy>
+ 6b6:	fd7d                	bnez	a0,6b4 <W25_QuadSwitch+0x32>
+ 6b8:	40b2                	lw	ra,12(sp)
+ 6ba:	4422                	lw	s0,8(sp)
+ 6bc:	4492                	lw	s1,4(sp)
+ 6be:	0141                	addi	sp,sp,16
+ 6c0:	8082                	ret
+
+000006c2 <SPIM_Init>:
+ 6c2:	167d                	addi	a2,a2,-1
+ 6c4:	0622                	slli	a2,a2,0x8
+ 6c6:	0586                	slli	a1,a1,0x1
+ 6c8:	8e4d                	or	a2,a2,a1
+ 6ca:	000305b7          	lui	a1,0x30
+ 6ce:	8e4d                	or	a2,a2,a1
+ 6d0:	c110                	sw	a2,0(a0)
+ 6d2:	411c                	lw	a5,0(a0)
+ 6d4:	0017e793          	ori	a5,a5,1
+ 6d8:	c11c                	sw	a5,0(a0)
+ 6da:	8082                	ret
+
+000006dc <SPIM_Command>:
+ 6dc:	01064783          	lbu	a5,16(a2)
+ 6e0:	c399                	beqz	a5,6e6 <SPIM_Command+0xa>
+ 6e2:	465c                	lw	a5,12(a2)
+ 6e4:	c55c                	sw	a5,12(a0)
+ 6e6:	01364783          	lbu	a5,19(a2)
+ 6ea:	c781                	beqz	a5,6f2 <SPIM_Command+0x16>
+ 6ec:	4a5c                	lw	a5,20(a2)
+ 6ee:	17fd                	addi	a5,a5,-1
+ 6f0:	c91c                	sw	a5,16(a0)
+ 6f2:	00064783          	lbu	a5,0(a2)
+ 6f6:	05ea                	slli	a1,a1,0x1a
+ 6f8:	8fcd                	or	a5,a5,a1
+ 6fa:	00164703          	lbu	a4,1(a2)
+ 6fe:	0722                	slli	a4,a4,0x8
+ 700:	8fd9                	or	a5,a5,a4
+ 702:	00864703          	lbu	a4,8(a2)
+ 706:	072a                	slli	a4,a4,0xa
+ 708:	8fd9                	or	a5,a5,a4
+ 70a:	00964703          	lbu	a4,9(a2)
+ 70e:	0732                	slli	a4,a4,0xc
+ 710:	8fd9                	or	a5,a5,a4
+ 712:	01064703          	lbu	a4,16(a2)
+ 716:	073a                	slli	a4,a4,0xe
+ 718:	8fd9                	or	a5,a5,a4
+ 71a:	01164703          	lbu	a4,17(a2)
+ 71e:	0742                	slli	a4,a4,0x10
+ 720:	8fd9                	or	a5,a5,a4
+ 722:	01264703          	lbu	a4,18(a2)
+ 726:	074a                	slli	a4,a4,0x12
+ 728:	8fd9                	or	a5,a5,a4
+ 72a:	01364703          	lbu	a4,19(a2)
+ 72e:	0762                	slli	a4,a4,0x18
+ 730:	8fd9                	or	a5,a5,a4
+ 732:	c95c                	sw	a5,20(a0)
+ 734:	00864783          	lbu	a5,8(a2)
+ 738:	c399                	beqz	a5,73e <SPIM_Command+0x62>
+ 73a:	425c                	lw	a5,4(a2)
+ 73c:	c51c                	sw	a5,8(a0)
+ 73e:	8082                	ret
+
+00000740 <SPIM_CmdStructInit>:
+ 740:	00050023          	sb	zero,0(a0)
+ 744:	000500a3          	sb	zero,1(a0)
+ 748:	00052223          	sw	zero,4(a0)
+ 74c:	00050423          	sb	zero,8(a0)
+ 750:	000504a3          	sb	zero,9(a0)
+ 754:	00052623          	sw	zero,12(a0)
+ 758:	00050823          	sb	zero,16(a0)
+ 75c:	000508a3          	sb	zero,17(a0)
+ 760:	00050923          	sb	zero,18(a0)
+ 764:	000509a3          	sb	zero,19(a0)
+ 768:	00052a23          	sw	zero,20(a0)
+ 76c:	8082                	ret
+	...

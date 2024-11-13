@@ -2,7 +2,6 @@
 
 #include "helper.h"
 
-#include "i2cm_drv.h"
 #include "AT24C04.h"
 
 #define N_RW	3
@@ -19,7 +18,7 @@ int main(void)
 
 	iputs("\n--- main ---\n");
 
-	I2CM_Init(I2CM, 1000);
+	AT24_Init();
 
 
 	iputs("\nEEPROM aligned Read/Write Test.\n");

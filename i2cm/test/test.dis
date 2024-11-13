@@ -7,16 +7,16 @@ Disassembly of section .text:
 00000000 <entry>:
    0:	1141                	addi	sp,sp,-16
    2:	c606                	sw	ra,12(sp)
-   4:	4f000713          	li	a4,1264
-   8:	51000793          	li	a5,1296
+   4:	4fc00713          	li	a4,1276
+   8:	51c00793          	li	a5,1308
    c:	02f77163          	bgeu	a4,a5,2e <entry+0x2e>
-  10:	4f000693          	li	a3,1264
-  14:	50f00713          	li	a4,1295
+  10:	4fc00693          	li	a3,1276
+  14:	51b00713          	li	a4,1307
   18:	8f15                	sub	a4,a4,a3
   1a:	9b71                	andi	a4,a4,-4
   1c:	0711                	addi	a4,a4,4
   1e:	9736                	add	a4,a4,a3
-  20:	4f000793          	li	a5,1264
+  20:	4fc00793          	li	a5,1276
   24:	0007a023          	sw	zero,0(a5)
   28:	0791                	addi	a5,a5,4
   2a:	fee79de3          	bne	a5,a4,24 <entry+0x24>
@@ -67,354 +67,362 @@ Disassembly of section .text:
 0000007e <main>:
   7e:	1141                	addi	sp,sp,-16
   80:	c606                	sw	ra,12(sp)
-  82:	3d000513          	li	a0,976
+  82:	3dc00513          	li	a0,988
   86:	37c9                	jal	48 <iputs>
-  88:	3e800593          	li	a1,1000
-  8c:	50000537          	lui	a0,0x50000
-  90:	204d                	jal	132 <I2CM_Init>
-  92:	3e000513          	li	a0,992
-  96:	3f4d                	jal	48 <iputs>
-  98:	460d                	li	a2,3
-  9a:	4d000593          	li	a1,1232
-  9e:	4501                	li	a0,0
-  a0:	2471                	jal	32c <AT24_Write>
-  a2:	c115                	beqz	a0,c6 <main+0x48>
-  a4:	42c00513          	li	a0,1068
-  a8:	3745                	jal	48 <iputs>
-  aa:	45400513          	li	a0,1108
-  ae:	3f69                	jal	48 <iputs>
-  b0:	460d                	li	a2,3
-  b2:	4d000593          	li	a1,1232
-  b6:	450d                	li	a0,3
-  b8:	2c95                	jal	32c <AT24_Write>
-  ba:	c129                	beqz	a0,fc <main+0x7e>
-  bc:	4a400513          	li	a0,1188
-  c0:	3761                	jal	48 <iputs>
-  c2:	3f95                	jal	36 <finish>
-  c4:	a001                	j	c4 <main+0x46>
-  c6:	460d                	li	a2,3
-  c8:	4f000593          	li	a1,1264
-  cc:	2241                	jal	24c <AT24_Read>
-  ce:	f979                	bnez	a0,a4 <main+0x26>
-  d0:	4f004703          	lbu	a4,1264(zero) # 4f0 <rdbuf>
-  d4:	4d004783          	lbu	a5,1232(zero) # 4d0 <wrbuf>
-  d8:	fcf716e3          	bne	a4,a5,a4 <main+0x26>
-  dc:	4f104703          	lbu	a4,1265(zero) # 4f1 <rdbuf+0x1>
-  e0:	4d104783          	lbu	a5,1233(zero) # 4d1 <wrbuf+0x1>
-  e4:	fcf710e3          	bne	a4,a5,a4 <main+0x26>
-  e8:	4f204703          	lbu	a4,1266(zero) # 4f2 <rdbuf+0x2>
-  ec:	4d204783          	lbu	a5,1234(zero) # 4d2 <wrbuf+0x2>
-  f0:	faf71ae3          	bne	a4,a5,a4 <main+0x26>
-  f4:	40400513          	li	a0,1028
-  f8:	3f81                	jal	48 <iputs>
-  fa:	bf45                	j	aa <main+0x2c>
-  fc:	460d                	li	a2,3
-  fe:	4f000593          	li	a1,1264
- 102:	22a9                	jal	24c <AT24_Read>
- 104:	fd45                	bnez	a0,bc <main+0x3e>
- 106:	4f004703          	lbu	a4,1264(zero) # 4f0 <rdbuf>
- 10a:	4d004783          	lbu	a5,1232(zero) # 4d0 <wrbuf>
- 10e:	faf717e3          	bne	a4,a5,bc <main+0x3e>
- 112:	4f104703          	lbu	a4,1265(zero) # 4f1 <rdbuf+0x1>
- 116:	4d104783          	lbu	a5,1233(zero) # 4d1 <wrbuf+0x1>
- 11a:	faf711e3          	bne	a4,a5,bc <main+0x3e>
- 11e:	4f204703          	lbu	a4,1266(zero) # 4f2 <rdbuf+0x2>
- 122:	4d204783          	lbu	a5,1234(zero) # 4d2 <wrbuf+0x2>
- 126:	f8f71be3          	bne	a4,a5,bc <main+0x3e>
- 12a:	47800513          	li	a0,1144
- 12e:	3f29                	jal	48 <iputs>
- 130:	bf49                	j	c2 <main+0x44>
+  88:	2215                	jal	1ac <AT24_Init>
+  8a:	3ec00513          	li	a0,1004
+  8e:	3f6d                	jal	48 <iputs>
+  90:	460d                	li	a2,3
+  92:	4dc00593          	li	a1,1244
+  96:	4501                	li	a0,0
+  98:	2445                	jal	338 <AT24_Write>
+  9a:	c115                	beqz	a0,be <main+0x40>
+  9c:	43800513          	li	a0,1080
+  a0:	3765                	jal	48 <iputs>
+  a2:	46000513          	li	a0,1120
+  a6:	374d                	jal	48 <iputs>
+  a8:	460d                	li	a2,3
+  aa:	4dc00593          	li	a1,1244
+  ae:	450d                	li	a0,3
+  b0:	2461                	jal	338 <AT24_Write>
+  b2:	c129                	beqz	a0,f4 <main+0x76>
+  b4:	4b000513          	li	a0,1200
+  b8:	3f41                	jal	48 <iputs>
+  ba:	3fb5                	jal	36 <finish>
+  bc:	a001                	j	bc <main+0x3e>
+  be:	460d                	li	a2,3
+  c0:	4fc00593          	li	a1,1276
+  c4:	2a51                	jal	258 <AT24_Read>
+  c6:	f979                	bnez	a0,9c <main+0x1e>
+  c8:	4fc04703          	lbu	a4,1276(zero) # 4fc <rdbuf>
+  cc:	4dc04783          	lbu	a5,1244(zero) # 4dc <wrbuf>
+  d0:	fcf716e3          	bne	a4,a5,9c <main+0x1e>
+  d4:	4fd04703          	lbu	a4,1277(zero) # 4fd <rdbuf+0x1>
+  d8:	4dd04783          	lbu	a5,1245(zero) # 4dd <wrbuf+0x1>
+  dc:	fcf710e3          	bne	a4,a5,9c <main+0x1e>
+  e0:	4fe04703          	lbu	a4,1278(zero) # 4fe <rdbuf+0x2>
+  e4:	4de04783          	lbu	a5,1246(zero) # 4de <wrbuf+0x2>
+  e8:	faf71ae3          	bne	a4,a5,9c <main+0x1e>
+  ec:	41000513          	li	a0,1040
+  f0:	3fa1                	jal	48 <iputs>
+  f2:	bf45                	j	a2 <main+0x24>
+  f4:	460d                	li	a2,3
+  f6:	4fc00593          	li	a1,1276
+  fa:	2ab9                	jal	258 <AT24_Read>
+  fc:	fd45                	bnez	a0,b4 <main+0x36>
+  fe:	4fc04703          	lbu	a4,1276(zero) # 4fc <rdbuf>
+ 102:	4dc04783          	lbu	a5,1244(zero) # 4dc <wrbuf>
+ 106:	faf717e3          	bne	a4,a5,b4 <main+0x36>
+ 10a:	4fd04703          	lbu	a4,1277(zero) # 4fd <rdbuf+0x1>
+ 10e:	4dd04783          	lbu	a5,1245(zero) # 4dd <wrbuf+0x1>
+ 112:	faf711e3          	bne	a4,a5,b4 <main+0x36>
+ 116:	4fe04703          	lbu	a4,1278(zero) # 4fe <rdbuf+0x2>
+ 11a:	4de04783          	lbu	a5,1246(zero) # 4de <wrbuf+0x2>
+ 11e:	f8f71be3          	bne	a4,a5,b4 <main+0x36>
+ 122:	48400513          	li	a0,1156
+ 126:	370d                	jal	48 <iputs>
+ 128:	bf49                	j	ba <main+0x3c>
 
-00000132 <I2CM_Init>:
- 132:	00052023          	sw	zero,0(a0) # 50000000 <__top_mem+0x4fffc000>
- 136:	05a2                	slli	a1,a1,0x8
- 138:	0015e593          	ori	a1,a1,1
- 13c:	c10c                	sw	a1,0(a0)
- 13e:	8082                	ret
+0000012a <I2CM_Init>:
+ 12a:	00052023          	sw	zero,0(a0)
+ 12e:	05a2                	slli	a1,a1,0x8
+ 130:	0015e593          	ori	a1,a1,1
+ 134:	c10c                	sw	a1,0(a0)
+ 136:	8082                	ret
 
-00000140 <I2CM_Start>:
- 140:	872a                	mv	a4,a0
- 142:	c54c                	sw	a1,12(a0)
- 144:	478d                	li	a5,3
- 146:	c51c                	sw	a5,8(a0)
- 148:	471c                	lw	a5,8(a4)
- 14a:	8b89                	andi	a5,a5,2
- 14c:	fff5                	bnez	a5,148 <I2CM_Start+0x8>
- 14e:	435c                	lw	a5,4(a4)
- 150:	8b85                	andi	a5,a5,1
- 152:	4509                	li	a0,2
- 154:	e781                	bnez	a5,15c <I2CM_Start+0x1c>
- 156:	4348                	lw	a0,4(a4)
- 158:	8105                	srli	a0,a0,0x1
- 15a:	8905                	andi	a0,a0,1
- 15c:	8082                	ret
+00000138 <I2CM_Start>:
+ 138:	872a                	mv	a4,a0
+ 13a:	c54c                	sw	a1,12(a0)
+ 13c:	478d                	li	a5,3
+ 13e:	c51c                	sw	a5,8(a0)
+ 140:	471c                	lw	a5,8(a4)
+ 142:	8b89                	andi	a5,a5,2
+ 144:	fff5                	bnez	a5,140 <I2CM_Start+0x8>
+ 146:	435c                	lw	a5,4(a4)
+ 148:	8b85                	andi	a5,a5,1
+ 14a:	4509                	li	a0,2
+ 14c:	e781                	bnez	a5,154 <I2CM_Start+0x1c>
+ 14e:	4348                	lw	a0,4(a4)
+ 150:	8105                	srli	a0,a0,0x1
+ 152:	8905                	andi	a0,a0,1
+ 154:	8082                	ret
 
-0000015e <I2CM_Stop>:
- 15e:	47c1                	li	a5,16
- 160:	c51c                	sw	a5,8(a0)
- 162:	451c                	lw	a5,8(a0)
- 164:	8bc1                	andi	a5,a5,16
- 166:	fff5                	bnez	a5,162 <I2CM_Stop+0x4>
- 168:	4148                	lw	a0,4(a0)
- 16a:	8905                	andi	a0,a0,1
- 16c:	e111                	bnez	a0,170 <I2CM_Stop+0x12>
- 16e:	8082                	ret
- 170:	4509                	li	a0,2
- 172:	bff5                	j	16e <I2CM_Stop+0x10>
+00000156 <I2CM_Stop>:
+ 156:	47c1                	li	a5,16
+ 158:	c51c                	sw	a5,8(a0)
+ 15a:	451c                	lw	a5,8(a0)
+ 15c:	8bc1                	andi	a5,a5,16
+ 15e:	fff5                	bnez	a5,15a <I2CM_Stop+0x4>
+ 160:	4148                	lw	a0,4(a0)
+ 162:	8905                	andi	a0,a0,1
+ 164:	e111                	bnez	a0,168 <I2CM_Stop+0x12>
+ 166:	8082                	ret
+ 168:	4509                	li	a0,2
+ 16a:	bff5                	j	166 <I2CM_Stop+0x10>
 
-00000174 <I2CM_Write>:
- 174:	872a                	mv	a4,a0
- 176:	c54c                	sw	a1,12(a0)
- 178:	4789                	li	a5,2
- 17a:	c51c                	sw	a5,8(a0)
- 17c:	471c                	lw	a5,8(a4)
- 17e:	8b89                	andi	a5,a5,2
- 180:	fff5                	bnez	a5,17c <I2CM_Write+0x8>
- 182:	435c                	lw	a5,4(a4)
- 184:	8b85                	andi	a5,a5,1
- 186:	4509                	li	a0,2
- 188:	e781                	bnez	a5,190 <I2CM_Write+0x1c>
- 18a:	4348                	lw	a0,4(a4)
- 18c:	8105                	srli	a0,a0,0x1
- 18e:	8905                	andi	a0,a0,1
- 190:	8082                	ret
+0000016c <I2CM_Write>:
+ 16c:	872a                	mv	a4,a0
+ 16e:	c54c                	sw	a1,12(a0)
+ 170:	4789                	li	a5,2
+ 172:	c51c                	sw	a5,8(a0)
+ 174:	471c                	lw	a5,8(a4)
+ 176:	8b89                	andi	a5,a5,2
+ 178:	fff5                	bnez	a5,174 <I2CM_Write+0x8>
+ 17a:	435c                	lw	a5,4(a4)
+ 17c:	8b85                	andi	a5,a5,1
+ 17e:	4509                	li	a0,2
+ 180:	e781                	bnez	a5,188 <I2CM_Write+0x1c>
+ 182:	4348                	lw	a0,4(a4)
+ 184:	8105                	srli	a0,a0,0x1
+ 186:	8905                	andi	a0,a0,1
+ 188:	8082                	ret
 
-00000192 <I2CM_Read>:
- 192:	872a                	mv	a4,a0
- 194:	060e                	slli	a2,a2,0x3
- 196:	00466613          	ori	a2,a2,4
- 19a:	c510                	sw	a2,8(a0)
- 19c:	471c                	lw	a5,8(a4)
- 19e:	8b91                	andi	a5,a5,4
- 1a0:	fff5                	bnez	a5,19c <I2CM_Read+0xa>
- 1a2:	4348                	lw	a0,4(a4)
- 1a4:	8905                	andi	a0,a0,1
- 1a6:	e509                	bnez	a0,1b0 <I2CM_Read+0x1e>
- 1a8:	475c                	lw	a5,12(a4)
- 1aa:	00f58023          	sb	a5,0(a1)
- 1ae:	8082                	ret
- 1b0:	4509                	li	a0,2
- 1b2:	8082                	ret
+0000018a <I2CM_Read>:
+ 18a:	872a                	mv	a4,a0
+ 18c:	060e                	slli	a2,a2,0x3
+ 18e:	00466613          	ori	a2,a2,4
+ 192:	c510                	sw	a2,8(a0)
+ 194:	471c                	lw	a5,8(a4)
+ 196:	8b91                	andi	a5,a5,4
+ 198:	fff5                	bnez	a5,194 <I2CM_Read+0xa>
+ 19a:	4348                	lw	a0,4(a4)
+ 19c:	8905                	andi	a0,a0,1
+ 19e:	e509                	bnez	a0,1a8 <I2CM_Read+0x1e>
+ 1a0:	475c                	lw	a5,12(a4)
+ 1a2:	00f58023          	sb	a5,0(a1)
+ 1a6:	8082                	ret
+ 1a8:	4509                	li	a0,2
+ 1aa:	8082                	ret
 
-000001b4 <AT24_WriteOnePage>:
- 1b4:	00c507b3          	add	a5,a0,a2
- 1b8:	1ff00713          	li	a4,511
- 1bc:	08f74663          	blt	a4,a5,248 <AT24_WriteOnePage+0x94>
- 1c0:	1101                	addi	sp,sp,-32
- 1c2:	ce06                	sw	ra,28(sp)
- 1c4:	cc22                	sw	s0,24(sp)
- 1c6:	ca26                	sw	s1,20(sp)
- 1c8:	c84a                	sw	s2,16(sp)
- 1ca:	c64e                	sw	s3,12(sp)
- 1cc:	84aa                	mv	s1,a0
- 1ce:	892e                	mv	s2,a1
- 1d0:	8432                	mv	s0,a2
- 1d2:	00455693          	srli	a3,a0,0x4
- 1d6:	fff78713          	addi	a4,a5,-1 # 8fffffff <__top_mem+0x8fffbfff>
- 1da:	41f75793          	srai	a5,a4,0x1f
- 1de:	8bbd                	andi	a5,a5,15
- 1e0:	97ba                	add	a5,a5,a4
- 1e2:	8791                	srai	a5,a5,0x4
- 1e4:	4505                	li	a0,1
- 1e6:	00f68963          	beq	a3,a5,1f8 <AT24_WriteOnePage+0x44>
- 1ea:	40f2                	lw	ra,28(sp)
- 1ec:	4462                	lw	s0,24(sp)
- 1ee:	44d2                	lw	s1,20(sp)
- 1f0:	4942                	lw	s2,16(sp)
- 1f2:	49b2                	lw	s3,12(sp)
- 1f4:	6105                	addi	sp,sp,32
- 1f6:	8082                	ret
- 1f8:	0084d593          	srli	a1,s1,0x8
- 1fc:	0586                	slli	a1,a1,0x1
- 1fe:	fa05e593          	ori	a1,a1,-96
- 202:	0fe5f593          	andi	a1,a1,254
- 206:	50000537          	lui	a0,0x50000
- 20a:	3f1d                	jal	140 <I2CM_Start>
- 20c:	c511                	beqz	a0,218 <AT24_WriteOnePage+0x64>
- 20e:	50000537          	lui	a0,0x50000
- 212:	37b1                	jal	15e <I2CM_Stop>
- 214:	4505                	li	a0,1
- 216:	bfd1                	j	1ea <AT24_WriteOnePage+0x36>
- 218:	0ff4f593          	zext.b	a1,s1
- 21c:	50000537          	lui	a0,0x50000
- 220:	3f91                	jal	174 <I2CM_Write>
- 222:	f575                	bnez	a0,20e <AT24_WriteOnePage+0x5a>
- 224:	00805d63          	blez	s0,23e <AT24_WriteOnePage+0x8a>
- 228:	84ca                	mv	s1,s2
- 22a:	944a                	add	s0,s0,s2
- 22c:	0004c583          	lbu	a1,0(s1)
- 230:	50000537          	lui	a0,0x50000
- 234:	3781                	jal	174 <I2CM_Write>
- 236:	fd61                	bnez	a0,20e <AT24_WriteOnePage+0x5a>
- 238:	0485                	addi	s1,s1,1
- 23a:	fe8499e3          	bne	s1,s0,22c <AT24_WriteOnePage+0x78>
- 23e:	50000537          	lui	a0,0x50000
- 242:	3f31                	jal	15e <I2CM_Stop>
- 244:	d15d                	beqz	a0,1ea <AT24_WriteOnePage+0x36>
- 246:	b7e1                	j	20e <AT24_WriteOnePage+0x5a>
- 248:	4505                	li	a0,1
- 24a:	8082                	ret
+000001ac <AT24_Init>:
+ 1ac:	1141                	addi	sp,sp,-16
+ 1ae:	c606                	sw	ra,12(sp)
+ 1b0:	3e800593          	li	a1,1000
+ 1b4:	50000537          	lui	a0,0x50000
+ 1b8:	3f8d                	jal	12a <I2CM_Init>
+ 1ba:	40b2                	lw	ra,12(sp)
+ 1bc:	0141                	addi	sp,sp,16
+ 1be:	8082                	ret
 
-0000024c <AT24_Read>:
- 24c:	00c50733          	add	a4,a0,a2
- 250:	1ff00793          	li	a5,511
- 254:	00e7d463          	bge	a5,a4,25c <AT24_Read+0x10>
- 258:	4505                	li	a0,1
- 25a:	8082                	ret
- 25c:	1101                	addi	sp,sp,-32
- 25e:	ce06                	sw	ra,28(sp)
- 260:	cc22                	sw	s0,24(sp)
- 262:	ca26                	sw	s1,20(sp)
- 264:	c84a                	sw	s2,16(sp)
- 266:	c64e                	sw	s3,12(sp)
- 268:	c452                	sw	s4,8(sp)
- 26a:	84aa                	mv	s1,a0
- 26c:	892e                	mv	s2,a1
- 26e:	8432                	mv	s0,a2
- 270:	00855993          	srli	s3,a0,0x8
- 274:	00199593          	slli	a1,s3,0x1
- 278:	fa05e593          	ori	a1,a1,-96
- 27c:	0fe5f593          	andi	a1,a1,254
- 280:	50000537          	lui	a0,0x50000
- 284:	3d75                	jal	140 <I2CM_Start>
- 286:	cd09                	beqz	a0,2a0 <AT24_Read+0x54>
- 288:	50000537          	lui	a0,0x50000
- 28c:	3dc9                	jal	15e <I2CM_Stop>
- 28e:	4505                	li	a0,1
- 290:	40f2                	lw	ra,28(sp)
- 292:	4462                	lw	s0,24(sp)
- 294:	44d2                	lw	s1,20(sp)
- 296:	4942                	lw	s2,16(sp)
- 298:	49b2                	lw	s3,12(sp)
- 29a:	4a22                	lw	s4,8(sp)
- 29c:	6105                	addi	sp,sp,32
- 29e:	8082                	ret
- 2a0:	0ff4f593          	zext.b	a1,s1
- 2a4:	50000537          	lui	a0,0x50000
- 2a8:	35f1                	jal	174 <I2CM_Write>
- 2aa:	fd79                	bnez	a0,288 <AT24_Read+0x3c>
- 2ac:	00199593          	slli	a1,s3,0x1
- 2b0:	0a15e593          	ori	a1,a1,161
- 2b4:	0ff5f593          	zext.b	a1,a1
- 2b8:	50000537          	lui	a0,0x50000
- 2bc:	3551                	jal	140 <I2CM_Start>
- 2be:	84aa                	mv	s1,a0
- 2c0:	f561                	bnez	a0,288 <AT24_Read+0x3c>
- 2c2:	4785                	li	a5,1
- 2c4:	02f40963          	beq	s0,a5,2f6 <AT24_Read+0xaa>
- 2c8:	147d                	addi	s0,s0,-1
- 2ca:	4601                	li	a2,0
- 2cc:	009905b3          	add	a1,s2,s1
- 2d0:	50000537          	lui	a0,0x50000
- 2d4:	3d7d                	jal	192 <I2CM_Read>
- 2d6:	f94d                	bnez	a0,288 <AT24_Read+0x3c>
- 2d8:	0485                	addi	s1,s1,1
- 2da:	fe8498e3          	bne	s1,s0,2ca <AT24_Read+0x7e>
- 2de:	4605                	li	a2,1
- 2e0:	008905b3          	add	a1,s2,s0
- 2e4:	50000537          	lui	a0,0x50000
- 2e8:	356d                	jal	192 <I2CM_Read>
- 2ea:	fd59                	bnez	a0,288 <AT24_Read+0x3c>
- 2ec:	50000537          	lui	a0,0x50000
- 2f0:	35bd                	jal	15e <I2CM_Stop>
- 2f2:	dd59                	beqz	a0,290 <AT24_Read+0x44>
- 2f4:	bf51                	j	288 <AT24_Read+0x3c>
- 2f6:	842a                	mv	s0,a0
- 2f8:	b7dd                	j	2de <AT24_Read+0x92>
+000001c0 <AT24_WriteOnePage>:
+ 1c0:	00c507b3          	add	a5,a0,a2
+ 1c4:	1ff00713          	li	a4,511
+ 1c8:	08f74663          	blt	a4,a5,254 <AT24_WriteOnePage+0x94>
+ 1cc:	1101                	addi	sp,sp,-32
+ 1ce:	ce06                	sw	ra,28(sp)
+ 1d0:	cc22                	sw	s0,24(sp)
+ 1d2:	ca26                	sw	s1,20(sp)
+ 1d4:	c84a                	sw	s2,16(sp)
+ 1d6:	c64e                	sw	s3,12(sp)
+ 1d8:	84aa                	mv	s1,a0
+ 1da:	892e                	mv	s2,a1
+ 1dc:	8432                	mv	s0,a2
+ 1de:	00455693          	srli	a3,a0,0x4
+ 1e2:	fff78713          	addi	a4,a5,-1 # 8fffffff <__top_mem+0x8fffbfff>
+ 1e6:	41f75793          	srai	a5,a4,0x1f
+ 1ea:	8bbd                	andi	a5,a5,15
+ 1ec:	97ba                	add	a5,a5,a4
+ 1ee:	8791                	srai	a5,a5,0x4
+ 1f0:	4505                	li	a0,1
+ 1f2:	00f68963          	beq	a3,a5,204 <AT24_WriteOnePage+0x44>
+ 1f6:	40f2                	lw	ra,28(sp)
+ 1f8:	4462                	lw	s0,24(sp)
+ 1fa:	44d2                	lw	s1,20(sp)
+ 1fc:	4942                	lw	s2,16(sp)
+ 1fe:	49b2                	lw	s3,12(sp)
+ 200:	6105                	addi	sp,sp,32
+ 202:	8082                	ret
+ 204:	0084d593          	srli	a1,s1,0x8
+ 208:	0586                	slli	a1,a1,0x1
+ 20a:	fa05e593          	ori	a1,a1,-96
+ 20e:	0fe5f593          	andi	a1,a1,254
+ 212:	50000537          	lui	a0,0x50000
+ 216:	370d                	jal	138 <I2CM_Start>
+ 218:	c511                	beqz	a0,224 <AT24_WriteOnePage+0x64>
+ 21a:	50000537          	lui	a0,0x50000
+ 21e:	3f25                	jal	156 <I2CM_Stop>
+ 220:	4505                	li	a0,1
+ 222:	bfd1                	j	1f6 <AT24_WriteOnePage+0x36>
+ 224:	0ff4f593          	zext.b	a1,s1
+ 228:	50000537          	lui	a0,0x50000
+ 22c:	3781                	jal	16c <I2CM_Write>
+ 22e:	f575                	bnez	a0,21a <AT24_WriteOnePage+0x5a>
+ 230:	00805d63          	blez	s0,24a <AT24_WriteOnePage+0x8a>
+ 234:	84ca                	mv	s1,s2
+ 236:	944a                	add	s0,s0,s2
+ 238:	0004c583          	lbu	a1,0(s1)
+ 23c:	50000537          	lui	a0,0x50000
+ 240:	3735                	jal	16c <I2CM_Write>
+ 242:	fd61                	bnez	a0,21a <AT24_WriteOnePage+0x5a>
+ 244:	0485                	addi	s1,s1,1
+ 246:	fe8499e3          	bne	s1,s0,238 <AT24_WriteOnePage+0x78>
+ 24a:	50000537          	lui	a0,0x50000
+ 24e:	3721                	jal	156 <I2CM_Stop>
+ 250:	d15d                	beqz	a0,1f6 <AT24_WriteOnePage+0x36>
+ 252:	b7e1                	j	21a <AT24_WriteOnePage+0x5a>
+ 254:	4505                	li	a0,1
+ 256:	8082                	ret
 
-000002fa <AT24_Busy>:
- 2fa:	1141                	addi	sp,sp,-16
- 2fc:	c606                	sw	ra,12(sp)
- 2fe:	c422                	sw	s0,8(sp)
- 300:	0a100593          	li	a1,161
- 304:	50000537          	lui	a0,0x50000
- 308:	3d25                	jal	140 <I2CM_Start>
- 30a:	842a                	mv	s0,a0
- 30c:	50000537          	lui	a0,0x50000
- 310:	35b9                	jal	15e <I2CM_Stop>
- 312:	00803533          	snez	a0,s0
- 316:	40b2                	lw	ra,12(sp)
- 318:	4422                	lw	s0,8(sp)
- 31a:	0141                	addi	sp,sp,16
- 31c:	8082                	ret
+00000258 <AT24_Read>:
+ 258:	00c50733          	add	a4,a0,a2
+ 25c:	1ff00793          	li	a5,511
+ 260:	00e7d463          	bge	a5,a4,268 <AT24_Read+0x10>
+ 264:	4505                	li	a0,1
+ 266:	8082                	ret
+ 268:	1101                	addi	sp,sp,-32
+ 26a:	ce06                	sw	ra,28(sp)
+ 26c:	cc22                	sw	s0,24(sp)
+ 26e:	ca26                	sw	s1,20(sp)
+ 270:	c84a                	sw	s2,16(sp)
+ 272:	c64e                	sw	s3,12(sp)
+ 274:	c452                	sw	s4,8(sp)
+ 276:	84aa                	mv	s1,a0
+ 278:	892e                	mv	s2,a1
+ 27a:	8432                	mv	s0,a2
+ 27c:	00855993          	srli	s3,a0,0x8
+ 280:	00199593          	slli	a1,s3,0x1
+ 284:	fa05e593          	ori	a1,a1,-96
+ 288:	0fe5f593          	andi	a1,a1,254
+ 28c:	50000537          	lui	a0,0x50000
+ 290:	3565                	jal	138 <I2CM_Start>
+ 292:	cd09                	beqz	a0,2ac <AT24_Read+0x54>
+ 294:	50000537          	lui	a0,0x50000
+ 298:	3d7d                	jal	156 <I2CM_Stop>
+ 29a:	4505                	li	a0,1
+ 29c:	40f2                	lw	ra,28(sp)
+ 29e:	4462                	lw	s0,24(sp)
+ 2a0:	44d2                	lw	s1,20(sp)
+ 2a2:	4942                	lw	s2,16(sp)
+ 2a4:	49b2                	lw	s3,12(sp)
+ 2a6:	4a22                	lw	s4,8(sp)
+ 2a8:	6105                	addi	sp,sp,32
+ 2aa:	8082                	ret
+ 2ac:	0ff4f593          	zext.b	a1,s1
+ 2b0:	50000537          	lui	a0,0x50000
+ 2b4:	3d65                	jal	16c <I2CM_Write>
+ 2b6:	fd79                	bnez	a0,294 <AT24_Read+0x3c>
+ 2b8:	00199593          	slli	a1,s3,0x1
+ 2bc:	0a15e593          	ori	a1,a1,161
+ 2c0:	0ff5f593          	zext.b	a1,a1
+ 2c4:	50000537          	lui	a0,0x50000
+ 2c8:	3d85                	jal	138 <I2CM_Start>
+ 2ca:	84aa                	mv	s1,a0
+ 2cc:	f561                	bnez	a0,294 <AT24_Read+0x3c>
+ 2ce:	4785                	li	a5,1
+ 2d0:	02f40963          	beq	s0,a5,302 <AT24_Read+0xaa>
+ 2d4:	147d                	addi	s0,s0,-1
+ 2d6:	4601                	li	a2,0
+ 2d8:	009905b3          	add	a1,s2,s1
+ 2dc:	50000537          	lui	a0,0x50000
+ 2e0:	356d                	jal	18a <I2CM_Read>
+ 2e2:	f94d                	bnez	a0,294 <AT24_Read+0x3c>
+ 2e4:	0485                	addi	s1,s1,1
+ 2e6:	fe8498e3          	bne	s1,s0,2d6 <AT24_Read+0x7e>
+ 2ea:	4605                	li	a2,1
+ 2ec:	008905b3          	add	a1,s2,s0
+ 2f0:	50000537          	lui	a0,0x50000
+ 2f4:	3d59                	jal	18a <I2CM_Read>
+ 2f6:	fd59                	bnez	a0,294 <AT24_Read+0x3c>
+ 2f8:	50000537          	lui	a0,0x50000
+ 2fc:	3da9                	jal	156 <I2CM_Stop>
+ 2fe:	dd59                	beqz	a0,29c <AT24_Read+0x44>
+ 300:	bf51                	j	294 <AT24_Read+0x3c>
+ 302:	842a                	mv	s0,a0
+ 304:	b7dd                	j	2ea <AT24_Read+0x92>
 
-0000031e <AT24_BusyWait>:
- 31e:	67a1                	lui	a5,0x8
- 320:	a1278793          	addi	a5,a5,-1518 # 7a12 <__top_mem+0x3a12>
- 324:	17fd                	addi	a5,a5,-1
- 326:	fffd                	bnez	a5,324 <AT24_BusyWait+0x6>
- 328:	4501                	li	a0,0
- 32a:	8082                	ret
+00000306 <AT24_Busy>:
+ 306:	1141                	addi	sp,sp,-16
+ 308:	c606                	sw	ra,12(sp)
+ 30a:	c422                	sw	s0,8(sp)
+ 30c:	0a100593          	li	a1,161
+ 310:	50000537          	lui	a0,0x50000
+ 314:	3515                	jal	138 <I2CM_Start>
+ 316:	842a                	mv	s0,a0
+ 318:	50000537          	lui	a0,0x50000
+ 31c:	3d2d                	jal	156 <I2CM_Stop>
+ 31e:	00803533          	snez	a0,s0
+ 322:	40b2                	lw	ra,12(sp)
+ 324:	4422                	lw	s0,8(sp)
+ 326:	0141                	addi	sp,sp,16
+ 328:	8082                	ret
 
-0000032c <AT24_Write>:
- 32c:	00c50733          	add	a4,a0,a2
- 330:	1ff00793          	li	a5,511
- 334:	08e7cc63          	blt	a5,a4,3cc <AT24_Write+0xa0>
- 338:	1101                	addi	sp,sp,-32
- 33a:	ce06                	sw	ra,28(sp)
- 33c:	cc22                	sw	s0,24(sp)
- 33e:	ca26                	sw	s1,20(sp)
- 340:	c84a                	sw	s2,16(sp)
- 342:	c64e                	sw	s3,12(sp)
- 344:	84aa                	mv	s1,a0
- 346:	892e                	mv	s2,a1
- 348:	8432                	mv	s0,a2
- 34a:	00f57793          	andi	a5,a0,15
- 34e:	ef95                	bnez	a5,38a <AT24_Write+0x5e>
- 350:	47bd                	li	a5,15
- 352:	0287f363          	bgeu	a5,s0,378 <AT24_Write+0x4c>
- 356:	49bd                	li	s3,15
- 358:	4641                	li	a2,16
- 35a:	85ca                	mv	a1,s2
- 35c:	8526                	mv	a0,s1
- 35e:	3d99                	jal	1b4 <AT24_WriteOnePage>
- 360:	ed11                	bnez	a0,37c <AT24_Write+0x50>
- 362:	3f75                	jal	31e <AT24_BusyWait>
- 364:	ed01                	bnez	a0,37c <AT24_Write+0x50>
- 366:	04c1                	addi	s1,s1,16
- 368:	04c2                	slli	s1,s1,0x10
- 36a:	80c1                	srli	s1,s1,0x10
- 36c:	0941                	addi	s2,s2,16
- 36e:	1441                	addi	s0,s0,-16
- 370:	0442                	slli	s0,s0,0x10
- 372:	8041                	srli	s0,s0,0x10
- 374:	fe89e2e3          	bltu	s3,s0,358 <AT24_Write+0x2c>
- 378:	4501                	li	a0,0
- 37a:	e029                	bnez	s0,3bc <AT24_Write+0x90>
- 37c:	40f2                	lw	ra,28(sp)
- 37e:	4462                	lw	s0,24(sp)
- 380:	44d2                	lw	s1,20(sp)
- 382:	4942                	lw	s2,16(sp)
- 384:	49b2                	lw	s3,12(sp)
- 386:	6105                	addi	sp,sp,32
- 388:	8082                	ret
- 38a:	49c1                	li	s3,16
- 38c:	40f989b3          	sub	s3,s3,a5
- 390:	01365363          	bge	a2,s3,396 <AT24_Write+0x6a>
- 394:	89b2                	mv	s3,a2
- 396:	0ff9f613          	zext.b	a2,s3
- 39a:	85ca                	mv	a1,s2
- 39c:	8526                	mv	a0,s1
- 39e:	3d19                	jal	1b4 <AT24_WriteOnePage>
- 3a0:	fd71                	bnez	a0,37c <AT24_Write+0x50>
- 3a2:	3fb5                	jal	31e <AT24_BusyWait>
- 3a4:	fd61                	bnez	a0,37c <AT24_Write+0x50>
- 3a6:	01099793          	slli	a5,s3,0x10
- 3aa:	83c1                	srli	a5,a5,0x10
- 3ac:	94be                	add	s1,s1,a5
- 3ae:	04c2                	slli	s1,s1,0x10
- 3b0:	80c1                	srli	s1,s1,0x10
- 3b2:	994e                	add	s2,s2,s3
- 3b4:	8c1d                	sub	s0,s0,a5
- 3b6:	0442                	slli	s0,s0,0x10
- 3b8:	8041                	srli	s0,s0,0x10
- 3ba:	bf59                	j	350 <AT24_Write+0x24>
- 3bc:	0ff47613          	zext.b	a2,s0
- 3c0:	85ca                	mv	a1,s2
- 3c2:	8526                	mv	a0,s1
- 3c4:	3bc5                	jal	1b4 <AT24_WriteOnePage>
- 3c6:	f95d                	bnez	a0,37c <AT24_Write+0x50>
- 3c8:	3f99                	jal	31e <AT24_BusyWait>
- 3ca:	bf4d                	j	37c <AT24_Write+0x50>
- 3cc:	4505                	li	a0,1
- 3ce:	8082                	ret
+0000032a <AT24_BusyWait>:
+ 32a:	67a1                	lui	a5,0x8
+ 32c:	a1278793          	addi	a5,a5,-1518 # 7a12 <__top_mem+0x3a12>
+ 330:	17fd                	addi	a5,a5,-1
+ 332:	fffd                	bnez	a5,330 <AT24_BusyWait+0x6>
+ 334:	4501                	li	a0,0
+ 336:	8082                	ret
+
+00000338 <AT24_Write>:
+ 338:	00c50733          	add	a4,a0,a2
+ 33c:	1ff00793          	li	a5,511
+ 340:	08e7cc63          	blt	a5,a4,3d8 <AT24_Write+0xa0>
+ 344:	1101                	addi	sp,sp,-32
+ 346:	ce06                	sw	ra,28(sp)
+ 348:	cc22                	sw	s0,24(sp)
+ 34a:	ca26                	sw	s1,20(sp)
+ 34c:	c84a                	sw	s2,16(sp)
+ 34e:	c64e                	sw	s3,12(sp)
+ 350:	84aa                	mv	s1,a0
+ 352:	892e                	mv	s2,a1
+ 354:	8432                	mv	s0,a2
+ 356:	00f57793          	andi	a5,a0,15
+ 35a:	ef95                	bnez	a5,396 <AT24_Write+0x5e>
+ 35c:	47bd                	li	a5,15
+ 35e:	0287f363          	bgeu	a5,s0,384 <AT24_Write+0x4c>
+ 362:	49bd                	li	s3,15
+ 364:	4641                	li	a2,16
+ 366:	85ca                	mv	a1,s2
+ 368:	8526                	mv	a0,s1
+ 36a:	3d99                	jal	1c0 <AT24_WriteOnePage>
+ 36c:	ed11                	bnez	a0,388 <AT24_Write+0x50>
+ 36e:	3f75                	jal	32a <AT24_BusyWait>
+ 370:	ed01                	bnez	a0,388 <AT24_Write+0x50>
+ 372:	04c1                	addi	s1,s1,16
+ 374:	04c2                	slli	s1,s1,0x10
+ 376:	80c1                	srli	s1,s1,0x10
+ 378:	0941                	addi	s2,s2,16
+ 37a:	1441                	addi	s0,s0,-16
+ 37c:	0442                	slli	s0,s0,0x10
+ 37e:	8041                	srli	s0,s0,0x10
+ 380:	fe89e2e3          	bltu	s3,s0,364 <AT24_Write+0x2c>
+ 384:	4501                	li	a0,0
+ 386:	e029                	bnez	s0,3c8 <AT24_Write+0x90>
+ 388:	40f2                	lw	ra,28(sp)
+ 38a:	4462                	lw	s0,24(sp)
+ 38c:	44d2                	lw	s1,20(sp)
+ 38e:	4942                	lw	s2,16(sp)
+ 390:	49b2                	lw	s3,12(sp)
+ 392:	6105                	addi	sp,sp,32
+ 394:	8082                	ret
+ 396:	49c1                	li	s3,16
+ 398:	40f989b3          	sub	s3,s3,a5
+ 39c:	01365363          	bge	a2,s3,3a2 <AT24_Write+0x6a>
+ 3a0:	89b2                	mv	s3,a2
+ 3a2:	0ff9f613          	zext.b	a2,s3
+ 3a6:	85ca                	mv	a1,s2
+ 3a8:	8526                	mv	a0,s1
+ 3aa:	3d19                	jal	1c0 <AT24_WriteOnePage>
+ 3ac:	fd71                	bnez	a0,388 <AT24_Write+0x50>
+ 3ae:	3fb5                	jal	32a <AT24_BusyWait>
+ 3b0:	fd61                	bnez	a0,388 <AT24_Write+0x50>
+ 3b2:	01099793          	slli	a5,s3,0x10
+ 3b6:	83c1                	srli	a5,a5,0x10
+ 3b8:	94be                	add	s1,s1,a5
+ 3ba:	04c2                	slli	s1,s1,0x10
+ 3bc:	80c1                	srli	s1,s1,0x10
+ 3be:	994e                	add	s2,s2,s3
+ 3c0:	8c1d                	sub	s0,s0,a5
+ 3c2:	0442                	slli	s0,s0,0x10
+ 3c4:	8041                	srli	s0,s0,0x10
+ 3c6:	bf59                	j	35c <AT24_Write+0x24>
+ 3c8:	0ff47613          	zext.b	a2,s0
+ 3cc:	85ca                	mv	a1,s2
+ 3ce:	8526                	mv	a0,s1
+ 3d0:	3bc5                	jal	1c0 <AT24_WriteOnePage>
+ 3d2:	f95d                	bnez	a0,388 <AT24_Write+0x50>
+ 3d4:	3f99                	jal	32a <AT24_BusyWait>
+ 3d6:	bf4d                	j	388 <AT24_Write+0x50>
+ 3d8:	4505                	li	a0,1
+ 3da:	8082                	ret
