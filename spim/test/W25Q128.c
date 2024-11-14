@@ -30,18 +30,30 @@ void W25_Init(uint32_t chip_size)
 
 /*******************************************************************************************************************************
 * @brief	SPI Flash erase
-* @param	cmd is the erase command to use, can be W25_CMD_ERASE_SECTOR, W25_CMD_ERASE_BLOCK32KB, or W25_CMD_ERASE_BLOCK64KB
 * @param	addr is the SPI Flash address to erase
+* @param	block_size is block size (in kbytes) to erase, support 4 and 64
 * @param	wait: 1 wait for erase operation done, 0 send out erase command, and then immediately return.
 * @return
 *******************************************************************************************************************************/
-void W25_Erase(uint8_t cmd, uint32_t addr, uint8_t wait)
+void W25_Erase_(uint32_t addr, uint16_t block_size, uint8_t wait)
 {
 	SPIM_CmdStructure cmdStruct;
 	SPIM_CmdStructInit(&cmdStruct);
+
+	uint8_t instruction;
+	switch(block_size)
+	{
+	case 4:
+		instruction = (AddressSize == SPIM_PhaseSize_32bit) ? W25_C4B_ERASE_SECTOR	  : W25_CMD_ERASE_SECTOR;
+		break;
+	
+	case 64:
+		instruction = (AddressSize == SPIM_PhaseSize_32bit) ? W25_C4B_ERASE_BLOCK64KB : W25_CMD_ERASE_BLOCK64KB;
+		break;
+	}
 	
 	cmdStruct.InstructionMode 	 = SPIM_PhaseMode_1bit;
-	cmdStruct.Instruction 		 = cmd;
+	cmdStruct.Instruction 		 = instruction;
 	cmdStruct.AddressMode 		 = SPIM_PhaseMode_1bit;
 	cmdStruct.AddressSize		 = AddressSize;
 	cmdStruct.Address			 = addr;

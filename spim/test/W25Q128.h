@@ -48,7 +48,9 @@
 
 void W25_Init(uint32_t chip_size);
 
-void W25_Erase(uint8_t cmd, uint32_t addr, uint8_t wait);
+void W25_Erase_(uint32_t addr, uint16_t block_size, uint8_t wait);
+#define W25_Erase(addr, wait)				W25_Erase_((addr),  4, (wait))
+#define W25_Erase_Block64KB(addr, wait)		W25_Erase_((addr), 64, (wait))
 
 void W25_Write_(uint32_t addr, uint8_t buff[], uint32_t nbyte, uint8_t data_width);
 #define W25_Write(addr, buff, nbyte)		W25_Write_((addr), (buff), (nbyte), 1)

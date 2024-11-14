@@ -21,15 +21,14 @@ int main(void)
 	
 	iputs("\n--- main ---\n");
 
-#define W25_CHIP_SIZE  128	// Mbits
-	W25_Init(W25_CHIP_SIZE);
+	W25_Init(128);	// Mbits
 	
 	int id = W25_ReadJEDEC();	
 	
 	W25_QuadSwitch(1);
 	
 	
-	W25_Erase((W25_CHIP_SIZE > 128) ? W25_C4B_ERASE_SECTOR : W25_CMD_ERASE_SECTOR, 0x010000, 1);
+	W25_Erase(0x010000, 1);
 	
 	W25_Read(0x010000, rdbuf, N_RW);
 
@@ -77,7 +76,7 @@ int main(void)
 		iputs("\nW25Q128 Dual IO Read Test Fail.\n");
 	
 	
-	W25_Erase((W25_CHIP_SIZE > 128) ? W25_C4B_ERASE_SECTOR : W25_CMD_ERASE_SECTOR, 0x010000, 1);
+	W25_Erase(0x010000, 1);
 	W25_Write_4bit(0x010000, wrbuf, N_RW);
 	
 	W25_Read_4bit(0x010000, rdbuf, N_RW);
