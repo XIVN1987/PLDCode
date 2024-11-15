@@ -8,19 +8,19 @@ Disassembly of section .text:
    0:	1141                	addi	sp,sp,-16
    2:	c606                	sw	ra,12(sp)
    4:	6705                	lui	a4,0x1
-   6:	96870713          	addi	a4,a4,-1688 # 968 <rdbuf>
+   6:	96470713          	addi	a4,a4,-1692 # 964 <rdbuf>
    a:	6785                	lui	a5,0x1
-   c:	99878793          	addi	a5,a5,-1640 # 998 <AddressSize>
+   c:	99478793          	addi	a5,a5,-1644 # 994 <AddressSize>
   10:	02f77363          	bgeu	a4,a5,36 <entry+0x36>
   14:	6785                	lui	a5,0x1
-  16:	96878693          	addi	a3,a5,-1688 # 968 <rdbuf>
+  16:	96478693          	addi	a3,a5,-1692 # 964 <rdbuf>
   1a:	6705                	lui	a4,0x1
-  1c:	99770713          	addi	a4,a4,-1641 # 997 <rdbuf+0x2f>
+  1c:	99370713          	addi	a4,a4,-1645 # 993 <rdbuf+0x2f>
   20:	8f15                	sub	a4,a4,a3
   22:	9b71                	andi	a4,a4,-4
   24:	0711                	addi	a4,a4,4
   26:	9736                	add	a4,a4,a3
-  28:	96878793          	addi	a5,a5,-1688
+  28:	96478793          	addi	a5,a5,-1692
   2c:	0007a023          	sw	zero,0(a5)
   30:	0791                	addi	a5,a5,4
   32:	fee79de3          	bne	a5,a4,2c <entry+0x2c>
@@ -75,7 +75,7 @@ Disassembly of section .text:
   8c:	c226                	sw	s1,4(sp)
   8e:	c04a                	sw	s2,0(sp)
   90:	4501                	li	a0,0
-  92:	7a800513          	li	a0,1960
+  92:	7a400513          	li	a0,1956
   96:	3f6d                	jal	50 <iputs>
   98:	08000513          	li	a0,128
   9c:	22dd                	jal	282 <W25_Init>
@@ -92,11 +92,11 @@ Disassembly of section .text:
   b4:	4705                	li	a4,1
   b6:	4685                	li	a3,1
   b8:	4631                	li	a2,12
-  ba:	96848593          	addi	a1,s1,-1688 # 968 <rdbuf>
+  ba:	96448593          	addi	a1,s1,-1692 # 964 <rdbuf>
   be:	6541                	lui	a0,0x10
   c0:	22f5                	jal	2ac <W25_Read_>
-  c2:	96848413          	addi	s0,s1,-1688
-  c6:	96848793          	addi	a5,s1,-1688
+  c2:	96448413          	addi	s0,s1,-1692
+  c6:	96448793          	addi	a5,s1,-1692
   ca:	4701                	li	a4,0
   cc:	0ff00613          	li	a2,255
   d0:	45b1                	li	a1,12
@@ -106,29 +106,29 @@ Disassembly of section .text:
   dc:	0785                	addi	a5,a5,1
   de:	feb71ae3          	bne	a4,a1,d2 <main+0x4c>
   e2:	4501                	li	a0,0
-  e4:	7b800513          	li	a0,1976
+  e4:	7b400513          	li	a0,1972
   e8:	37a5                	jal	50 <iputs>
   ea:	a801                	j	fa <main+0x74>
   ec:	47b1                	li	a5,12
   ee:	fef70ae3          	beq	a4,a5,e2 <main+0x5c>
   f2:	4501                	li	a0,0
-  f4:	7d400513          	li	a0,2004
+  f4:	7d000513          	li	a0,2000
   f8:	3fa1                	jal	50 <iputs>
   fa:	6485                	lui	s1,0x1
   fc:	4685                	li	a3,1
   fe:	4631                	li	a2,12
- 100:	93848593          	addi	a1,s1,-1736 # 938 <wrbuf>
+ 100:	93448593          	addi	a1,s1,-1740 # 934 <wrbuf>
  104:	6541                	lui	a0,0x10
  106:	29f1                	jal	5e2 <W25_Write_>
  108:	4705                	li	a4,1
  10a:	4685                	li	a3,1
  10c:	4631                	li	a2,12
  10e:	6585                	lui	a1,0x1
- 110:	96858593          	addi	a1,a1,-1688 # 968 <rdbuf>
+ 110:	96458593          	addi	a1,a1,-1692 # 964 <rdbuf>
  114:	6541                	lui	a0,0x10
  116:	2a59                	jal	2ac <W25_Read_>
- 118:	93848913          	addi	s2,s1,-1736
- 11c:	93848793          	addi	a5,s1,-1736
+ 118:	93448913          	addi	s2,s1,-1740
+ 11c:	93448793          	addi	a5,s1,-1740
  120:	86a2                	mv	a3,s0
  122:	4701                	li	a4,0
  124:	4531                	li	a0,12
@@ -140,19 +140,19 @@ Disassembly of section .text:
  136:	0785                	addi	a5,a5,1
  138:	fea717e3          	bne	a4,a0,126 <main+0xa0>
  13c:	4501                	li	a0,0
- 13e:	7f000513          	li	a0,2032
+ 13e:	7ec00513          	li	a0,2028
  142:	3739                	jal	50 <iputs>
  144:	a801                	j	154 <main+0xce>
  146:	47b1                	li	a5,12
  148:	fef70ae3          	beq	a4,a5,13c <main+0xb6>
  14c:	6505                	lui	a0,0x1
- 14e:	80c50513          	addi	a0,a0,-2036 # 80c <SPIM_CmdStructInit+0x92>
+ 14e:	80850513          	addi	a0,a0,-2040 # 808 <SPIM_CmdStructInit+0x94>
  152:	3dfd                	jal	50 <iputs>
  154:	4709                	li	a4,2
  156:	4685                	li	a3,1
  158:	4631                	li	a2,12
  15a:	6585                	lui	a1,0x1
- 15c:	96858593          	addi	a1,a1,-1688 # 968 <rdbuf>
+ 15c:	96458593          	addi	a1,a1,-1692 # 964 <rdbuf>
  160:	6541                	lui	a0,0x10
  162:	22a9                	jal	2ac <W25_Read_>
  164:	86ca                	mv	a3,s2
@@ -167,19 +167,19 @@ Disassembly of section .text:
  17c:	0685                	addi	a3,a3,1
  17e:	fea797e3          	bne	a5,a0,16c <main+0xe6>
  182:	6505                	lui	a0,0x1
- 184:	82850513          	addi	a0,a0,-2008 # 828 <SPIM_CmdStructInit+0xae>
+ 184:	82450513          	addi	a0,a0,-2012 # 824 <SPIM_CmdStructInit+0xb0>
  188:	35e1                	jal	50 <iputs>
  18a:	a801                	j	19a <main+0x114>
  18c:	4731                	li	a4,12
  18e:	fee78ae3          	beq	a5,a4,182 <main+0xfc>
  192:	6505                	lui	a0,0x1
- 194:	84850513          	addi	a0,a0,-1976 # 848 <SPIM_CmdStructInit+0xce>
+ 194:	84450513          	addi	a0,a0,-1980 # 844 <SPIM_CmdStructInit+0xd0>
  198:	3d65                	jal	50 <iputs>
  19a:	4709                	li	a4,2
  19c:	4689                	li	a3,2
  19e:	4631                	li	a2,12
  1a0:	6585                	lui	a1,0x1
- 1a2:	96858593          	addi	a1,a1,-1688 # 968 <rdbuf>
+ 1a2:	96458593          	addi	a1,a1,-1692 # 964 <rdbuf>
  1a6:	6541                	lui	a0,0x10
  1a8:	2211                	jal	2ac <W25_Read_>
  1aa:	86ca                	mv	a3,s2
@@ -194,13 +194,13 @@ Disassembly of section .text:
  1c2:	0685                	addi	a3,a3,1
  1c4:	fea797e3          	bne	a5,a0,1b2 <main+0x12c>
  1c8:	6505                	lui	a0,0x1
- 1ca:	86850513          	addi	a0,a0,-1944 # 868 <SPIM_CmdStructInit+0xee>
+ 1ca:	86450513          	addi	a0,a0,-1948 # 864 <SPIM_CmdStructInit+0xf0>
  1ce:	3549                	jal	50 <iputs>
  1d0:	a801                	j	1e0 <main+0x15a>
  1d2:	4731                	li	a4,12
  1d4:	fee78ae3          	beq	a5,a4,1c8 <main+0x142>
  1d8:	6505                	lui	a0,0x1
- 1da:	88c50513          	addi	a0,a0,-1908 # 88c <SPIM_CmdStructInit+0x112>
+ 1da:	88850513          	addi	a0,a0,-1912 # 888 <SPIM_CmdStructInit+0x114>
  1de:	3d8d                	jal	50 <iputs>
  1e0:	4605                	li	a2,1
  1e2:	4591                	li	a1,4
@@ -209,14 +209,14 @@ Disassembly of section .text:
  1e8:	4691                	li	a3,4
  1ea:	4631                	li	a2,12
  1ec:	6585                	lui	a1,0x1
- 1ee:	93858593          	addi	a1,a1,-1736 # 938 <wrbuf>
+ 1ee:	93458593          	addi	a1,a1,-1740 # 934 <wrbuf>
  1f2:	6541                	lui	a0,0x10
  1f4:	26fd                	jal	5e2 <W25_Write_>
  1f6:	4711                	li	a4,4
  1f8:	4685                	li	a3,1
  1fa:	4631                	li	a2,12
  1fc:	6585                	lui	a1,0x1
- 1fe:	96858593          	addi	a1,a1,-1688 # 968 <rdbuf>
+ 1fe:	96458593          	addi	a1,a1,-1692 # 964 <rdbuf>
  202:	6541                	lui	a0,0x10
  204:	2065                	jal	2ac <W25_Read_>
  206:	86ca                	mv	a3,s2
@@ -231,19 +231,19 @@ Disassembly of section .text:
  21e:	0685                	addi	a3,a3,1
  220:	fea797e3          	bne	a5,a0,20e <main+0x188>
  224:	6505                	lui	a0,0x1
- 226:	8b050513          	addi	a0,a0,-1872 # 8b0 <SPIM_CmdStructInit+0x136>
+ 226:	8ac50513          	addi	a0,a0,-1876 # 8ac <SPIM_CmdStructInit+0x138>
  22a:	351d                	jal	50 <iputs>
  22c:	a801                	j	23c <main+0x1b6>
  22e:	4731                	li	a4,12
  230:	fee78ae3          	beq	a5,a4,224 <main+0x19e>
  234:	6505                	lui	a0,0x1
- 236:	8d050513          	addi	a0,a0,-1840 # 8d0 <SPIM_CmdStructInit+0x156>
+ 236:	8cc50513          	addi	a0,a0,-1844 # 8cc <SPIM_CmdStructInit+0x158>
  23a:	3d19                	jal	50 <iputs>
  23c:	4711                	li	a4,4
  23e:	4691                	li	a3,4
  240:	4631                	li	a2,12
  242:	6585                	lui	a1,0x1
- 244:	96858593          	addi	a1,a1,-1688 # 968 <rdbuf>
+ 244:	96458593          	addi	a1,a1,-1692 # 964 <rdbuf>
  248:	6541                	lui	a0,0x10
  24a:	208d                	jal	2ac <W25_Read_>
  24c:	4781                	li	a5,0
@@ -256,13 +256,13 @@ Disassembly of section .text:
  260:	0905                	addi	s2,s2,1
  262:	fec797e3          	bne	a5,a2,250 <main+0x1ca>
  266:	6505                	lui	a0,0x1
- 268:	8f050513          	addi	a0,a0,-1808 # 8f0 <SPIM_CmdStructInit+0x176>
+ 268:	8ec50513          	addi	a0,a0,-1812 # 8ec <SPIM_CmdStructInit+0x178>
  26c:	33d5                	jal	50 <iputs>
  26e:	a801                	j	27e <main+0x1f8>
  270:	4731                	li	a4,12
  272:	fee78ae3          	beq	a5,a4,266 <main+0x1e0>
  276:	6505                	lui	a0,0x1
- 278:	91450513          	addi	a0,a0,-1772 # 914 <SPIM_CmdStructInit+0x19a>
+ 278:	91050513          	addi	a0,a0,-1776 # 910 <SPIM_CmdStructInit+0x19c>
  27c:	3bd1                	jal	50 <iputs>
  27e:	33c1                	jal	3e <finish>
  280:	a001                	j	280 <main+0x1fa>
@@ -280,7 +280,7 @@ Disassembly of section .text:
  298:	00853533          	sltu	a0,a0,s0
  29c:	0509                	addi	a0,a0,2
  29e:	6785                	lui	a5,0x1
- 2a0:	98a7ac23          	sw	a0,-1640(a5) # 998 <AddressSize>
+ 2a0:	98a7aa23          	sw	a0,-1644(a5) # 994 <AddressSize>
  2a4:	40b2                	lw	ra,12(sp)
  2a6:	4422                	lw	s0,8(sp)
  2a8:	0141                	addi	sp,sp,16
@@ -305,7 +305,7 @@ Disassembly of section .text:
  2ca:	8436                	mv	s0,a3
  2cc:	8a3a                	mv	s4,a4
  2ce:	0028                	addi	a0,sp,8
- 2d0:	216d                	jal	77a <SPIM_CmdStructInit>
+ 2d0:	2155                	jal	774 <SPIM_CmdStructInit>
  2d2:	00441793          	slli	a5,s0,0x4
  2d6:	0147e7b3          	or	a5,a5,s4
  2da:	4751                	li	a4,20
@@ -321,7 +321,7 @@ Disassembly of section .text:
  2f6:	04400713          	li	a4,68
  2fa:	04e79d63          	bne	a5,a4,354 <W25_Read_+0xa8>
  2fe:	6785                	lui	a5,0x1
- 300:	9987a703          	lw	a4,-1640(a5) # 998 <AddressSize>
+ 300:	9947a703          	lw	a4,-1644(a5) # 994 <AddressSize>
  304:	478d                	li	a5,3
  306:	12f70a63          	beq	a4,a5,43a <W25_Read_+0x18e>
  30a:	4b8d                	li	s7,3
@@ -335,7 +335,7 @@ Disassembly of section .text:
  31e:	4749                	li	a4,18
  320:	02e79a63          	bne	a5,a4,354 <W25_Read_+0xa8>
  324:	6785                	lui	a5,0x1
- 326:	9987a703          	lw	a4,-1640(a5) # 998 <AddressSize>
+ 326:	9947a703          	lw	a4,-1644(a5) # 994 <AddressSize>
  32a:	478d                	li	a5,3
  32c:	0ef70263          	beq	a4,a5,410 <W25_Read_+0x164>
  330:	4b81                	li	s7,0
@@ -345,7 +345,7 @@ Disassembly of section .text:
  338:	03b00c93          	li	s9,59
  33c:	a821                	j	354 <W25_Read_+0xa8>
  33e:	6785                	lui	a5,0x1
- 340:	9987a703          	lw	a4,-1640(a5) # 998 <AddressSize>
+ 340:	9947a703          	lw	a4,-1644(a5) # 994 <AddressSize>
  344:	478d                	li	a5,3
  346:	0af70f63          	beq	a4,a5,404 <W25_Read_+0x158>
  34a:	4b81                	li	s7,0
@@ -358,7 +358,7 @@ Disassembly of section .text:
  35a:	01910423          	sb	s9,8(sp)
  35e:	01810823          	sb	s8,16(sp)
  362:	6785                	lui	a5,0x1
- 364:	9987a783          	lw	a5,-1640(a5) # 998 <AddressSize>
+ 364:	9947a783          	lw	a5,-1644(a5) # 994 <AddressSize>
  368:	00f108a3          	sb	a5,17(sp)
  36c:	c64e                	sw	s3,12(sp)
  36e:	01710c23          	sb	s7,24(sp)
@@ -371,7 +371,7 @@ Disassembly of section .text:
  386:	0030                	addi	a2,sp,8
  388:	4585                	li	a1,1
  38a:	50010537          	lui	a0,0x50010
- 38e:	2661                	jal	716 <SPIM_Command>
+ 38e:	2649                	jal	710 <SPIM_Command>
  390:	02090363          	beqz	s2,3b6 <W25_Read_+0x10a>
  394:	86a6                	mv	a3,s1
  396:	01248633          	add	a2,s1,s2
@@ -398,7 +398,7 @@ Disassembly of section .text:
  3cc:	6161                	addi	sp,sp,80
  3ce:	8082                	ret
  3d0:	6785                	lui	a5,0x1
- 3d2:	9987a703          	lw	a4,-1640(a5) # 998 <AddressSize>
+ 3d2:	9947a703          	lw	a4,-1644(a5) # 994 <AddressSize>
  3d6:	478d                	li	a5,3
  3d8:	04f70363          	beq	a4,a5,41e <W25_Read_+0x172>
  3dc:	4b89                	li	s7,2
@@ -408,7 +408,7 @@ Disassembly of section .text:
  3e4:	0bb00c93          	li	s9,187
  3e8:	b7b5                	j	354 <W25_Read_+0xa8>
  3ea:	6785                	lui	a5,0x1
- 3ec:	9987a703          	lw	a4,-1640(a5) # 998 <AddressSize>
+ 3ec:	9947a703          	lw	a4,-1644(a5) # 994 <AddressSize>
  3f0:	478d                	li	a5,3
  3f2:	02f70d63          	beq	a4,a5,42c <W25_Read_+0x180>
  3f6:	4b81                	li	s7,0
@@ -457,7 +457,7 @@ Disassembly of section .text:
  452:	c62e                	sw	a1,12(sp)
  454:	8432                	mv	s0,a2
  456:	0828                	addi	a0,sp,24
- 458:	260d                	jal	77a <SPIM_CmdStructInit>
+ 458:	2e31                	jal	774 <SPIM_CmdStructInit>
  45a:	4785                	li	a5,1
  45c:	00f10ca3          	sb	a5,25(sp)
  460:	00910c23          	sb	s1,24(sp)
@@ -470,7 +470,7 @@ Disassembly of section .text:
  47a:	0830                	addi	a2,sp,24
  47c:	4581                	li	a1,0
  47e:	50010537          	lui	a0,0x50010
- 482:	2c51                	jal	716 <SPIM_Command>
+ 482:	2479                	jal	710 <SPIM_Command>
  484:	cc19                	beqz	s0,4a2 <W25_WriteReg+0x5a>
  486:	0074                	addi	a3,sp,12
  488:	fff40793          	addi	a5,s0,-1
@@ -499,7 +499,7 @@ Disassembly of section .text:
  4be:	84aa                	mv	s1,a0
  4c0:	842e                	mv	s0,a1
  4c2:	0028                	addi	a0,sp,8
- 4c4:	2c5d                	jal	77a <SPIM_CmdStructInit>
+ 4c4:	2c45                	jal	774 <SPIM_CmdStructInit>
  4c6:	4785                	li	a5,1
  4c8:	00f104a3          	sb	a5,9(sp)
  4cc:	00910423          	sb	s1,8(sp)
@@ -512,7 +512,7 @@ Disassembly of section .text:
  4e4:	0030                	addi	a2,sp,8
  4e6:	4585                	li	a1,1
  4e8:	50010537          	lui	a0,0x50010
- 4ec:	242d                	jal	716 <SPIM_Command>
+ 4ec:	2415                	jal	710 <SPIM_Command>
  4ee:	50010737          	lui	a4,0x50010
  4f2:	435c                	lw	a5,4(a4)
  4f4:	83a1                	srli	a5,a5,0x8
@@ -558,7 +558,7 @@ Disassembly of section .text:
  54a:	842e                	mv	s0,a1
  54c:	8932                	mv	s2,a2
  54e:	0028                	addi	a0,sp,8
- 550:	242d                	jal	77a <SPIM_CmdStructInit>
+ 550:	2415                	jal	774 <SPIM_CmdStructInit>
  552:	4791                	li	a5,4
  554:	06f40363          	beq	s0,a5,5ba <W25_Erase_+0x7e>
  558:	4481                	li	s1,0
@@ -569,7 +569,7 @@ Disassembly of section .text:
  568:	00910423          	sb	s1,8(sp)
  56c:	00f10823          	sb	a5,16(sp)
  570:	6785                	lui	a5,0x1
- 572:	9987a783          	lw	a5,-1640(a5) # 998 <AddressSize>
+ 572:	9947a783          	lw	a5,-1644(a5) # 994 <AddressSize>
  576:	00f108a3          	sb	a5,17(sp)
  57a:	c64e                	sw	s3,12(sp)
  57c:	00010c23          	sb	zero,24(sp)
@@ -582,7 +582,7 @@ Disassembly of section .text:
  590:	0030                	addi	a2,sp,8
  592:	4581                	li	a1,0
  594:	50010537          	lui	a0,0x50010
- 598:	2abd                	jal	716 <SPIM_Command>
+ 598:	2aa5                	jal	710 <SPIM_Command>
  59a:	50010737          	lui	a4,0x50010
  59e:	435c                	lw	a5,4(a4)
  5a0:	8b89                	andi	a5,a5,2
@@ -598,13 +598,13 @@ Disassembly of section .text:
  5b6:	6121                	addi	sp,sp,64
  5b8:	8082                	ret
  5ba:	6785                	lui	a5,0x1
- 5bc:	9987a483          	lw	s1,-1640(a5) # 998 <AddressSize>
+ 5bc:	9947a483          	lw	s1,-1644(a5) # 994 <AddressSize>
  5c0:	14f5                	addi	s1,s1,-3
  5c2:	0014b493          	seqz	s1,s1
  5c6:	02048493          	addi	s1,s1,32
  5ca:	bf61                	j	562 <W25_Erase_+0x26>
  5cc:	6785                	lui	a5,0x1
- 5ce:	9987a703          	lw	a4,-1640(a5) # 998 <AddressSize>
+ 5ce:	9947a703          	lw	a4,-1644(a5) # 994 <AddressSize>
  5d2:	478d                	li	a5,3
  5d4:	0dc00493          	li	s1,220
  5d8:	f8f705e3          	beq	a4,a5,562 <W25_Erase_+0x26>
@@ -624,7 +624,7 @@ Disassembly of section .text:
  5f4:	89b2                	mv	s3,a2
  5f6:	84b6                	mv	s1,a3
  5f8:	0028                	addi	a0,sp,8
- 5fa:	2241                	jal	77a <SPIM_CmdStructInit>
+ 5fa:	2aad                	jal	774 <SPIM_CmdStructInit>
  5fc:	4785                	li	a5,1
  5fe:	08f48863          	beq	s1,a5,68e <W25_Write_+0xac>
  602:	4901                	li	s2,0
@@ -635,7 +635,7 @@ Disassembly of section .text:
  610:	01210423          	sb	s2,8(sp)
  614:	00f10823          	sb	a5,16(sp)
  618:	6785                	lui	a5,0x1
- 61a:	9987a783          	lw	a5,-1640(a5) # 998 <AddressSize>
+ 61a:	9947a783          	lw	a5,-1644(a5) # 994 <AddressSize>
  61e:	00f108a3          	sb	a5,17(sp)
  622:	c652                	sw	s4,12(sp)
  624:	00010c23          	sb	zero,24(sp)
@@ -649,7 +649,7 @@ Disassembly of section .text:
  63a:	0030                	addi	a2,sp,8
  63c:	4581                	li	a1,0
  63e:	50010537          	lui	a0,0x50010
- 642:	28d1                	jal	716 <SPIM_Command>
+ 642:	20f9                	jal	710 <SPIM_Command>
  644:	02098663          	beqz	s3,670 <W25_Write_+0x8e>
  648:	8522                	mv	a0,s0
  64a:	01340633          	add	a2,s0,s3
@@ -678,14 +678,14 @@ Disassembly of section .text:
  68a:	6121                	addi	sp,sp,64
  68c:	8082                	ret
  68e:	6785                	lui	a5,0x1
- 690:	9987a703          	lw	a4,-1640(a5) # 998 <AddressSize>
+ 690:	9947a703          	lw	a4,-1644(a5) # 994 <AddressSize>
  694:	478d                	li	a5,3
  696:	4949                	li	s2,18
  698:	f6f709e3          	beq	a4,a5,60a <W25_Write_+0x28>
  69c:	4909                	li	s2,2
  69e:	b7b5                	j	60a <W25_Write_+0x28>
  6a0:	6785                	lui	a5,0x1
- 6a2:	9987a703          	lw	a4,-1640(a5) # 998 <AddressSize>
+ 6a2:	9947a703          	lw	a4,-1644(a5) # 994 <AddressSize>
  6a6:	478d                	li	a5,3
  6a8:	00f70663          	beq	a4,a5,6b4 <W25_Write_+0xd2>
  6ac:	448d                	li	s1,3
@@ -729,65 +729,64 @@ Disassembly of section .text:
  6fe:	0622                	slli	a2,a2,0x8
  700:	0586                	slli	a1,a1,0x1
  702:	8e4d                	or	a2,a2,a1
- 704:	000305b7          	lui	a1,0x30
- 708:	8e4d                	or	a2,a2,a1
- 70a:	c110                	sw	a2,0(a0)
- 70c:	411c                	lw	a5,0(a0)
- 70e:	0017e793          	ori	a5,a5,1
- 712:	c11c                	sw	a5,0(a0)
- 714:	8082                	ret
+ 704:	c110                	sw	a2,0(a0)
+ 706:	411c                	lw	a5,0(a0)
+ 708:	0017e793          	ori	a5,a5,1
+ 70c:	c11c                	sw	a5,0(a0)
+ 70e:	8082                	ret
 
-00000716 <SPIM_Command>:
- 716:	01064783          	lbu	a5,16(a2)
- 71a:	c399                	beqz	a5,720 <SPIM_Command+0xa>
- 71c:	465c                	lw	a5,12(a2)
- 71e:	c55c                	sw	a5,12(a0)
- 720:	01364783          	lbu	a5,19(a2)
- 724:	c781                	beqz	a5,72c <SPIM_Command+0x16>
- 726:	4a5c                	lw	a5,20(a2)
- 728:	17fd                	addi	a5,a5,-1
- 72a:	c91c                	sw	a5,16(a0)
- 72c:	00064783          	lbu	a5,0(a2)
- 730:	05ea                	slli	a1,a1,0x1a
- 732:	8fcd                	or	a5,a5,a1
- 734:	00164703          	lbu	a4,1(a2)
- 738:	0722                	slli	a4,a4,0x8
- 73a:	8fd9                	or	a5,a5,a4
- 73c:	00864703          	lbu	a4,8(a2)
- 740:	072a                	slli	a4,a4,0xa
- 742:	8fd9                	or	a5,a5,a4
- 744:	00964703          	lbu	a4,9(a2)
- 748:	0732                	slli	a4,a4,0xc
- 74a:	8fd9                	or	a5,a5,a4
- 74c:	01064703          	lbu	a4,16(a2)
- 750:	073a                	slli	a4,a4,0xe
- 752:	8fd9                	or	a5,a5,a4
- 754:	01164703          	lbu	a4,17(a2)
- 758:	0742                	slli	a4,a4,0x10
- 75a:	8fd9                	or	a5,a5,a4
- 75c:	01264703          	lbu	a4,18(a2)
- 760:	074a                	slli	a4,a4,0x12
- 762:	8fd9                	or	a5,a5,a4
- 764:	01364703          	lbu	a4,19(a2)
- 768:	0762                	slli	a4,a4,0x18
- 76a:	8fd9                	or	a5,a5,a4
- 76c:	c95c                	sw	a5,20(a0)
- 76e:	00864783          	lbu	a5,8(a2)
- 772:	c399                	beqz	a5,778 <SPIM_Command+0x62>
- 774:	425c                	lw	a5,4(a2)
- 776:	c51c                	sw	a5,8(a0)
- 778:	8082                	ret
+00000710 <SPIM_Command>:
+ 710:	01064783          	lbu	a5,16(a2)
+ 714:	c399                	beqz	a5,71a <SPIM_Command+0xa>
+ 716:	465c                	lw	a5,12(a2)
+ 718:	c55c                	sw	a5,12(a0)
+ 71a:	01364783          	lbu	a5,19(a2)
+ 71e:	c781                	beqz	a5,726 <SPIM_Command+0x16>
+ 720:	4a5c                	lw	a5,20(a2)
+ 722:	17fd                	addi	a5,a5,-1
+ 724:	c91c                	sw	a5,16(a0)
+ 726:	00064783          	lbu	a5,0(a2)
+ 72a:	05ea                	slli	a1,a1,0x1a
+ 72c:	8fcd                	or	a5,a5,a1
+ 72e:	00164703          	lbu	a4,1(a2)
+ 732:	0722                	slli	a4,a4,0x8
+ 734:	8fd9                	or	a5,a5,a4
+ 736:	00864703          	lbu	a4,8(a2)
+ 73a:	072a                	slli	a4,a4,0xa
+ 73c:	8fd9                	or	a5,a5,a4
+ 73e:	00964703          	lbu	a4,9(a2)
+ 742:	0732                	slli	a4,a4,0xc
+ 744:	8fd9                	or	a5,a5,a4
+ 746:	01064703          	lbu	a4,16(a2)
+ 74a:	073a                	slli	a4,a4,0xe
+ 74c:	8fd9                	or	a5,a5,a4
+ 74e:	01164703          	lbu	a4,17(a2)
+ 752:	0742                	slli	a4,a4,0x10
+ 754:	8fd9                	or	a5,a5,a4
+ 756:	01264703          	lbu	a4,18(a2)
+ 75a:	074a                	slli	a4,a4,0x12
+ 75c:	8fd9                	or	a5,a5,a4
+ 75e:	01364703          	lbu	a4,19(a2)
+ 762:	0762                	slli	a4,a4,0x18
+ 764:	8fd9                	or	a5,a5,a4
+ 766:	c95c                	sw	a5,20(a0)
+ 768:	00864783          	lbu	a5,8(a2)
+ 76c:	c399                	beqz	a5,772 <SPIM_Command+0x62>
+ 76e:	425c                	lw	a5,4(a2)
+ 770:	c51c                	sw	a5,8(a0)
+ 772:	8082                	ret
 
-0000077a <SPIM_CmdStructInit>:
- 77a:	00050023          	sb	zero,0(a0)
- 77e:	000500a3          	sb	zero,1(a0)
- 782:	00052223          	sw	zero,4(a0)
- 786:	00050423          	sb	zero,8(a0)
- 78a:	000504a3          	sb	zero,9(a0)
- 78e:	00052623          	sw	zero,12(a0)
- 792:	00050823          	sb	zero,16(a0)
- 796:	000508a3          	sb	zero,17(a0)
- 79a:	00050923          	sb	zero,18(a0)
- 79e:	000509a3          	sb	zero,19(a0)
- 7a2:	00052a23          	sw	zero,20(a0)
- 7a6:	8082                	ret
+00000774 <SPIM_CmdStructInit>:
+ 774:	00050023          	sb	zero,0(a0)
+ 778:	000500a3          	sb	zero,1(a0)
+ 77c:	00052223          	sw	zero,4(a0)
+ 780:	00050423          	sb	zero,8(a0)
+ 784:	000504a3          	sb	zero,9(a0)
+ 788:	00052623          	sw	zero,12(a0)
+ 78c:	00050823          	sb	zero,16(a0)
+ 790:	000508a3          	sb	zero,17(a0)
+ 794:	00050923          	sb	zero,18(a0)
+ 798:	000509a3          	sb	zero,19(a0)
+ 79c:	00052a23          	sw	zero,20(a0)
+ 7a0:	8082                	ret
+	...

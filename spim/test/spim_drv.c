@@ -17,10 +17,9 @@
 *******************************************************************************************************************************/
 void SPIM_Init(SPIM_TypeDef * SPIMx, uint8_t clkmode, uint8_t clkdiv)
 {
-	SPIMx->CR = (clkmode 	  << SPIM_CR_CPHA_Pos)  |
-				(0			  << SPIM_CR_BIDI_Pos)  |
-				((clkdiv - 1) << SPIM_CR_CKDIV_Pos) |
-				(3			  << SPIM_CR_CSHMIN_Pos);
+	SPIMx->CR = (clkmode 	  << SPIM_CR_CPHA_Pos) |
+				(0			  << SPIM_CR_BIDI_Pos) |
+				((clkdiv - 1) << SPIM_CR_CKDIV_Pos);
 	
 	SPIMx->CR |= SPIM_CR_ENA_Msk;
 }

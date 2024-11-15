@@ -35,8 +35,6 @@ typedef struct {
 #define SPIM_CR_BIDI_Msk			(0x01 << SPIM_CR_BIDI_Pos)
 #define SPIM_CR_CKDIV_Pos			8		// fSPIM_CK = fSYSCLK / (CKDIV + 1)
 #define SPIM_CR_CKDIV_Msk			(0xFF << SPIM_CR_CKDIV_Pos)
-#define SPIM_CR_CSHMIN_Pos			16		// nCS stay high for at least (CSHMIN + 1) cycles between commands
-#define SPIM_CR_CSHMIN_Msk			(0x07 << SPIM_CR_CSHMIN_Pos)
 
 #define SPIM_SR_ERR_Pos				0
 #define SPIM_SR_ERR_Msk				(0x01 << SPIM_SR_ERR_Pos)
