@@ -8,6 +8,7 @@ localparam PhaseSize_16bit	= 1;
 localparam PhaseSize_24bit	= 2;
 localparam PhaseSize_32bit	= 3;
 
-localparam Oper_Idle  = 0;
+localparam Oper_None  = 0;
 localparam Oper_Read  = 1;
 localparam Oper_Write = 2;
+localparam Oper_Dummy = 3;

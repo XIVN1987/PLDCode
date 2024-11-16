@@ -38,14 +38,14 @@ wire [31:0] dlen;
 
 wire 		tf_write;
 wire [ 7:0]	tf_wbyte;
-wire 		tf_read;
+reg 		tf_read;
 wire [ 7:0]	tf_rbyte;
 wire 		tf_full;
 wire 		tf_empty;
 wire [ 5:0]	tf_level;
 
-wire 		rf_write;
-wire [ 7:0]	rf_wbyte;
+reg 		rf_write;
+reg [ 7:0]	rf_wbyte;
 wire 		rf_read;
 wire [ 7:0]	rf_rbyte;
 wire 		rf_full;
@@ -129,5 +129,254 @@ byte_fifo #(
 //----------------------------------------------------------------------------
 `include "spim.vh"
 
+localparam STATE_IDLE	 = 4'h0;
+localparam STATE_CS_0	 = 4'h1;
+localparam STATE_INST	 = 4'h2;
+localparam STATE_ADDR	 = 4'h3;
+localparam STATE_ALTB	 = 4'h4;
+localparam STATE_DUMMY	 = 4'h5;
+localparam STATE_DATAT_0 = 4'h6;
+localparam STATE_DATAT_1 = 4'h7;
+localparam STATE_DATAR_0 = 4'h8;
+localparam STATE_DATAR_1 = 4'h9;
+localparam STATE_CS_1	 = 4'hA;
+localparam STATE_WAIT	 = 4'hB;	// wait for oper to be cleared, then switch to IDLE
+
+reg [ 3:0] state_r;
+
+reg 	   spi_cs_r;
+
+reg 	   boper;	// byte transfer oper
+reg 	   bmode;	// byte transfer mode
+reg [ 7:0] tbyte;	// byte to transmit
+wire[ 7:0] rbyte;	// received byte
+wire 	   bdone;	// byte transfer done
+
+reg [ 5:0] count;
+
+always @(posedge clk or negedge rst_n) begin
+	if(~rst_n | ~clr_n) begin
+		state_r	 <= STATE_IDLE;
+		spi_cs_r <= 1;
+		odone	 <= 0;
+		boper	 <= 0;
+	end
+	else begin
+		odone	 <= 0;
+		boper	 <= 0;
+
+		case(state_r)
+		STATE_IDLE: begin
+			if(oper != 0) begin
+				state_r	 <= STATE_CS_0;
+				spi_cs_r <= 0;
+				count	 <= 3;
+			end
+		end
+
+		STATE_CS_0: begin
+			if(~|count) begin
+				state_r	 <= STATE_INST;
+				boper	 <= Oper_Write;
+				bmode	 <= imode;
+				tbyte	 <= icode;
+			end
+			else begin
+				count	 <= count - 1;
+			end
+		end
+
+		STATE_INST: begin
+			if(bdone) begin
+				if(amode) begin
+					state_r	 <= STATE_ADDR;
+					boper	 <= Oper_Write;
+					bmode	 <= amode;
+					tbyte	 <= addr[asize-8 +: 8];
+					count	 <= (asize >> 3) - 1;
+				end
+				else if(abmode) begin
+					state_r	 <= STATE_ALTB;
+					boper	 <= Oper_Write;
+					bmode	 <= abmode;
+					tbyte	 <= altb[absize-8 +: 8];
+					count	 <= (absize >> 3) - 1;
+				end
+				else if(dummy) begin
+					state_r	 <= STATE_DUMMY;
+					boper	 <= Oper_Dummy;
+				end
+				else if(dmode & (oper == Oper_Read)) begin
+					state_r	 <= STATE_DATAR_0;
+					boper	 <= Oper_Read;
+					bmode	 <= dmode;
+					count	 <= dlen;
+				end
+				else if(dmode & (oper == Oper_Write)) begin
+					state_r	 <= STATE_DATAT_0;
+					count	 <= dlen;
+				end
+				else begin
+					state_r  <= STATE_CS_1;
+					spi_cs_r <= 1;
+					count    <= 7;
+				end
+			end
+		end
+
+		STATE_ADDR: begin
+			if(bdone) begin
+				if(~|count) begin
+					if(abmode) begin
+						state_r	 <= STATE_ALTB;
+						boper	 <= Oper_Write;
+						bmode	 <= abmode;
+						tbyte	 <= altb[absize-8 +: 8];
+						count	 <= (absize >> 3) - 1;
+					end
+					else if(dummy) begin
+						state_r	 <= STATE_DUMMY;
+						boper	 <= Oper_Dummy;
+					end
+					else if(dmode & (oper == Oper_Read)) begin
+						state_r	 <= STATE_DATAR_0;
+						boper	 <= Oper_Read;
+						bmode	 <= dmode;
+						count	 <= dlen;
+					end
+					else if(dmode & (oper == Oper_Write)) begin
+						state_r	 <= STATE_DATAT_0;
+						count	 <= dlen;
+					end
+					else begin
+						state_r  <= STATE_CS_1;
+						spi_cs_r <= 1;
+						count    <= 7;
+					end
+				end
+				else begin
+					boper	 <= Oper_Write;
+					tbyte	 <= addr[(count<<3)-8 +: 8];
+					count	 <= count - 1;
+				end
+			end
+		end
+
+		STATE_ALTB: begin
+			if(bdone) begin
+				if(~|count) begin
+					if(dummy) begin
+						state_r	 <= STATE_DUMMY;
+						boper	 <= Oper_Dummy;
+					end
+					else if(dmode & (oper == Oper_Read)) begin
+						state_r	 <= STATE_DATAR_0;
+						boper	 <= Oper_Read;
+						bmode	 <= dmode;
+						count	 <= dlen;
+					end
+					else if(dmode & (oper == Oper_Write)) begin
+						state_r	 <= STATE_DATAT_0;
+						count	 <= dlen;
+					end
+					else begin
+						state_r  <= STATE_CS_1;
+						spi_cs_r <= 1;
+						count    <= 7;
+					end
+				end
+				else begin
+					boper	 <= Oper_Write;
+					tbyte	 <= altb[(count<<3)-8 +: 8];
+					count	 <= count - 1;
+				end
+			end
+		end
+
+		STATE_DUMMY: begin
+			if(bdone) begin
+				if(dmode & (oper == Oper_Read)) begin
+					state_r	 <= STATE_DATAR_0;
+					boper	 <= Oper_Read;
+					bmode	 <= dmode;
+					count	 <= dlen;
+				end
+				else if(dmode & (oper == Oper_Write)) begin
+					state_r	 <= STATE_DATAT_0;
+					count	 <= dlen;
+				end
+				else begin
+					state_r  <= STATE_CS_1;
+					spi_cs_r <= 1;
+					count    <= 7;
+				end
+			end
+		end
+
+		STATE_DATAT_0: begin
+			if(~tf_empty) begin
+				state_r	 <= STATE_DATAT_1;
+				boper	 <= Oper_Write;
+				bmode	 <= dmode;
+				tbyte	 <= tf_rbyte;
+				tf_read	 <= 1;
+				count	 <= count - 1;
+			end
+		end
+
+		STATE_DATAT_1: begin
+			if(bdone) begin
+				if(~|count) begin
+					state_r  <= STATE_CS_1;
+					spi_cs_r <= 1;
+					count    <= 7;
+				end
+				else begin
+					state_r	 <= STATE_DATAT_0;
+				end
+			end
+		end
+
+		STATE_DATAR_0: begin
+			if(bdone) begin
+				state_r	 <= STATE_DATAR_1;
+				count	 <= count - 1;
+			end
+		end
+
+		STATE_DATAR_1: begin
+			if(~rf_full) begin
+				rf_write <= 1;
+				rf_wbyte <= rbyte;
+
+				if(~|count) begin
+					state_r  <= STATE_CS_1;
+					spi_cs_r <= 1;
+					count    <= 7;
+				end
+				else begin
+					state_r	 <= STATE_DATAR_0;
+					boper	 <= Oper_Read;
+					bmode	 <= dmode;
+				end
+			end
+		end
+
+		STATE_CS_1: begin
+			if(~|count) begin
+				state_r  <= STATE_WAIT;
+				odone	 <= 1;
+			end
+			else begin
+				count    <= count - 1;
+			end
+		end
+
+		STATE_WAIT: begin
+			state_r	 <= STATE_IDLE;
+		end
+		endcase
+	end
+end
 
 endmodule
