@@ -468,7 +468,7 @@ Disassembly of section .text:
  474:	02f105a3          	sb	a5,43(sp)
  478:	d622                	sw	s0,44(sp)
  47a:	0830                	addi	a2,sp,24
- 47c:	4581                	li	a1,0
+ 47c:	4589                	li	a1,2
  47e:	50010537          	lui	a0,0x50010
  482:	2479                	jal	710 <SPIM_Command>
  484:	cc19                	beqz	s0,4a2 <W25_WriteReg+0x5a>
@@ -580,7 +580,7 @@ Disassembly of section .text:
  58c:	4519                	li	a0,6
  58e:	3d6d                	jal	448 <W25_WriteReg>
  590:	0030                	addi	a2,sp,8
- 592:	4581                	li	a1,0
+ 592:	4589                	li	a1,2
  594:	50010537          	lui	a0,0x50010
  598:	2aa5                	jal	710 <SPIM_Command>
  59a:	50010737          	lui	a4,0x50010
@@ -647,7 +647,7 @@ Disassembly of section .text:
  636:	4519                	li	a0,6
  638:	3d01                	jal	448 <W25_WriteReg>
  63a:	0030                	addi	a2,sp,8
- 63c:	4581                	li	a1,0
+ 63c:	4589                	li	a1,2
  63e:	50010537          	lui	a0,0x50010
  642:	20f9                	jal	710 <SPIM_Command>
  644:	02098663          	beqz	s3,670 <W25_Write_+0x8e>

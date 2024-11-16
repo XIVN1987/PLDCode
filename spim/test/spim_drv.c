@@ -28,11 +28,11 @@ void SPIM_Init(SPIM_TypeDef * SPIMx, uint8_t clkmode, uint8_t clkdiv)
 /*******************************************************************************************************************************
 * @brief	SPIM command send
 * @param	SPIMx is the SPIM to use
-* @param	cmdMode: SPIM_IndirectWrite, SPIM_IndirectRead, or SPIM_MemoryMapped
+* @param	oper: SPIM_Oper_Read or SPIM_Oper_Write
 * @param	cmdStruct contains command to send
 * @return
 *******************************************************************************************************************************/
-void SPIM_Command(SPIM_TypeDef * SPIMx, uint8_t cmdMode, SPIM_CmdStructure * cmdStruct)
+void SPIM_Command(SPIM_TypeDef * SPIMx, uint8_t oper, SPIM_CmdStructure * cmdStruct)
 {
 	if(cmdStruct->AlternateBytesMode != SPIM_PhaseMode_None)
 		SPIMx->ABR = cmdStruct->AlternateBytes;
@@ -48,7 +48,7 @@ void SPIM_Command(SPIM_TypeDef * SPIMx, uint8_t cmdMode, SPIM_CmdStructure * cmd
 				 (cmdStruct->AlternateBytesSize	<< SPIM_CCR_ABSIZE_Pos) |
 				 (cmdStruct->DummyCycles		<< SPIM_CCR_DUMMY_Pos)  |
 				 (cmdStruct->DataMode			<< SPIM_CCR_DMODE_Pos)  |
-				 (cmdMode						<< SPIM_CCR_MODE_Pos);
+				 (oper							<< SPIM_CCR_OPER_Pos);
 	
 	if(cmdStruct->AddressMode != SPIM_PhaseMode_None)
 		SPIMx->AR = cmdStruct->Address;

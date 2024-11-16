@@ -22,9 +22,8 @@ module spim (
 wire 		clr_n;
 wire [ 1:0] ckmod;
 wire [ 7:0] ckdiv;
-wire 		busy;
-wire [ 5:0] fflvl;
-wire 		oper;
+wire [ 1:0] oper;
+reg 		odone;
 wire [ 7:0] icode;
 wire [ 1:0] imode;
 wire [31:0] addr;
@@ -36,6 +35,22 @@ wire [ 1:0] absize;
 wire [ 4:0] dummy;
 wire [ 1:0] dmode;
 wire [31:0] dlen;
+
+wire 		tf_write;
+wire [ 7:0]	tf_wbyte;
+wire 		tf_read;
+wire [ 7:0]	tf_rbyte;
+wire 		tf_full;
+wire 		tf_empty;
+wire [ 5:0]	tf_level;
+
+wire 		rf_write;
+wire [ 7:0]	rf_wbyte;
+wire 		rf_read;
+wire [ 7:0]	rf_rbyte;
+wire 		rf_full;
+wire 		rf_empty;
+wire [ 5:0]	rf_level;
 
 spim_reg u_reg (
 	.clk(clk),
@@ -51,10 +66,9 @@ spim_reg u_reg (
 	.clr_n (clr_n ),
 	.ckmod (ckmod ),
 	.ckdiv (ckdiv ),
-	.busy  (busy  ),
-	.fflvl (fflvl ),
 
 	.oper  (oper  ),
+	.odone (odone ),
 	.icode (icode ),
 	.imode (imode ),
 	.addr  (addr  ),
@@ -65,8 +79,55 @@ spim_reg u_reg (
 	.absize(absize),
 	.dummy (dummy ),
 	.dmode (dmode ),
-	.dlen  (dlen  )
+	.dlen  (dlen  ),
+
+	.tf_write(tf_write),
+	.tf_wbyte(tf_wbyte),
+	.tf_level(tf_level),
+	.tf_full (tf_full),
+	.rf_read (rf_read),
+	.rf_rbyte(rf_rbyte),
+	.rf_level(rf_level),
+	.rf_empty(rf_empty)
 );
+
+
+byte_fifo #(
+	.DEPTH(32),
+	.WADDR( 5)
+) u_tfifo (
+	.clk  (clk),
+	.rst_n(rst_n),
+	.clr_n(clr_n),
+	.write(tf_write),
+	.wbyte(tf_wbyte),
+	.read (tf_read),
+	.rbyte(tf_rbyte),
+	.full (tf_full),
+	.empty(tf_empty),
+	.level(tf_level)
+);
+
+
+byte_fifo #(
+	.DEPTH(32),
+	.WADDR( 5)
+) u_rfifo (
+	.clk  (clk),
+	.rst_n(rst_n),
+	.clr_n(clr_n),
+	.write(rf_write),
+	.wbyte(rf_wbyte),
+	.read (rf_read),
+	.rbyte(rf_rbyte),
+	.full (rf_full),
+	.empty(rf_empty),
+	.level(rf_level)
+);
+
+
+//----------------------------------------------------------------------------
+`include "spim.vh"
 
 
 endmodule

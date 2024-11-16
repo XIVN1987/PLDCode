@@ -59,8 +59,8 @@ typedef struct {
 #define SPIM_CCR_DUMMY_Msk			(0x1F << SPIM_CCR_DUMMY_Pos)
 #define SPIM_CCR_DMODE_Pos			24		// 0 No Data, 1 Data on D0, 2 on D0-1, 3 on D0-3
 #define SPIM_CCR_DMODE_Msk			(0x03 << SPIM_CCR_DMODE_Pos)
-#define SPIM_CCR_MODE_Pos			26		// 0 Indirect write mode, 1 Indirect read mode, 3 Memory-mapped mode
-#define SPIM_CCR_MODE_Msk			(0x03 << SPIM_CCR_MODE_Pos)
+#define SPIM_CCR_OPER_Pos			26		// 1 read operation, 2 write operation
+#define SPIM_CCR_OPER_Msk			(0x03 << SPIM_CCR_OPER_Pos)
 
 
 #define SPIM	((SPIM_TypeDef *)((5 << 28) + 0x010000))
@@ -91,20 +91,19 @@ typedef struct {
 #define SPIM_PhaseSize_24bit	2
 #define SPIM_PhaseSize_32bit	3
 
-#define SPIM_IndirectWrite		0
-#define SPIM_IndirectRead		1
-#define SPIM_MemoryMapped		3
-
 #define SPIM_CPHA0_CPOL0		0
 #define SPIM_CPHA1_CPOL0		1
 #define SPIM_CPHA0_CPOL1		2
 #define SPIM_CPHA1_CPOL1		3
 
+#define SPIM_Oper_Read			1
+#define SPIM_Oper_Write			2
+
 
 
 void SPIM_Init(SPIM_TypeDef * SPIMx, uint8_t clkmode, uint8_t clkdiv);
 
-void SPIM_Command(SPIM_TypeDef * SPIMx, uint8_t cmdMode, SPIM_CmdStructure * cmdStruct);
+void SPIM_Command(SPIM_TypeDef * SPIMx, uint8_t oper, SPIM_CmdStructure * cmdStruct);
 void SPIM_CmdStructInit(SPIM_CmdStructure * cmdStruct);
 
 

@@ -63,7 +63,7 @@ void W25_Erase_(uint32_t addr, uint16_t block_size, uint8_t wait)
 	
 	W25_WriteEnable();
 	
-	SPIM_Command(SPIM, SPIM_IndirectWrite, &cmdStruct);
+	SPIM_Command(SPIM, SPIM_Oper_Write, &cmdStruct);
 	
 	while(SPIM_Busy(SPIM)) {}
 	
@@ -111,7 +111,7 @@ void W25_Write_(uint32_t addr, uint8_t buff[], uint32_t nbyte, uint8_t data_widt
 	
 	W25_WriteEnable();
 	
-	SPIM_Command(SPIM, SPIM_IndirectWrite, &cmdStruct);
+	SPIM_Command(SPIM, SPIM_Oper_Write, &cmdStruct);
 	
 	for(int i = 0; i < nbyte; i++)
 	{
@@ -204,7 +204,7 @@ void W25_Read_(uint32_t addr, uint8_t buff[], uint32_t nbyte, uint8_t addr_width
 	cmdStruct.DataMode 			 = dataMode;
 	cmdStruct.DataCount 		 = nbyte;
 	
-	SPIM_Command(SPIM, SPIM_IndirectRead, &cmdStruct);
+	SPIM_Command(SPIM, SPIM_Oper_Read, &cmdStruct);
 	
 	for(int i = 0; i < nbyte; i++)
 	{
@@ -235,7 +235,7 @@ void W25_WriteReg(uint8_t cmd, uint32_t data, uint8_t nbyte)
 	cmdStruct.DataMode 			 = nbyte ? SPIM_PhaseMode_1bit : SPIM_PhaseMode_None;
 	cmdStruct.DataCount 		 = nbyte;
 	
-	SPIM_Command(SPIM, SPIM_IndirectWrite, &cmdStruct);
+	SPIM_Command(SPIM, SPIM_Oper_Write, &cmdStruct);
 	
 	for(int i = nbyte; i > 0; i--)
 		SPIM->DRB = ((uint8_t *)&data)[i-1];
@@ -263,7 +263,7 @@ uint32_t W25_ReadReg(uint8_t cmd, uint8_t nbyte)
 	cmdStruct.DataMode 			 = SPIM_PhaseMode_1bit;
 	cmdStruct.DataCount 		 = nbyte;
 	
-	SPIM_Command(SPIM, SPIM_IndirectRead, &cmdStruct);
+	SPIM_Command(SPIM, SPIM_Oper_Read, &cmdStruct);
 	
 	while(SPIM_FIFOCount(SPIM) < nbyte) {}
 	
