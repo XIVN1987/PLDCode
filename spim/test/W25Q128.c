@@ -68,7 +68,9 @@ void W25_Erase_(uint32_t addr, uint16_t block_size, uint8_t wait)
 	while(SPIM_Busy(SPIM)) {}
 	
 	if(wait)
-		while(W25_FlashBusy()) {}
+		while(W25_FlashBusy()) {
+			for(int i = 0; i < 1000 * 50 / 4 / 2; i++) {}	// when fCPU = 50MHz
+		}
 }
 
 

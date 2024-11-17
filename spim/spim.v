@@ -152,7 +152,7 @@ reg [ 7:0] tbyte;	// byte to transmit
 wire[ 7:0] rbyte;	// received byte
 wire 	   bdone;	// byte transfer done
 
-reg [19:0] count;
+reg [20:0] count;
 
 always @(posedge clk or negedge rst_n) begin
 	if(~rst_n | ~clr_n) begin
@@ -164,6 +164,8 @@ always @(posedge clk or negedge rst_n) begin
 	else begin
 		odone	 <= 0;
 		boper	 <= 0;
+		tf_read	 <= 0;
+		rf_write <= 0;
 
 		case(state_r)
 		STATE_IDLE: begin
@@ -192,15 +194,15 @@ always @(posedge clk or negedge rst_n) begin
 					state_r	 <= STATE_ADDR;
 					boper	 <= Oper_Write;
 					bmode	 <= amode;
-					tbyte	 <= addr[asize<<3 +: 8];
-					count	 <= asize << 3;
+					tbyte	 <= addr[{asize, 3'b000} +: 8];
+					count	 <= {asize, 3'b000};
 				end
 				else if(abmode) begin
 					state_r	 <= STATE_ALTB;
 					boper	 <= Oper_Write;
 					bmode	 <= abmode;
-					tbyte	 <= altb[absize<<3 +: 8];
-					count	 <= absize << 3;
+					tbyte	 <= altb[{absize, 3'b000} +: 8];
+					count	 <= {absize, 3'b000};
 				end
 				else if(dummy) begin
 					state_r	 <= STATE_DUMMY;
@@ -210,11 +212,11 @@ always @(posedge clk or negedge rst_n) begin
 					state_r	 <= STATE_DATAR_0;
 					boper	 <= Oper_Read;
 					bmode	 <= dmode;
-					count	 <= dlen;
+					count	 <= dlen + 1;
 				end
 				else if(dmode & (oper == Oper_Write)) begin
 					state_r	 <= STATE_DATAT_0;
-					count	 <= dlen;
+					count	 <= dlen + 1;
 				end
 				else begin
 					state_r  <= STATE_CS_1;
@@ -231,8 +233,8 @@ always @(posedge clk or negedge rst_n) begin
 						state_r	 <= STATE_ALTB;
 						boper	 <= Oper_Write;
 						bmode	 <= abmode;
-						tbyte	 <= altb[absize<<3 +: 8];
-						count	 <= absize << 3;
+						tbyte	 <= altb[{absize, 3'b000} +: 8];
+						count	 <= {absize, 3'b000};
 					end
 					else if(dummy) begin
 						state_r	 <= STATE_DUMMY;
@@ -242,11 +244,11 @@ always @(posedge clk or negedge rst_n) begin
 						state_r	 <= STATE_DATAR_0;
 						boper	 <= Oper_Read;
 						bmode	 <= dmode;
-						count	 <= dlen;
+						count	 <= dlen + 1;
 					end
 					else if(dmode & (oper == Oper_Write)) begin
 						state_r	 <= STATE_DATAT_0;
-						count	 <= dlen;
+						count	 <= dlen + 1;
 					end
 					else begin
 						state_r  <= STATE_CS_1;
@@ -273,11 +275,11 @@ always @(posedge clk or negedge rst_n) begin
 						state_r	 <= STATE_DATAR_0;
 						boper	 <= Oper_Read;
 						bmode	 <= dmode;
-						count	 <= dlen;
+						count	 <= dlen + 1;
 					end
 					else if(dmode & (oper == Oper_Write)) begin
 						state_r	 <= STATE_DATAT_0;
-						count	 <= dlen;
+						count	 <= dlen + 1;
 					end
 					else begin
 						state_r  <= STATE_CS_1;
@@ -299,11 +301,11 @@ always @(posedge clk or negedge rst_n) begin
 					state_r	 <= STATE_DATAR_0;
 					boper	 <= Oper_Read;
 					bmode	 <= dmode;
-					count	 <= dlen;
+					count	 <= dlen + 1;
 				end
 				else if(dmode & (oper == Oper_Write)) begin
 					state_r	 <= STATE_DATAT_0;
-					count	 <= dlen;
+					count	 <= dlen + 1;
 				end
 				else begin
 					state_r  <= STATE_CS_1;

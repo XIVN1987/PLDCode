@@ -30,7 +30,8 @@ localparam STATE_RBYTE_00_0	= 4'h5;
 localparam STATE_RBYTE_00_1	= 4'h6;
 localparam STATE_RBYTE_11_0	= 4'h7;
 localparam STATE_RBYTE_11_1	= 4'h8;
-localparam STATE_DUMMY		= 4'h9;
+localparam STATE_DUMMY_0	= 4'h9;
+localparam STATE_DUMMY_1	= 4'hA;
 
 reg [ 3:0] state_r;
 
@@ -99,7 +100,7 @@ always @(posedge clk or negedge rst_n) begin
 			end
 
 			Oper_Dummy: begin
-				state_r	 <= STATE_DUMMY;
+				state_r	 <= STATE_DUMMY_0;
 				count	 <= dummy;
 			end
 			endcase
@@ -181,18 +182,18 @@ always @(posedge clk or negedge rst_n) begin
 
 			case(bmode)
 			PhaseMode_1bit: begin
-				rbyte_r	<= (rbyte_r << 1) | spi_di[1:1];
-				count	<= count - 1;
+				rbyte_r	 <= (rbyte_r << 1) | spi_di[1:1];
+				count	 <= count - 1;
 			end
 
 			PhaseMode_2bit: begin
-				rbyte_r	<= (rbyte_r << 2) | spi_di[1:0];
-				count	<= count - 2;
+				rbyte_r	 <= (rbyte_r << 2) | spi_di[1:0];
+				count	 <= count - 2;
 			end
 			
 			PhaseMode_4bit: begin
-				rbyte_r	<= (rbyte_r << 4) | spi_di[3:0];
-				count	<= count - 4;
+				rbyte_r	 <= (rbyte_r << 4) | spi_di[3:0];
+				count	 <= count - 4;
 			end
 			endcase
 		end
@@ -214,9 +215,9 @@ always @(posedge clk or negedge rst_n) begin
 			state_r	 <= STATE_RBYTE_11_1;
 
 			case(bmode)
-			PhaseMode_1bit: count <= count - 1;
-			PhaseMode_2bit: count <= count - 2;
-			PhaseMode_4bit: count <= count - 4;
+			PhaseMode_1bit: count	 <= count - 1;
+			PhaseMode_2bit: count	 <= count - 2;
+			PhaseMode_4bit: count	 <= count - 4;
 			endcase
 		end
 
@@ -225,15 +226,15 @@ always @(posedge clk or negedge rst_n) begin
 
 			case(bmode)
 			PhaseMode_1bit: begin
-				rbyte_r	<= (rbyte_r << 1) | spi_di[1:1];
+				rbyte_r	 <= (rbyte_r << 1) | spi_di[1:1];
 			end
 
 			PhaseMode_2bit: begin
-				rbyte_r	<= (rbyte_r << 2) | spi_di[1:0];
+				rbyte_r	 <= (rbyte_r << 2) | spi_di[1:0];
 			end
 			
 			PhaseMode_4bit: begin
-				rbyte_r	<= (rbyte_r << 4) | spi_di[3:0];
+				rbyte_r	 <= (rbyte_r << 4) | spi_di[3:0];
 			end
 			endcase
 
@@ -246,13 +247,22 @@ always @(posedge clk or negedge rst_n) begin
 			end
 		end
 
-		STATE_DUMMY: begin
+		STATE_DUMMY_0: begin
+			spi_ck_r <= spi_ck_r ^ 1;
+			state_r	 <= STATE_DUMMY_1;
+
+			count	 <= count - 1;
+		end
+
+		STATE_DUMMY_1: begin
+			spi_ck_r <= spi_ck_r ^ 1;
+
 			if(~|count) begin
 				state_r	 <= STATE_IDLE;
 				bdone_r	 <= 1;
 			end
 			else begin
-				count	 <= count - 1;
+				state_r	 <= STATE_DUMMY_0;
 			end
 		end
 		endcase
