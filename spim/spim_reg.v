@@ -64,7 +64,7 @@ always @(posedge clk or negedge rst_n) begin
 	else if((mem_addr == ADDR_CR) && (mem_wstrb != 0) && mem_ready) begin
 		ena_r	<= mem_wdata[   0];
 		ckmod_r <= mem_wdata[ 2:1];
-		ckdiv_r <= mem_wdata[15:8];
+		ckdiv_r <= ~|mem_wdata[15:9] ? 2 : mem_wdata[15:8];
 	end
 end
 
