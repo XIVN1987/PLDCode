@@ -190,31 +190,31 @@ always @(posedge clk or negedge rst_n) begin
 
 		STATE_INST: begin
 			if(bdone) begin
-				if(amode) begin
+				if(|amode) begin
 					state_r	 <= STATE_ADDR;
 					boper	 <= Oper_Write;
 					bmode	 <= amode;
 					tbyte	 <= addr[{asize, 3'b000} +: 8];
 					count	 <= {asize, 3'b000};
 				end
-				else if(abmode) begin
+				else if(|abmode) begin
 					state_r	 <= STATE_ALTB;
 					boper	 <= Oper_Write;
 					bmode	 <= abmode;
 					tbyte	 <= altb[{absize, 3'b000} +: 8];
 					count	 <= {absize, 3'b000};
 				end
-				else if(dummy) begin
+				else if(|dummy) begin
 					state_r	 <= STATE_DUMMY;
 					boper	 <= Oper_Dummy;
 				end
-				else if(dmode & (oper == Oper_Read)) begin
+				else if(|dmode & (oper == Oper_Read)) begin
 					state_r	 <= STATE_DATAR_0;
 					boper	 <= Oper_Read;
 					bmode	 <= dmode;
 					count	 <= dlen + 1;
 				end
-				else if(dmode & (oper == Oper_Write)) begin
+				else if(|dmode & (oper == Oper_Write)) begin
 					state_r	 <= STATE_DATAT_0;
 					count	 <= dlen + 1;
 				end
@@ -229,24 +229,24 @@ always @(posedge clk or negedge rst_n) begin
 		STATE_ADDR: begin
 			if(bdone) begin
 				if(~|count) begin
-					if(abmode) begin
+					if(|abmode) begin
 						state_r	 <= STATE_ALTB;
 						boper	 <= Oper_Write;
 						bmode	 <= abmode;
 						tbyte	 <= altb[{absize, 3'b000} +: 8];
 						count	 <= {absize, 3'b000};
 					end
-					else if(dummy) begin
+					else if(|dummy) begin
 						state_r	 <= STATE_DUMMY;
 						boper	 <= Oper_Dummy;
 					end
-					else if(dmode & (oper == Oper_Read)) begin
+					else if(|dmode & (oper == Oper_Read)) begin
 						state_r	 <= STATE_DATAR_0;
 						boper	 <= Oper_Read;
 						bmode	 <= dmode;
 						count	 <= dlen + 1;
 					end
-					else if(dmode & (oper == Oper_Write)) begin
+					else if(|dmode & (oper == Oper_Write)) begin
 						state_r	 <= STATE_DATAT_0;
 						count	 <= dlen + 1;
 					end
@@ -267,17 +267,17 @@ always @(posedge clk or negedge rst_n) begin
 		STATE_ALTB: begin
 			if(bdone) begin
 				if(~|count) begin
-					if(dummy) begin
+					if(|dummy) begin
 						state_r	 <= STATE_DUMMY;
 						boper	 <= Oper_Dummy;
 					end
-					else if(dmode & (oper == Oper_Read)) begin
+					else if(|dmode & (oper == Oper_Read)) begin
 						state_r	 <= STATE_DATAR_0;
 						boper	 <= Oper_Read;
 						bmode	 <= dmode;
 						count	 <= dlen + 1;
 					end
-					else if(dmode & (oper == Oper_Write)) begin
+					else if(|dmode & (oper == Oper_Write)) begin
 						state_r	 <= STATE_DATAT_0;
 						count	 <= dlen + 1;
 					end
@@ -297,13 +297,13 @@ always @(posedge clk or negedge rst_n) begin
 
 		STATE_DUMMY: begin
 			if(bdone) begin
-				if(dmode & (oper == Oper_Read)) begin
+				if(|dmode & (oper == Oper_Read)) begin
 					state_r	 <= STATE_DATAR_0;
 					boper	 <= Oper_Read;
 					bmode	 <= dmode;
 					count	 <= dlen + 1;
 				end
-				else if(dmode & (oper == Oper_Write)) begin
+				else if(|dmode & (oper == Oper_Write)) begin
 					state_r	 <= STATE_DATAT_0;
 					count	 <= dlen + 1;
 				end

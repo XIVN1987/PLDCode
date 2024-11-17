@@ -128,7 +128,7 @@ initial begin
 	#20;
 	rst_n = 1;
 
-	#50000000;
+	#100000000;
 
 	$write("\n--- done ---\n");
 	$finish;
