@@ -4,6 +4,7 @@ SRCS = \
 	../picorv32/memory.v \
 	spim.v \
 	spim_reg.v \
+	spim_byte.v \
 	W25Q128JV/W25Q128JV.v \
 
 VCD_FILE=./__riscv.vcd

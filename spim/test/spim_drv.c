@@ -11,7 +11,7 @@
 /*******************************************************************************************************************************
 * @brief	SPIM init
 * @param	SPIMx is the SPIM to init
-* @param	clkmode: SPIM_CPHA0_CPOL0, SPIM_CPHA1_CPOL0, SPIM_CPHA0_CPOL1, or SPIM_CPHA1_CPOL1
+* @param	clkmode: SPIM_CPHA0_CPOL0 or SPIM_CPHA1_CPOL1
 * @param	clkdiv is clock division value
 * @return
 *******************************************************************************************************************************/

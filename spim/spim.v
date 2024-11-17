@@ -34,7 +34,7 @@ wire [ 1:0] abmode;
 wire [ 1:0] absize;
 wire [ 4:0] dummy;
 wire [ 1:0] dmode;
-wire [31:0] dlen;
+wire [19:0] dlen;
 
 wire 		tf_write;
 wire [ 7:0]	tf_wbyte;
@@ -146,13 +146,13 @@ reg [ 3:0] state_r;
 
 reg 	   spi_cs_r;
 
-reg 	   boper;	// byte transfer oper
-reg 	   bmode;	// byte transfer mode
+reg [ 1:0] boper;	// byte transfer oper
+reg [ 1:0] bmode;	// byte transfer mode
 reg [ 7:0] tbyte;	// byte to transmit
 wire[ 7:0] rbyte;	// received byte
 wire 	   bdone;	// byte transfer done
 
-reg [ 5:0] count;
+reg [19:0] count;
 
 always @(posedge clk or negedge rst_n) begin
 	if(~rst_n | ~clr_n) begin
@@ -192,15 +192,15 @@ always @(posedge clk or negedge rst_n) begin
 					state_r	 <= STATE_ADDR;
 					boper	 <= Oper_Write;
 					bmode	 <= amode;
-					tbyte	 <= addr[asize-8 +: 8];
-					count	 <= (asize >> 3) - 1;
+					tbyte	 <= addr[asize<<3 +: 8];
+					count	 <= asize << 3;
 				end
 				else if(abmode) begin
 					state_r	 <= STATE_ALTB;
 					boper	 <= Oper_Write;
 					bmode	 <= abmode;
-					tbyte	 <= altb[absize-8 +: 8];
-					count	 <= (absize >> 3) - 1;
+					tbyte	 <= altb[absize<<3 +: 8];
+					count	 <= absize << 3;
 				end
 				else if(dummy) begin
 					state_r	 <= STATE_DUMMY;
@@ -231,8 +231,8 @@ always @(posedge clk or negedge rst_n) begin
 						state_r	 <= STATE_ALTB;
 						boper	 <= Oper_Write;
 						bmode	 <= abmode;
-						tbyte	 <= altb[absize-8 +: 8];
-						count	 <= (absize >> 3) - 1;
+						tbyte	 <= altb[absize<<3 +: 8];
+						count	 <= absize << 3;
 					end
 					else if(dummy) begin
 						state_r	 <= STATE_DUMMY;
@@ -256,8 +256,8 @@ always @(posedge clk or negedge rst_n) begin
 				end
 				else begin
 					boper	 <= Oper_Write;
-					tbyte	 <= addr[(count<<3)-8 +: 8];
-					count	 <= count - 1;
+					tbyte	 <= addr[count-8 +: 8];
+					count	 <= count - 8;
 				end
 			end
 		end
@@ -287,8 +287,8 @@ always @(posedge clk or negedge rst_n) begin
 				end
 				else begin
 					boper	 <= Oper_Write;
-					tbyte	 <= altb[(count<<3)-8 +: 8];
-					count	 <= count - 1;
+					tbyte	 <= altb[count-8 +: 8];
+					count	 <= count - 8;
 				end
 			end
 		end
@@ -378,5 +378,29 @@ always @(posedge clk or negedge rst_n) begin
 		endcase
 	end
 end
+
+assign spi_cs = spi_cs_r;
+
+
+spim_byte u_byte (
+	.clk   (clk   ),
+	.rst_n (rst_n ),
+
+	.clr_n (clr_n ),
+	.ckmod (ckmod ),
+	.ckdiv (ckdiv ),
+
+	.boper (boper ),
+	.bmode (bmode ),
+	.tbyte (tbyte ),
+	.rbyte (rbyte ),
+	.dummy (dummy ),
+	.bdone (bdone ),
+
+	.spi_ck(spi_ck),
+	.spi_di(spi_di),
+	.spi_do(spi_do),
+	.spi_oe(spi_oe)
+);
 
 endmodule

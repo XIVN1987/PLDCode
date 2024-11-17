@@ -27,7 +27,7 @@ module spim_reg (
 	output reg [ 1:0] absize,
 	output reg [ 4:0] dummy,
 	output reg [ 1:0] dmode,
-	output reg [31:0] dlen,
+	output reg [19:0] dlen,
 
 	output 		  tf_write,
 	output [ 7:0] tf_wbyte,
@@ -101,7 +101,7 @@ always @(posedge clk or negedge rst_n) begin
 		altb	<= mem_wdata;
 	end
 	if((mem_addr == ADDR_DLR) && (mem_wstrb != 0) && mem_ready) begin
-		dlen	<= mem_wdata;
+		dlen	<= mem_wdata[19:0];
 	end
 	if((mem_addr == ADDR_CCR) && (mem_wstrb != 0) && mem_ready) begin
 		icode	<= mem_wdata[ 7: 0];

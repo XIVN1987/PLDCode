@@ -92,8 +92,6 @@ typedef struct {
 #define SPIM_PhaseSize_32bit	3
 
 #define SPIM_CPHA0_CPOL0		0
-#define SPIM_CPHA1_CPOL0		1
-#define SPIM_CPHA0_CPOL1		2
 #define SPIM_CPHA1_CPOL1		3
 
 #define SPIM_Oper_Read			1
