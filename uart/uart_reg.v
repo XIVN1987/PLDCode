@@ -24,11 +24,11 @@ module uart_reg (
 	output 		  int_req,
 
 	output 		  tf_write,
-	output [ 7:0] tf_wbyte,
+	output [ 8:0] tf_wbyte,
 	input  [ 5:0] tf_level,
 	input  		  tf_full,
 	output 		  rf_read,
-	input  [ 7:0] rf_rbyte,
+	input  [ 8:0] rf_rbyte,
 	input  [ 5:0] rf_level,
 	input  		  rf_empty
 );
@@ -113,7 +113,7 @@ assign ckdiv = ckdiv_r;
 
 //----------------------------------------------------------------------------
 reg 	   write_r;
-reg [ 7:0] wbyte_r;
+reg [ 8:0] wbyte_r;
 reg 	   read_r;
 
 always @(posedge clk or negedge rst_n) begin
@@ -125,7 +125,7 @@ always @(posedge clk or negedge rst_n) begin
 		write_r <= 0;
 	else if((mem_addr == ADDR_DR) && (mem_wstrb != 0) && mem_ready) begin
 		write_r <= tf_full ? 0 : 1;
-		wbyte_r <= mem_wdata[ 7: 0];
+		wbyte_r <= mem_wdata[ 8: 0];
 	end
 
 	if(read_r)
@@ -187,15 +187,15 @@ module byte_fifo #(
 	input  		  clr_n,
 
 	input  		  write,
-	input  [ 7:0] wbyte,
+	input  [ 8:0] wbyte,
 	input  		  read,
-	output [ 7:0] rbyte,
+	output [ 8:0] rbyte,
 	output		  full,
 	output 		  empty,
 	output [WADDR:0] level
 );
 
-reg [7:0] mem[DEPTH-1:0];
+reg [8:0] mem[DEPTH-1:0];
 reg [WADDR-1:0] wptr;
 reg [WADDR-1:0] rptr;
 reg [WADDR  :0] count;

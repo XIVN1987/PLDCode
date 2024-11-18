@@ -7,16 +7,16 @@ Disassembly of section .text:
 00000000 <entry>:
    0:	1141                	addi	sp,sp,-16
    2:	c606                	sw	ra,12(sp)
-   4:	15800713          	li	a4,344
-   8:	1d800793          	li	a5,472
+   4:	1d800713          	li	a4,472
+   8:	25800793          	li	a5,600
    c:	02f77163          	bgeu	a4,a5,2e <entry+0x2e>
-  10:	15800693          	li	a3,344
-  14:	1d700713          	li	a4,471
+  10:	1d800693          	li	a3,472
+  14:	25700713          	li	a4,599
   18:	8f15                	sub	a4,a4,a3
   1a:	9b71                	andi	a4,a4,-4
   1c:	0711                	addi	a4,a4,4
   1e:	9736                	add	a4,a4,a3
-  20:	15800793          	li	a5,344
+  20:	1d800793          	li	a5,472
   24:	0007a023          	sw	zero,0(a5)
   28:	0791                	addi	a5,a5,4
   2a:	fee79de3          	bne	a5,a4,24 <entry+0x24>
@@ -67,78 +67,104 @@ Disassembly of section .text:
 0000007e <main>:
   7e:	1141                	addi	sp,sp,-16
   80:	c606                	sw	ra,12(sp)
-  82:	12800513          	li	a0,296
+  82:	17800513          	li	a0,376
   86:	37c9                	jal	48 <iputs>
   88:	4681                	li	a3,0
   8a:	4621                	li	a2,8
   8c:	65f1                	lui	a1,0x1c
   8e:	20058593          	addi	a1,a1,512 # 1c200 <__top_mem+0x18200>
   92:	50000537          	lui	a0,0x50000
-  96:	280d                	jal	c8 <UART_Init>
-  98:	13800713          	li	a4,312
-  9c:	01d70613          	addi	a2,a4,29 # 9000001d <__top_mem+0x8fffc01d>
-  a0:	500006b7          	lui	a3,0x50000
-  a4:	a021                	j	ac <main+0x2e>
-  a6:	0705                	addi	a4,a4,1
-  a8:	00c70963          	beq	a4,a2,ba <main+0x3c>
-  ac:	42dc                	lw	a5,4(a3)
-  ae:	8b91                	andi	a5,a5,4
-  b0:	fbfd                	bnez	a5,a6 <main+0x28>
-  b2:	00074783          	lbu	a5,0(a4)
-  b6:	c69c                	sw	a5,8(a3)
-  b8:	b7fd                	j	a6 <main+0x28>
+  96:	2049                	jal	118 <UART_Init>
+  98:	1b800593          	li	a1,440
+  9c:	01d58613          	addi	a2,a1,29
+  a0:	1b800693          	li	a3,440
+  a4:	50000737          	lui	a4,0x50000
+  a8:	435c                	lw	a5,4(a4)
+  aa:	8b91                	andi	a5,a5,4
+  ac:	fff5                	bnez	a5,a8 <main+0x2a>
+  ae:	0006c783          	lbu	a5,0(a3)
+  b2:	c71c                	sw	a5,8(a4)
+  b4:	0685                	addi	a3,a3,1
+  b6:	fec699e3          	bne	a3,a2,a8 <main+0x2a>
   ba:	50000737          	lui	a4,0x50000
   be:	435c                	lw	a5,4(a4)
   c0:	8b89                	andi	a5,a5,2
   c2:	fff5                	bnez	a5,be <main+0x40>
-  c4:	3f8d                	jal	36 <finish>
-  c6:	a001                	j	c6 <main+0x48>
+  c4:	1d800613          	li	a2,472
+  c8:	01d60513          	addi	a0,a2,29
+  cc:	1d800693          	li	a3,472
+  d0:	50000737          	lui	a4,0x50000
+  d4:	435c                	lw	a5,4(a4)
+  d6:	8ba1                	andi	a5,a5,8
+  d8:	fff5                	bnez	a5,d4 <main+0x56>
+  da:	471c                	lw	a5,8(a4)
+  dc:	00f68023          	sb	a5,0(a3)
+  e0:	0685                	addi	a3,a3,1
+  e2:	fea699e3          	bne	a3,a0,d4 <main+0x56>
+  e6:	4781                	li	a5,0
+  e8:	4575                	li	a0,29
+  ea:	00064683          	lbu	a3,0(a2)
+  ee:	0005c703          	lbu	a4,0(a1)
+  f2:	00e69b63          	bne	a3,a4,108 <main+0x8a>
+  f6:	0785                	addi	a5,a5,1
+  f8:	0605                	addi	a2,a2,1
+  fa:	0585                	addi	a1,a1,1
+  fc:	fea797e3          	bne	a5,a0,ea <main+0x6c>
+ 100:	18800513          	li	a0,392
+ 104:	3791                	jal	48 <iputs>
+ 106:	a039                	j	114 <main+0x96>
+ 108:	4775                	li	a4,29
+ 10a:	fee78be3          	beq	a5,a4,100 <main+0x82>
+ 10e:	1a000513          	li	a0,416
+ 112:	3f1d                	jal	48 <iputs>
+ 114:	370d                	jal	36 <finish>
+ 116:	a001                	j	116 <main+0x98>
 
-000000c8 <UART_Init>:
-  c8:	47a5                	li	a5,9
-  ca:	02f60863          	beq	a2,a5,fa <UART_Init+0x32>
-  ce:	6799                	lui	a5,0x6
-  d0:	40478793          	addi	a5,a5,1028 # 6404 <__top_mem+0x2404>
-  d4:	c11c                	sw	a5,0(a0)
-  d6:	02faf7b7          	lui	a5,0x2faf
-  da:	08078793          	addi	a5,a5,128 # 2faf080 <__top_mem+0x2fab080>
-  de:	02b7d5b3          	divu	a1,a5,a1
-  e2:	c54c                	sw	a1,12(a0)
-  e4:	411c                	lw	a5,0(a0)
-  e6:	0017e793          	ori	a5,a5,1
-  ea:	c11c                	sw	a5,0(a0)
-  ec:	415c                	lw	a5,4(a0)
-  ee:	8fd5                	or	a5,a5,a3
-  f0:	c15c                	sw	a5,4(a0)
-  f2:	411c                	lw	a5,0(a0)
-  f4:	8edd                	or	a3,a3,a5
-  f6:	c114                	sw	a3,0(a0)
-  f8:	8082                	ret
-  fa:	6799                	lui	a5,0x6
-  fc:	40678793          	addi	a5,a5,1030 # 6406 <__top_mem+0x2406>
- 100:	bfd1                	j	d4 <UART_Init+0xc>
+00000118 <UART_Init>:
+ 118:	47a5                	li	a5,9
+ 11a:	02f60863          	beq	a2,a5,14a <UART_Init+0x32>
+ 11e:	6799                	lui	a5,0x6
+ 120:	40478793          	addi	a5,a5,1028 # 6404 <__top_mem+0x2404>
+ 124:	c11c                	sw	a5,0(a0)
+ 126:	02faf7b7          	lui	a5,0x2faf
+ 12a:	08078793          	addi	a5,a5,128 # 2faf080 <__top_mem+0x2fab080>
+ 12e:	02b7d5b3          	divu	a1,a5,a1
+ 132:	c54c                	sw	a1,12(a0)
+ 134:	411c                	lw	a5,0(a0)
+ 136:	0017e793          	ori	a5,a5,1
+ 13a:	c11c                	sw	a5,0(a0)
+ 13c:	415c                	lw	a5,4(a0)
+ 13e:	8fd5                	or	a5,a5,a3
+ 140:	c15c                	sw	a5,4(a0)
+ 142:	411c                	lw	a5,0(a0)
+ 144:	8edd                	or	a3,a3,a5
+ 146:	c114                	sw	a3,0(a0)
+ 148:	8082                	ret
+ 14a:	6799                	lui	a5,0x6
+ 14c:	40678793          	addi	a5,a5,1030 # 6406 <__top_mem+0x2406>
+ 150:	bfd1                	j	124 <UART_Init+0xc>
 
-00000102 <UART_IntEn>:
- 102:	411c                	lw	a5,0(a0)
- 104:	8fcd                	or	a5,a5,a1
- 106:	c11c                	sw	a5,0(a0)
- 108:	8082                	ret
+00000152 <UART_IntEn>:
+ 152:	411c                	lw	a5,0(a0)
+ 154:	8fcd                	or	a5,a5,a1
+ 156:	c11c                	sw	a5,0(a0)
+ 158:	8082                	ret
 
-0000010a <UART_IntDis>:
- 10a:	411c                	lw	a5,0(a0)
- 10c:	fff5c593          	not	a1,a1
- 110:	8dfd                	and	a1,a1,a5
- 112:	c10c                	sw	a1,0(a0)
- 114:	8082                	ret
+0000015a <UART_IntDis>:
+ 15a:	411c                	lw	a5,0(a0)
+ 15c:	fff5c593          	not	a1,a1
+ 160:	8dfd                	and	a1,a1,a5
+ 162:	c10c                	sw	a1,0(a0)
+ 164:	8082                	ret
 
-00000116 <UART_IntClr>:
- 116:	415c                	lw	a5,4(a0)
- 118:	8fcd                	or	a5,a5,a1
- 11a:	c15c                	sw	a5,4(a0)
- 11c:	8082                	ret
+00000166 <UART_IntClr>:
+ 166:	415c                	lw	a5,4(a0)
+ 168:	8fcd                	or	a5,a5,a1
+ 16a:	c15c                	sw	a5,4(a0)
+ 16c:	8082                	ret
 
-0000011e <UART_IntStat>:
- 11e:	4148                	lw	a0,4(a0)
- 120:	8d6d                	and	a0,a0,a1
- 122:	00a03533          	snez	a0,a0
- 126:	8082                	ret
+0000016e <UART_IntStat>:
+ 16e:	4148                	lw	a0,4(a0)
+ 170:	8d6d                	and	a0,a0,a1
+ 172:	00a03533          	snez	a0,a0
+ 176:	8082                	ret

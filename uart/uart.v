@@ -1,18 +1,18 @@
 `timescale 1ns / 1ps
 
 module uart (
-	input         clk,
-	input         rst_n,
+	input  		  clk,
+	input  		  rst_n,
 
-	input         mem_valid,
-	output        mem_ready,
+	input  		  mem_valid,
+	output 		  mem_ready,
 	input  [31:0] mem_addr,
 	input  [31:0] mem_wdata,
 	input  [ 3:0] mem_wstrb,
 	output [31:0] mem_rdata,
 
-	output reg	  uart_txd,
-	output 		  uart_rxd
+	output 		  uart_txd,
+	input  		  uart_rxd
 );
 
 //----------------------------------------------------------------------------
@@ -21,22 +21,22 @@ wire [23:0] ckdiv;
 wire 		data9b;
 wire 		stop2b;
 wire [ 7:0] totime;
-reg  		txbusy;
-reg  		timeout;
+wire 		txbusy;
+wire 		timeout;
 wire 		int_req;
 
 wire 		tf_write;
-wire [ 7:0]	tf_wbyte;
-reg 		tf_read;
-wire [ 7:0]	tf_rbyte;
+wire [ 8:0]	tf_wbyte;
+wire 		tf_read;
+wire [ 8:0]	tf_rbyte;
 wire 		tf_full;
 wire 		tf_empty;
 wire [ 5:0]	tf_level;
 
-reg 		rf_write;
-reg [ 7:0]	rf_wbyte;
+wire 		rf_write;
+wire [ 8:0]	rf_wbyte;
 wire 		rf_read;
-wire [ 7:0]	rf_rbyte;
+wire [ 8:0]	rf_rbyte;
 wire 		rf_full;
 wire 		rf_empty;
 wire [ 5:0]	rf_level;
@@ -108,26 +108,40 @@ byte_fifo #(
 
 
 //----------------------------------------------------------------------------
-localparam STATE_IDLE	 = 4'h0;
 
-reg [ 3:0] state_r;
+uart_tx u_utx (
+	.clk     (clk     ),
+	.rst_n   (rst_n   ),
 
-reg [ 3:0] count;
+	.clr_n   (clr_n   ),
+	.ckdiv   (ckdiv   ),
+	.data9b  (data9b  ),
+	.stop2b  (stop2b  ),
+	.txbusy  (txbusy  ),
 
-always @(posedge clk or negedge rst_n) begin
-	if(~rst_n | ~clr_n) begin
-		state_r	 <= STATE_IDLE;
-	end
-	else begin
-		tf_read	 <= 0;
-		rf_write <= 0;
+	.tf_read (tf_read ),
+	.tf_rbyte(tf_rbyte),
+	.tf_empty(tf_empty),
 
-		case(state_r)
-		STATE_IDLE: begin
-		end
-		endcase
-	end
-end
+	.uart_txd(uart_txd)
+);
 
+
+uart_rx u_urx (
+	.clk     (clk     ),
+	.rst_n   (rst_n   ),
+
+	.clr_n   (clr_n   ),
+	.ckdiv   (ckdiv   ),
+	.data9b  (data9b  ),
+	.totime  (totime  ),
+	.timeout (timeout ),
+
+	.rf_write(rf_write),
+	.rf_wbyte(rf_wbyte),
+	.rf_full (rf_full ),
+
+	.uart_rxd(uart_rxd)
+);
 
 endmodule

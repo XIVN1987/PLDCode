@@ -3,6 +3,8 @@ SRCS = \
 	../picorv32/picorv32.v \
 	../picorv32/memory.v \
 	uart.v \
+	uart_tx.v \
+	uart_rx.v \
 	uart_reg.v \
 
 VCD_FILE=./__riscv.vcd

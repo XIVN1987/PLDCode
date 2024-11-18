@@ -11,11 +11,13 @@ char rxbuf[128] = {0};
 
 int main(void)
 {
+	int i;
+
 	iputs("\n--- main ---\n");
 
 	UART_Init(UART, 115200, 8, 0);
 
-	for(int i = 0; i < sizeof(txstr); i++)
+	for(i = 0; i < sizeof(txstr); i++)
 	{
 		while(UART_TxFull(UART)) {}
 		
@@ -23,6 +25,22 @@ int main(void)
 	}
 
 	while(UART_TxBusy(UART)) {}
+
+	for(i = 0; i < sizeof(txstr); i++)
+	{
+		while(UART_RxEmpty(UART)) {}
+
+		rxbuf[i] = UART_Read(UART);
+	}
+
+	for(i = 0; i < sizeof(txstr); i++)
+		if(rxbuf[i] != txstr[i])
+			break;
+
+	if(i == sizeof(txstr))
+		iputs("\nUART TX/RX test Pass!\n");
+	else
+		iputs("\nUART TX/RX test Fail!\n");
 	
 	finish();
 
