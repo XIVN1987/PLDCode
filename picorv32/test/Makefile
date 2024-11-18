@@ -6,7 +6,7 @@ SRCS = \
 
 HDRS += 
 SRCS += \
-	alu/main.c \
+	main.c \
 
 CFLAGS += -march=rv32imc -mabi=ilp32 -nostartfiles -O1
 CFLAGS += -Wl,--script=linker.ld -Wl,-Map=$@.map
