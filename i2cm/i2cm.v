@@ -1,22 +1,22 @@
 `timescale 1ns / 1ps
 
 module i2cm (
-	input         clk,
-	input         rst_n,
+	input  		  clk,
+	input  		  rst_n,
 
-	input         mem_valid,
-	output        mem_ready,
+	input  		  mem_valid,
+	output 		  mem_ready,
 	input  [31:0] mem_addr,
 	input  [31:0] mem_wdata,
 	input  [ 3:0] mem_wstrb,
 	output [31:0] mem_rdata,
 
-	input         i2c_scl_i,
-	output        i2c_scl_o,
-	output        i2c_scl_oe,
-	input         i2c_sda_i,
-	output        i2c_sda_o,
-	output        i2c_sda_oe
+	input  		  i2c_scl_i,
+	output 		  i2c_scl_o,
+	output 		  i2c_scl_oe,
+	input  		  i2c_sda_i,
+	output 		  i2c_sda_o,
+	output 		  i2c_sda_oe
 );
 
 //----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ wire [ 4:0] cmds;	// commands
 reg  [ 4:0] cdone;	// command done
 wire [ 7:0] tbyte;
 reg  		rxack;
-wire [ 7:0] rbyte;
+reg  [ 7:0] rbyte;
 wire 		txack;
 wire 		error;
 
@@ -71,42 +71,36 @@ reg [4:0] cmd;
 reg 	  tbit;		// bit to transmit
 wire 	  rbit;		// received bit
 wire 	  bdone;	// bit done
-reg 	  load;
-reg 	  shift;
-reg [7:0] shift_r;	// shift register
-wire 	  shift_done;
 
+reg [2:0] count;
 
 always @(posedge clk or negedge rst_n) begin
-	if(~rst_n) begin
+	if(~rst_n | ~clr_n) begin
 		state_r <= STATE_IDLE;
+		cdone	<= 0;
+		cmd		<= 0;
 	end
 	else begin
-		tbit  <= state_r == STATE_TXACK ? txack : shift_r[7];
-		load  <= 1'b0;
-		shift <= 1'b0;
-
 		case(state_r)
 		STATE_IDLE: begin
 			if(cmds & CMD_START) begin
-				cmd		<= CMD_START;
 				state_r <= STATE_START;
+				cmd		<= CMD_START;
 			end
 			else if(cmds & CMD_WRITE) begin
-				cmd		<= CMD_WRITE;
 				state_r <= STATE_WRITE;
-
-				load	<= 1'b1;
+				cmd		<= CMD_WRITE;
+				tbit	<= tbyte[7];
+				count	<= 7;
 			end
 			else if(cmds & CMD_READ) begin
-				cmd		<= CMD_READ;
 				state_r <= STATE_READ;
-
-				load	<= 1'b1;
+				cmd		<= CMD_READ;
+				count	<= 7;
 			end
 			else if(cmds & CMD_STOP) begin
-				cmd		<= CMD_STOP;
 				state_r <= STATE_STOP;
+				cmd		<= CMD_STOP;
 			end
 			else begin
 				cmd		<= 0;
@@ -116,57 +110,64 @@ always @(posedge clk or negedge rst_n) begin
 		STATE_START: begin
 			if(bdone) begin
 				state_r <= STATE_WAIT;
-				cdone   <= CMD_START;
+				cdone	<= CMD_START;
 			end
 		end
 
 		STATE_WRITE: begin
 			if(bdone) begin
-				if(shift_done) begin
-					cmd     <= CMD_READ;
+				if(~|count) begin
 					state_r <= STATE_RXACK;
+					cmd		<= CMD_READ;
 				end
-				else
-					shift	<= 1'b1;
+				else begin
+					tbit	<= tbyte[count - 1];
+					count	<= count - 1;
+				end
 			end
 		end
 
 		STATE_RXACK: begin
 			if(bdone) begin
 				state_r <= STATE_WAIT;
-				cdone   <= CMD_WRITE;
-				rxack   <= rbit;
+				cdone	<= CMD_WRITE;
+				rxack	<= rbit;
 			end
 		end
 
 		STATE_READ: begin
 			if(bdone) begin
-				if(shift_done) begin
-					cmd     <= CMD_WRITE;
+				if(~|count) begin
 					state_r <= STATE_TXACK;
+					cmd		<= CMD_WRITE;
+					tbit	<= txack;
+
+					rbyte	<= {rbyte[6:0], rbit};
 				end
-				
-				shift	<= 1'b1;
+				else begin
+					rbyte	<= {rbyte[6:0], rbit};
+					count	<= count - 1;
+				end
 			end
 		end
 
 		STATE_TXACK: begin
 			if(bdone) begin
 				state_r <= STATE_WAIT;
-				cdone   <= CMD_READ;
+				cdone	<= CMD_READ;
 			end
 		end
 
 		STATE_STOP: begin
 			if(bdone) begin
 				state_r <= STATE_WAIT;
-				cdone   <= CMD_STOP;
+				cdone	<= CMD_STOP;
 			end
 		end
 
 		STATE_WAIT: begin
 			state_r <= STATE_IDLE;
-			cdone   <= 5'b0;
+			cdone	<= 0;
 		end
 		endcase
 	end
@@ -192,25 +193,5 @@ i2cm_bit u_bit (
 	.i2c_sda_o (i2c_sda_o ),
 	.i2c_sda_oe(i2c_sda_oe)
 );
-
-
-//----------------------------------------------------------------------------
-reg [2:0] count;
-
-always @(posedge clk or negedge rst_n) begin
-	if(~rst_n | ~clr_n) begin
-	end
-	else if(load) begin
-		shift_r <= tbyte;
-		count   <= 3'h7;
-	end
-	else if(shift) begin
-		shift_r <= {shift_r[6:0], rbit};
-		count   <= count - 3'b1;
-	end
-end
-
-assign rbyte = shift_r;
-assign shift_done = ~|count;
 
 endmodule
