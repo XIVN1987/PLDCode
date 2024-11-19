@@ -7,7 +7,11 @@ VCD_FILE=./__riscv.vcd
 SIM_FILE=./__riscv.sim
 
 all:
-	@iverilog -Wall -o $(SIM_FILE) -DSIMULATOR -DVCD_FILE=\"$(VCD_FILE)\" $(SRCS)
+	@iverilog -Wall -o $(SIM_FILE) -DSIMULATOR -DVCD_FILE=\"$(VCD_FILE)\" -DFIRMWARE=\"test/test.mem\" $(SRCS)
+	@vvp -n $(SIM_FILE)
+
+irq:
+	@iverilog -Wall -o $(SIM_FILE) -DSIMULATOR -DVCD_FILE=\"$(VCD_FILE)\" -DFIRMWARE=\"test_irq/test.mem\" $(SRCS)
 	@vvp -n $(SIM_FILE)
 
 wave:

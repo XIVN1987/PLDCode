@@ -11,6 +11,7 @@
 //-----------------------------------------------------------------------------
 extern int main(void);
 
+__attribute__((section(".text.entry")))
 void entry(void)
 {
 	extern uint32_t _bss;

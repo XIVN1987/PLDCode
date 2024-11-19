@@ -18,7 +18,9 @@ picorv32 #(
 	.ENABLE_MUL(1),
 	.ENABLE_DIV(1),
 	.COMPRESSED_ISA(1),
-	.STACKADDR(MEM_SIZE)
+	.STACKADDR(MEM_SIZE),
+	.ENABLE_IRQ(1),
+	.PROGADDR_IRQ(32'h100)
 ) u_core (
 	.clk(clk),
 	.resetn(rst_n),
@@ -40,7 +42,7 @@ picorv32 #(
 
 memory #(
 	.SIZE(MEM_SIZE),
-	.FIRMWARE("test/test.mem")
+	.FIRMWARE(`FIRMWARE)
 ) u_memory (
 	.clk(clk),
 	.rst_n(rst_n),
