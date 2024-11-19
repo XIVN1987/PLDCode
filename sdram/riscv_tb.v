@@ -2,7 +2,7 @@
 
 module riscv_tb;
 
-parameter MEM_SIZE = 8192;
+parameter MEM_SIZE = 16'h4000;
 
 reg clk;
 reg rst_n;

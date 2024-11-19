@@ -98,30 +98,30 @@ Disassembly of section .text:
  186:	0141                	addi	sp,sp,16
  188:	8082                	ret
  18a:	0000                	unimp
- 18c:	2d0a                	fld	fs10,128(sp)
+ 18c:	2d0a                	.insn	2, 0x2d0a
  18e:	2d2d                	jal	7c8 <_bss+0x5f8>
- 190:	6120                	flw	fs0,64(a0)
- 192:	6464                	flw	fs1,76(s0)
- 194:	7020                	flw	fs0,96(s0)
+ 190:	6120                	.insn	2, 0x6120
+ 192:	6464                	.insn	2, 0x6464
+ 194:	7020                	.insn	2, 0x7020
  196:	7361                	lui	t1,0xffff8
- 198:	2d2d2073          	csrs	0x2d2,s10
+ 198:	2d2d2073          	.insn	4, 0x2d2d2073
  19c:	0a2d                	addi	s4,s4,11
  19e:	0000                	unimp
- 1a0:	2d0a                	fld	fs10,128(sp)
+ 1a0:	2d0a                	.insn	2, 0x2d0a
  1a2:	2d2d                	jal	7dc <_bss+0x60c>
- 1a4:	6120                	flw	fs0,64(a0)
- 1a6:	6464                	flw	fs1,76(s0)
- 1a8:	6620                	flw	fs0,72(a2)
+ 1a4:	6120                	.insn	2, 0x6120
+ 1a6:	6464                	.insn	2, 0x6464
+ 1a8:	6620                	.insn	2, 0x6620
  1aa:	6961                	lui	s2,0x18
- 1ac:	206c                	fld	fa1,192(s0)
+ 1ac:	206c                	.insn	2, 0x206c
  1ae:	2d2d                	jal	7e8 <_bss+0x618>
  1b0:	0a2d                	addi	s4,s4,11
  1b2:	0000                	unimp
- 1b4:	2d0a                	fld	fs10,128(sp)
+ 1b4:	2d0a                	.insn	2, 0x2d0a
  1b6:	2d2d                	jal	7f0 <_bss+0x620>
- 1b8:	6d20                	flw	fs0,88(a0)
+ 1b8:	6d20                	.insn	2, 0x6d20
  1ba:	6961                	lui	s2,0x18
- 1bc:	206e                	fld	ft0,216(sp)
+ 1bc:	206e                	.insn	2, 0x206e
  1be:	2d2d                	jal	7f8 <_bss+0x628>
  1c0:	0a2d                	addi	s4,s4,11
 	...

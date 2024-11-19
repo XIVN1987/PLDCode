@@ -1,4 +1,4 @@
-CROSS = riscv-none-embed-
+CROSS = riscv-none-elf-
 
 HDRS = ../test/
 SRCS = \
