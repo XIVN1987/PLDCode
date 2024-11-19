@@ -3,6 +3,7 @@ CROSS = riscv-none-elf-
 HDRS = ../../picorv32/test
 SRCS = \
 	../../picorv32/test/helper.c \
+	../../picorv32/test_irq/irq_handler_A.S \
 
 HDRS +=
 SRCS += \

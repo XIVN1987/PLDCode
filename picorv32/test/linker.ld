@@ -29,6 +29,7 @@ SECTIONS
 	{
 		_bss = .;
 		*(.bss*)
+		*(.sbss*)
 		*(COMMON)
 		_ebss = ALIGN(16);
 	} > mem

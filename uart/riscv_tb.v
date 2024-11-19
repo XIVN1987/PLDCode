@@ -14,11 +14,15 @@ wire [31:0] mem_wdata;
 wire [ 3:0] mem_wstrb;
 wire [31:0] mem_rdata;
 
+wire 		uart_int;
+
 picorv32 #(
 	.ENABLE_MUL(1),
 	.ENABLE_DIV(1),
 	.COMPRESSED_ISA(1),
-	.STACKADDR(MEM_SIZE)
+	.STACKADDR(MEM_SIZE),
+	.ENABLE_IRQ(1),
+	.PROGADDR_IRQ(32'h100)
 ) u_core (
 	.clk(clk),
 	.resetn(rst_n),
@@ -35,7 +39,7 @@ picorv32 #(
 	.pcpi_wait(1'b0),
 	.pcpi_ready(1'b0),
 
-	.irq(32'b0)
+	.irq({27'b0, uart_int, 4'b0})
 );
 
 //----------------------------------------------------------------------------
@@ -80,6 +84,8 @@ uart u_uart (
 	.mem_wstrb(mem_wstrb),
 	.mem_rdata(mem_rdata_uart),
 
+	.int_req (uart_int),
+	
 	.uart_txd(uart_txd),
 	.uart_rxd(uart_rxd)
 );

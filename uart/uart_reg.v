@@ -95,6 +95,9 @@ end
 assign if_txhalf = tf_level < 16;
 assign if_rxhalf = rf_level > 16;
 
+assign int_req = (ie_txhalf & if_txhalf) |
+				 (ie_rxhalf & if_rxhalf) |
+				 (ie_rxtout & if_rxtout);
 
 //----------------------------------------------------------------------------
 reg [23:0] ckdiv_r;

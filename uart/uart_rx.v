@@ -55,6 +55,9 @@ reg [ 8:0] rbyte_r;
 
 reg [ 3:0] count;
 
+reg 	   to_start;
+reg [ 7:0] to_count;
+
 always @(posedge clk or negedge rst_n) begin
 	if(~rst_n | ~clr_n) begin
 		state_r <= STATE_IDLE;
@@ -68,6 +71,8 @@ always @(posedge clk or negedge rst_n) begin
 			if(~uart_rxd) begin
 				state_r <= STATE_START;
 				synclk	<= 1;
+
+				to_start<= 0;
 			end
 		end
 
@@ -93,11 +98,34 @@ always @(posedge clk or negedge rst_n) begin
 			if(~rf_full) begin
 				rf_write<= 1;
 			end
+
+			to_start<= 1;
+			to_count<= totime;
 		end
 		endcase
 	end
 end
 
 assign rf_wbyte = data9b ? rbyte_r : rbyte_r[8:1];
+
+
+always @(posedge clk or negedge rst_n) begin
+	if(~rst_n | ~clr_n) begin
+		timeout <= 0;
+		to_start<= 0;
+	end
+	else if(timeout) begin
+		timeout <= 0;
+	end
+	else if(to_start) begin
+		if(~|to_count) begin
+			timeout	<= 1;
+			to_start<= 0;
+		end
+		else if(clk_en) begin
+			to_count<= to_count - 1;
+		end
+	end
+end
 
 endmodule

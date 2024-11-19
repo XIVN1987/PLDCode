@@ -11,6 +11,8 @@ module uart (
 	input  [ 3:0] mem_wstrb,
 	output [31:0] mem_rdata,
 
+	output 		  int_req,
+
 	output 		  uart_txd,
 	input  		  uart_rxd
 );
@@ -23,7 +25,6 @@ wire 		stop2b;
 wire [ 7:0] totime;
 wire 		txbusy;
 wire 		timeout;
-wire 		int_req;
 
 wire 		tf_write;
 wire [ 8:0]	tf_wbyte;
