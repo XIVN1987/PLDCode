@@ -20,8 +20,8 @@ typedef struct {
 } PSRAMC_TypeDef;
 
 
-#define PSRAMC_CR_ENA_Pos				0		// write 1 to read back HyperRAM registers
-												// 0-to-1 perform a hardware reset, and then read back HyperRAM registers
+#define PSRAMC_CR_ENA_Pos				0		// write 1 to read back HyperRAM registers defined in Register Space
+												// 0-to-1 perform a HyperRAM hardware reset, and then read back HyperRAM registers
 #define PSRAMC_CR_ENA_Msk				(0x01 << PSRAMC_CR_ENA_Pos)
 
 #define PSRAMC_SR_READY_Pos				0		// clear when hardware reset, set when HyperRAM registers read back without error
@@ -39,6 +39,8 @@ typedef struct {
 #define PSRAMC_TR_TRH_Msk				(0x0F << PSRAMC_TR_TRH_Pos)
 #define PSRAMC_TR_TRWR_Pos				20		// tRWR, Read-Write Recovery Time in ns
 #define PSRAMC_TR_TRWR_Msk				(0xFF << PSRAMC_TR_TRWR_Pos)
+#define PSRAMC_TR_TCSM_Pos				28		// tCSM, Chip Select Maximum Low Time in us
+#define PSRAMC_TR_TCSM_Msk				(0x0Fu<< PSRAMC_TR_TCSM_Pos)
 
 #define PSRAMC_CR0_BurstLength_Pos		0
 #define PSRAMC_CR0_BurstLength_Msk		(0x03 << PSRAMC_CR0_BurstLength_Pos)
@@ -73,11 +75,11 @@ typedef struct {
 #define PSRAMC_RES_ERR	1
 
 
+uint32_t PSRAMC_Init(uint8_t clkdiv, uint8_t tRWR, uint8_t tACC);
 uint32_t PSRAMC_Reset(void);
+uint32_t PSRAMC_ReadHyperRAMRegs(void);
+
 void PSRAMC_SetBurstLength(uint8_t v);
 void PSRAMC_SetInitialLatency(uint8_t v);
-
-void PSRAMC_SetTiming(uint8_t clkdiv, uint8_t tRP, uint8_t tRH, uint8_t tRWR);
-
 
 #endif

@@ -24,7 +24,7 @@ int main(void)
 
 	for(int i = SYS_FREQ/1000000 * 200 / 4 * 2; i > 0; i--) {}	// wait for HyperRAM Power-Up Initialization done
 
-	int res = PSRAMC_Reset();
+	int res = PSRAMC_Init(2, 40, 40);
 	if(res != PSRAMC_RES_OK)
 	{
 		iputs("\nPSRAM initialize Fail.\n");
