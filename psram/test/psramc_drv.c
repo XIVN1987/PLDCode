@@ -17,14 +17,14 @@
 *******************************************************************************************************************************/
 uint32_t PSRAMC_Init(uint8_t clkdiv, uint8_t tRWR, uint8_t tACC)
 {
-	uint16_t period = 1000000000 / SYS_FREQ;
+	uint16_t period = 1000000000 / SYS_FREQ;	// system clock period in ns
 
 	PSRAMC->CR = ((clkdiv - 1)	<< PSRAMC_CR_CKDIV_Pos);
 
-	PSRAMC->TR = (period		<< PSRAMC_TR_CKiNS_Pos) |
-				 (2				<< PSRAMC_TR_TRP_Pos)   |
-				 (2				<< PSRAMC_TR_TRH_Pos)   |
-				 (tRWR			<< PSRAMC_TR_TRWR_Pos)  |
+	PSRAMC->TR = (period		<< PSRAMC_TR_TSYS_Pos) |
+				 (2				<< PSRAMC_TR_TRP_Pos)  |
+				 (2				<< PSRAMC_TR_TRH_Pos)  |
+				 (tRWR			<< PSRAMC_TR_TRWR_Pos) |
 				 (4				<< PSRAMC_TR_TCSM_Pos);
 
 	if(PSRAMC_ReadHyperRAMRegs() != PSRAMC_RES_OK)	// CR.ENA 0-to-1, HyperRAM hardware reset

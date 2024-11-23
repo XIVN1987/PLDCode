@@ -31,8 +31,8 @@ typedef struct {
 #define PSRAMC_SR_ERROR_Pos				1		// clear when hardware reset, set when HyperRAM read time-out
 #define PSRAMC_SR_ERROR_Msk				(0x01 << PSRAMC_SR_ERROR_Pos)
 
-#define PSRAMC_TR_CKiNS_Pos				0		// system clock period in ns
-#define PSRAMC_TR_CKiNS_Msk				(0xFF << PSRAMC_TR_CKiNS_Pos)
+#define PSRAMC_TR_TSYS_Pos				0		// tSYS, system clock period in ns
+#define PSRAMC_TR_TSYS_Msk				(0xFF << PSRAMC_TR_TSYS_Pos)
 #define PSRAMC_TR_TRP_Pos				8		// tRP, RESET# Pulse Width in us
 #define PSRAMC_TR_TRP_Msk				(0x0F << PSRAMC_TR_TRP_Pos)
 #define PSRAMC_TR_TRH_Pos				12		// tRH, Time between RESET# (High) and CS# (Low) in us
