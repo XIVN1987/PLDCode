@@ -44,7 +44,7 @@ uint32_t PSRAMC_Init(uint8_t clkdiv, uint8_t tRWR, uint8_t tACC)
 	default: initial_latency = PSRAMC_InitialLatency_7; break;
 	}
 
-	PSRAMC_SetInitialLatency(initial_latency);
+	PSRAMC_SetInitialLatency(initial_latency, false);
 
 	return PSRAMC_RES_OK;
 }
@@ -87,14 +87,20 @@ void PSRAMC_SetBurstLength(uint8_t v)
 /*******************************************************************************************************************************
 * @brief	change HyperRAM's Initial Latency
 * @param	v can be PSRAMC_InitialLatency_3, PSRAMC_InitialLatency_4, ..., PSRAMC_InitialLatency_6, or PSRAMC_InitialLatency_7
+* @param	fixed_latency: true, Fixed 2 times Initial Latency; false, Variable Latency depending on RWDS during CA cycles
 * @return
 *******************************************************************************************************************************/
-void PSRAMC_SetInitialLatency(uint8_t v)
+void PSRAMC_SetInitialLatency(uint8_t v, bool fixed_latency)
 {
 	uint16_t reg = PSRAMC->CR0;
 
 	reg &= ~PSRAMC_CR0_InitialLatency_Msk;
 	reg |= (v << PSRAMC_CR0_InitialLatency_Pos);
+
+	if(fixed_latency)
+		reg |=  PSRAMC_CR0_FixedLatency_Msk;
+	else
+		reg &= ~PSRAMC_CR0_FixedLatency_Msk;
 
 	PSRAMC->CR0 = reg | ((~reg) << 16);
 }

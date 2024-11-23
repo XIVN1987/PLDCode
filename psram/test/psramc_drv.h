@@ -1,6 +1,7 @@
 #ifndef __PSRAMC_DRV_H__
 #define __PSRAMC_DRV_H__
 
+#include <stdbool.h>
 
 typedef struct {
 	volatile uint32_t CR;
@@ -79,6 +80,6 @@ uint32_t PSRAMC_Init(uint8_t clkdiv, uint8_t tRWR, uint8_t tACC);
 uint32_t PSRAMC_ReadHyperRAMRegs(void);
 
 void PSRAMC_SetBurstLength(uint8_t v);
-void PSRAMC_SetInitialLatency(uint8_t v);
+void PSRAMC_SetInitialLatency(uint8_t v, bool fixed_latency);
 
 #endif
