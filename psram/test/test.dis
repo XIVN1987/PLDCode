@@ -192,21 +192,21 @@ Disassembly of section .text:
  2ca:	a001                	j	2ca <main+0x182>
 
 000002cc <PSRAMC_ReadHyperRAMRegs>:
- 2cc:	30000737          	lui	a4,0x30000
+ 2cc:	38000737          	lui	a4,0x38000
  2d0:	431c                	lw	a5,0(a4)
  2d2:	0017e793          	ori	a5,a5,1
  2d6:	c31c                	sw	a5,0(a4)
  2d8:	435c                	lw	a5,4(a4)
  2da:	8b8d                	andi	a5,a5,3
  2dc:	dff5                	beqz	a5,2d8 <PSRAMC_ReadHyperRAMRegs+0xc>
- 2de:	300007b7          	lui	a5,0x30000
+ 2de:	380007b7          	lui	a5,0x38000
  2e2:	43c8                	lw	a0,4(a5)
  2e4:	8105                	srli	a0,a0,0x1
  2e6:	8905                	andi	a0,a0,1
  2e8:	8082                	ret
 
 000002ea <PSRAMC_SetBurstLength>:
- 2ea:	30000737          	lui	a4,0x30000
+ 2ea:	38000737          	lui	a4,0x38000
  2ee:	4b5c                	lw	a5,20(a4)
  2f0:	07c2                	slli	a5,a5,0x10
  2f2:	83c1                	srli	a5,a5,0x10
@@ -219,7 +219,7 @@ Disassembly of section .text:
  302:	8082                	ret
 
 00000304 <PSRAMC_SetInitialLatency>:
- 304:	300007b7          	lui	a5,0x30000
+ 304:	380007b7          	lui	a5,0x38000
  308:	4bdc                	lw	a5,20(a5)
  30a:	07c2                	slli	a5,a5,0x10
  30c:	83c1                	srli	a5,a5,0x10
@@ -231,7 +231,7 @@ Disassembly of section .text:
  31c:	fff7c713          	not	a4,a5
  320:	0742                	slli	a4,a4,0x10
  322:	8fd9                	or	a5,a5,a4
- 324:	30000737          	lui	a4,0x30000
+ 324:	38000737          	lui	a4,0x38000
  328:	cb5c                	sw	a5,20(a4)
  32a:	8082                	ret
  32c:	9bdd                	andi	a5,a5,-9
@@ -249,7 +249,7 @@ Disassembly of section .text:
  340:	8432                	mv	s0,a2
  342:	fff50793          	addi	a5,a0,-1
  346:	0792                	slli	a5,a5,0x4
- 348:	30000737          	lui	a4,0x30000
+ 348:	38000737          	lui	a4,0x38000
  34c:	c31c                	sw	a5,0(a4)
  34e:	05c2                	slli	a1,a1,0x10
  350:	040027b7          	lui	a5,0x4002

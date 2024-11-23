@@ -56,7 +56,7 @@ typedef struct {
 #define PSRAMC_CR1_ClockType_Msk		(0x01 << PSRAMC_CR1_ClockType_Pos)
 
 
-#define PSRAMC	((PSRAMC_TypeDef *)((3 << 28) + 0x000000))
+#define PSRAMC	((PSRAMC_TypeDef *)((3 << 28) + (1 << 27)))
 
 
 
