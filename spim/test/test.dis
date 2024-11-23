@@ -10,12 +10,12 @@ Disassembly of section .text:
    4:	6705                	lui	a4,0x1
    6:	a3070713          	addi	a4,a4,-1488 # a30 <rdbuf>
    a:	6785                	lui	a5,0x1
-   c:	a6078793          	addi	a5,a5,-1440 # a60 <AddressSize>
+   c:	a7078793          	addi	a5,a5,-1424 # a70 <_ebss>
   10:	02f77363          	bgeu	a4,a5,36 <entry+0x36>
   14:	6785                	lui	a5,0x1
   16:	a3078693          	addi	a3,a5,-1488 # a30 <rdbuf>
   1a:	6705                	lui	a4,0x1
-  1c:	a5f70713          	addi	a4,a4,-1441 # a5f <rdbuf+0x2f>
+  1c:	a6f70713          	addi	a4,a4,-1425 # a6f <AddressSize+0xf>
   20:	8f15                	sub	a4,a4,a3
   22:	9b71                	andi	a4,a4,-4
   24:	0711                	addi	a4,a4,4
@@ -101,9 +101,9 @@ Disassembly of section .text:
  18c:	4701                	li	a4,0
  18e:	0ff00613          	li	a2,255
  192:	45b1                	li	a1,12
- 194:	0007c683          	lbu	a3,0(a5) # 90000000 <AddressSize+0x8ffff5a0>
+ 194:	0007c683          	lbu	a3,0(a5) # 90000000 <_ebss+0x8ffff590>
  198:	00c69b63          	bne	a3,a2,1ae <main+0x66>
- 19c:	0705                	addi	a4,a4,1 # 90000001 <AddressSize+0x8ffff5a1>
+ 19c:	0705                	addi	a4,a4,1 # 90000001 <_ebss+0x8ffff591>
  19e:	0785                	addi	a5,a5,1
  1a0:	feb71ae3          	bne	a4,a1,194 <main+0x4c>
  1a4:	6505                	lui	a0,0x1
@@ -279,7 +279,7 @@ Disassembly of section .text:
  354:	298d                	jal	7c6 <SPIM_Init>
  356:	08000793          	li	a5,128
  35a:	0087b533          	sltu	a0,a5,s0
- 35e:	0509                	addi	a0,a0,2 # 50010002 <AddressSize+0x5000f5a2>
+ 35e:	0509                	addi	a0,a0,2 # 50010002 <_ebss+0x5000f592>
  360:	6785                	lui	a5,0x1
  362:	a6a7a023          	sw	a0,-1440(a5) # a60 <AddressSize>
  366:	40b2                	lw	ra,12(sp)
@@ -381,7 +381,7 @@ Disassembly of section .text:
  462:	83a1                	srli	a5,a5,0x8
  464:	03f7f793          	andi	a5,a5,63
  468:	dfe5                	beqz	a5,460 <W25_Read_+0xf2>
- 46a:	01874783          	lbu	a5,24(a4) # 50010018 <AddressSize+0x5000f5b8>
+ 46a:	01874783          	lbu	a5,24(a4) # 50010018 <_ebss+0x5000f5a8>
  46e:	00f68023          	sb	a5,0(a3)
  472:	0685                	addi	a3,a3,1
  474:	fec696e3          	bne	a3,a2,460 <W25_Read_+0xf2>
@@ -478,7 +478,7 @@ Disassembly of section .text:
  54e:	97b6                	add	a5,a5,a3
  550:	50010637          	lui	a2,0x50010
  554:	0007c703          	lbu	a4,0(a5)
- 558:	00e60c23          	sb	a4,24(a2) # 50010018 <AddressSize+0x5000f5b8>
+ 558:	00e60c23          	sb	a4,24(a2) # 50010018 <_ebss+0x5000f5a8>
  55c:	873e                	mv	a4,a5
  55e:	17fd                	addi	a5,a5,-1
  560:	fed71ae3          	bne	a4,a3,554 <W25_WriteReg+0x4a>
@@ -525,7 +525,7 @@ Disassembly of section .text:
  5c6:	fff40793          	addi	a5,s0,-1
  5ca:	97b6                	add	a5,a5,a3
  5cc:	50010637          	lui	a2,0x50010
- 5d0:	01864703          	lbu	a4,24(a2) # 50010018 <AddressSize+0x5000f5b8>
+ 5d0:	01864703          	lbu	a4,24(a2) # 50010018 <_ebss+0x5000f5a8>
  5d4:	00e78023          	sb	a4,0(a5)
  5d8:	873e                	mv	a4,a5
  5da:	17fd                	addi	a5,a5,-1
@@ -599,7 +599,7 @@ Disassembly of section .text:
  678:	8082                	ret
  67a:	6785                	lui	a5,0x1
  67c:	a607a403          	lw	s0,-1440(a5) # a60 <AddressSize>
- 680:	1475                	addi	s0,s0,-3 # 1ffd <AddressSize+0x159d>
+ 680:	1475                	addi	s0,s0,-3 # 1ffd <_ebss+0x158d>
  682:	00143413          	seqz	s0,s0
  686:	02040413          	addi	s0,s0,32
  68a:	bf69                	j	624 <W25_Erase_+0x26>
@@ -665,8 +665,8 @@ Disassembly of section .text:
  726:	83a1                	srli	a5,a5,0x8
  728:	03f7f793          	andi	a5,a5,63
  72c:	fed78ce3          	beq	a5,a3,724 <W25_Write_+0x74>
- 730:	00054783          	lbu	a5,0(a0) # 50010000 <AddressSize+0x5000f5a0>
- 734:	00f70c23          	sb	a5,24(a4) # 50010018 <AddressSize+0x5000f5b8>
+ 730:	00054783          	lbu	a5,0(a0) # 50010000 <_ebss+0x5000f590>
+ 734:	00f70c23          	sb	a5,24(a4) # 50010018 <_ebss+0x5000f5a8>
  738:	0505                	addi	a0,a0,1
  73a:	fec515e3          	bne	a0,a2,724 <W25_Write_+0x74>
  73e:	50010737          	lui	a4,0x50010
@@ -794,11 +794,11 @@ Disassembly of section .text:
  866:	00052a23          	sw	zero,20(a0)
  86a:	8082                	ret
  86c:	2d0a                	.insn	2, 0x2d0a
- 86e:	2d2d                	jal	ea8 <AddressSize+0x448>
+ 86e:	2d2d                	jal	ea8 <_ebss+0x438>
  870:	6d20                	.insn	2, 0x6d20
  872:	6961                	lui	s2,0x18
  874:	206e                	.insn	2, 0x206e
- 876:	2d2d                	jal	eb0 <AddressSize+0x450>
+ 876:	2d2d                	jal	eb0 <_ebss+0x440>
  878:	0a2d                	addi	s4,s4,11
  87a:	0000                	unimp
  87c:	570a                	lw	a4,160(sp)

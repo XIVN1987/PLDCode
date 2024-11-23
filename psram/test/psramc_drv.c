@@ -9,8 +9,8 @@
 
 
 /*******************************************************************************************************************************
-* @brief	PSRAM (HyperRAM) Controller init, and then perform a HyperRAM hardware reset
-* @param	clkdiv: fPSRAM_CK = fSYS_CK / clkdiv
+* @brief	PSRAM (HyperRAM) Controller init, and then perform a HyperRAM hardware reset and read HyperRAM registers back
+* @param	clkdiv: fPSRAM_CK = fSYS_CK / clkdiv, can be 2-16
 * @param	tRWR: Read-Write Recovery Time in ns
 * @param	tACC: Read/Write Initial Access Time in ns
 * @return	PSRAMC_RES_OK or PSRAMC_RES_ERR
@@ -19,14 +19,15 @@ uint32_t PSRAMC_Init(uint8_t clkdiv, uint8_t tRWR, uint8_t tACC)
 {
 	uint16_t period = 1000000000 / SYS_FREQ;
 
-	PSRAMC->TR = ((clkdiv - 1)	<< PSRAMC_TR_CKDIV_Pos) |
-				 (period		<< PSRAMC_TR_CKiNS_Pos) |
+	PSRAMC->CR = ((clkdiv - 1)	<< PSRAMC_CR_CKDIV_Pos);
+
+	PSRAMC->TR = (period		<< PSRAMC_TR_CKiNS_Pos) |
 				 (2				<< PSRAMC_TR_TRP_Pos)   |
 				 (2				<< PSRAMC_TR_TRH_Pos)   |
 				 (tRWR			<< PSRAMC_TR_TRWR_Pos)  |
 				 (4				<< PSRAMC_TR_TCSM_Pos);
 
-	if(PSRAMC_Reset() != PSRAMC_RES_OK)
+	if(PSRAMC_ReadHyperRAMRegs() != PSRAMC_RES_OK)	// CR.ENA 0-to-1, HyperRAM hardware reset
 		return PSRAMC_RES_ERR;
 
 	/* The number of latency clocks needed to satisfy tACC depends on the HyperBus frequency */
@@ -46,19 +47,6 @@ uint32_t PSRAMC_Init(uint8_t clkdiv, uint8_t tRWR, uint8_t tACC)
 	PSRAMC_SetInitialLatency(initial_latency);
 
 	return PSRAMC_RES_OK;
-}
-
-
-/*******************************************************************************************************************************
-* @brief	perform a HyperRAM hardware reset
-* @param
-* @return	PSRAMC_RES_OK or PSRAMC_RES_ERR
-*******************************************************************************************************************************/
-uint32_t PSRAMC_Reset(void)
-{
-	PSRAMC->CR &=~PSRAMC_CR_ENA_Msk;
-
-	return PSRAMC_ReadHyperRAMRegs();
 }
 
 
@@ -92,7 +80,7 @@ void PSRAMC_SetBurstLength(uint8_t v)
 	reg &= ~PSRAMC_CR0_BurstLength_Msk;
 	reg |= (v << PSRAMC_CR0_BurstLength_Pos);
 
-	PSRAMC->CR0 = reg | (~reg);
+	PSRAMC->CR0 = reg | ((~reg) << 16);
 }
 
 
@@ -108,5 +96,5 @@ void PSRAMC_SetInitialLatency(uint8_t v)
 	reg &= ~PSRAMC_CR0_InitialLatency_Msk;
 	reg |= (v << PSRAMC_CR0_InitialLatency_Pos);
 
-	PSRAMC->CR0 = reg | (~reg);
+	PSRAMC->CR0 = reg | ((~reg) << 16);
 }
