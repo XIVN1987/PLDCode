@@ -4,3 +4,8 @@ __riscv.vcd
 *.bin
 *.elf
 *.elf.map
+
+*.v.bak
+db/
+incremental_db/
+output_files/
